@@ -8718,7 +8718,7 @@
             const label = document.createElement("span");
             label.style.cssText =
               "position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:0.7em;color:var(--text-muted);white-space:nowrap;";
-            label.textContent = String(h24).padStart(2, "0");
+            label.textContent = String(h24);
             tick.appendChild(label);
           } else if (isFullHour) {
             // Odd hour tick: medium
@@ -8728,7 +8728,7 @@
             const label = document.createElement("span");
             label.style.cssText =
               "position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-size:0.6em;color:var(--text-muted);opacity:0.6;white-space:nowrap;";
-            label.textContent = String(h24).padStart(2, "0");
+            label.textContent = String(h24);
             tick.appendChild(label);
           } else {
             // 30-min tick: small
