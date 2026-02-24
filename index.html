@@ -2383,7 +2383,7 @@
                       height: 32px;
                       background: var(--border);
                       border-radius: 4px;
-                      overflow: hidden;
+                      overflow: visible;
                     "
                   >
                     <div
@@ -2420,7 +2420,7 @@
                       height: 32px;
                       background: var(--border);
                       border-radius: 4px;
-                      overflow: hidden;
+                      overflow: visible;
                     "
                   >
                     <div
@@ -2457,7 +2457,7 @@
                       height: 32px;
                       background: var(--border);
                       border-radius: 4px;
-                      overflow: hidden;
+                      overflow: visible;
                     "
                   >
                     <div
@@ -2494,7 +2494,7 @@
                       height: 32px;
                       background: var(--border);
                       border-radius: 4px;
-                      overflow: hidden;
+                      overflow: visible;
                     "
                   >
                     <div
@@ -2548,7 +2548,7 @@
                 font-style: italic;
               "
             >
-              Clica "Tomei" para ativar timeline
+              Nenhum medicamento agendado para este dia
             </div>
           </div>
 
@@ -8807,9 +8807,11 @@
 
       function changeDay(delta) {
         viewDate = new Date(viewDate.getTime() + delta * 86400000);
-        // Don't allow future days
-        const now = getNow();
-        if (viewDate > now) viewDate = new Date(now);
+        // Allow navigation up to Fri 27 Feb (interview day)
+        const maxDate = new Date(2026, 1, 28); // Feb 28
+        const minDate = new Date(2026, 1, 22); // Feb 22
+        if (viewDate > maxDate) viewDate = new Date(maxDate);
+        if (viewDate < minDate) viewDate = new Date(minDate);
         updateDayLabel();
         // Reset button states then reload UI for the viewed day
         ["concerta", "rubifen", "propranolol", "alprazolam"].forEach((id) => {
@@ -9127,15 +9129,45 @@
         }
       }
 
-      // Initialize pill tracker on load
-      updatePillUI();
-      // Update NOW indicator every 10 seconds
-      setInterval(updateNowIndicator, 10000);
+      // ═══════════════════════════════════════════════════
+      // EXPECTED PILL SCHEDULES (pre-filled for each day)
+      // ═══════════════════════════════════════════════════
+      const EXPECTED_PILLS = {
+        "2026-02-24": { // Terça - DAY 1
+          rubifen:     { time: "15:30", dose: "20mg" },
+          propranolol: { time: "15:30", dose: "10mg" },
+          alprazolam:  { time: "21:00", dose: "0,25mg" }
+        },
+        "2026-02-25": { // Quarta - DAY 2
+          concerta:    { time: "10:00", dose: "27mg" },
+          rubifen:     { time: "12:30", dose: "20mg" },
+          propranolol: { time: "13:00", dose: "20mg" },
+          alprazolam:  { time: "13:00", dose: "0,5mg" }
+        },
+        "2026-02-26": { // Quinta - DAY 3
+          concerta:    { time: "09:30", dose: "27mg" },
+          rubifen:     { time: "13:00", dose: "20mg" }
+        },
+        "2026-02-27": { // Sexta - GAME DAY
+          concerta:    { time: "09:30", dose: "27mg" },
+          rubifen:     { time: "12:30", dose: "20mg" },
+          propranolol: { time: "14:30", dose: "?mg" },
+          alprazolam:  { time: "14:30", dose: "?mg" }
+        }
+      };
+
+      function getExpectedForDay() {
+        const d = viewDate;
+        const key = d.getFullYear() + "-" +
+          String(d.getMonth() + 1).padStart(2, "0") + "-" +
+          String(d.getDate()).padStart(2, "0");
+        return EXPECTED_PILLS[key] || {};
+      }
 
       // Initialize pill tracker on load
       updatePillUI();
-      // Update NOW indicator every 10 seconds
-      setInterval(updateNowIndicator, 10000);
+      // Update NOW indicator + bar colors every 10 seconds
+      setInterval(function() { updateNowIndicator(); updatePillUI(); }, 10000);
 
       // ═══════════════════════════════════════════════════
       // CHECK-IN QUESTIONNAIRE SCHEDULER
