@@ -150,8 +150,10 @@
         height: 12px;
         opacity: 0.35;
         background: currentColor;
-        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13.23 1h-1.46L3.52 9.25l-.16.22L1 13.59 2.41 15l4.12-2.36.22-.16L15 4.23V2.77L13.23 1zM2.41 13.59l1.51-3 1.45 1.45-2.96 1.55zm3.83-2.06L4.47 9.76l8-8 1.77 1.77-8 8z'/%3E%3C/svg%3E") no-repeat center / contain;
-        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13.23 1h-1.46L3.52 9.25l-.16.22L1 13.59 2.41 15l4.12-2.36.22-.16L15 4.23V2.77L13.23 1zM2.41 13.59l1.51-3 1.45 1.45-2.96 1.55zm3.83-2.06L4.47 9.76l8-8 1.77 1.77-8 8z'/%3E%3C/svg%3E") no-repeat center / contain;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13.23 1h-1.46L3.52 9.25l-.16.22L1 13.59 2.41 15l4.12-2.36.22-.16L15 4.23V2.77L13.23 1zM2.41 13.59l1.51-3 1.45 1.45-2.96 1.55zm3.83-2.06L4.47 9.76l8-8 1.77 1.77-8 8z'/%3E%3C/svg%3E")
+          no-repeat center / contain;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13.23 1h-1.46L3.52 9.25l-.16.22L1 13.59 2.41 15l4.12-2.36.22-.16L15 4.23V2.77L13.23 1zM2.41 13.59l1.51-3 1.45 1.45-2.96 1.55zm3.83-2.06L4.47 9.76l8-8 1.77 1.77-8 8z'/%3E%3C/svg%3E")
+          no-repeat center / contain;
       }
       .time-edit-input {
         width: 100px;
@@ -165,6 +167,55 @@
         text-align: center;
         background: #f0fdf4;
         outline: none;
+      }
+
+      /* EDITABLE ACTIVITY & DETAIL CELLS */
+      .day-content table tbody tr td:nth-child(3),
+      .day-content table tbody tr td:nth-child(4) {
+        position: relative;
+        cursor: pointer;
+      }
+      .day-content
+        table
+        tbody
+        tr
+        td:nth-child(3):not(.cell-editing):hover::after,
+      .day-content
+        table
+        tbody
+        tr
+        td:nth-child(4):not(.cell-editing):hover::after {
+        content: "";
+        position: absolute;
+        right: 4px;
+        top: 4px;
+        width: 12px;
+        height: 12px;
+        opacity: 0.3;
+        background: #333;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13.23 1h-1.46L3.52 9.25l-.16.22L1 13.59 2.41 15l4.12-2.36.22-.16L15 4.23V2.77L13.23 1zM2.41 13.59l1.51-3 1.45 1.45-2.96 1.55zm3.83-2.06L4.47 9.76l8-8 1.77 1.77-8 8z'/%3E%3C/svg%3E")
+          no-repeat center / contain;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13.23 1h-1.46L3.52 9.25l-.16.22L1 13.59 2.41 15l4.12-2.36.22-.16L15 4.23V2.77L13.23 1zM2.41 13.59l1.51-3 1.45 1.45-2.96 1.55zm3.83-2.06L4.47 9.76l8-8 1.77 1.77-8 8z'/%3E%3C/svg%3E")
+          no-repeat center / contain;
+        pointer-events: none;
+      }
+      .cell-editing {
+        outline: 2px solid var(--bcg-green) !important;
+        outline-offset: -1px;
+        border-radius: 4px;
+        background: #f0fdf4 !important;
+        cursor: text !important;
+        min-height: 28px;
+      }
+      .cell-editing a {
+        pointer-events: none;
+      }
+      .cell-edit-hint {
+        display: block;
+        font-size: 9px;
+        color: var(--text-muted);
+        margin-top: 4px;
+        opacity: 0.6;
       }
       .time-edit-input.invalid {
         border-color: #d32f2f;
@@ -12031,6 +12082,7 @@
             btn.onclick = function () {
               localStorage.removeItem(STORAGE_KEY);
               localStorage.removeItem(TIMES_KEY);
+              localStorage.removeItem(EDITS_KEY);
               location.reload();
             };
             h.appendChild(btn);
@@ -12142,11 +12194,248 @@
           }
         }
 
+        // ── Editable activity & detail cells ──
+        var EDITS_KEY = "bcg-schedule-cell-edits";
+
+        function getRowKey(row) {
+          var cb = row.querySelector(".schedule-check");
+          if (cb) return cb.id;
+          var tc = row.querySelector(".time-col");
+          return tc
+            ? "_nocheck_" + (row.dataset.origTime || tc.textContent.trim())
+            : null;
+        }
+
+        function makeCellsEditable() {
+          document
+            .querySelectorAll(".day-content table tbody tr")
+            .forEach(function (row) {
+              var cells = row.querySelectorAll("td");
+              if (cells.length < 3) return;
+
+              [2, 3].forEach(function (idx) {
+                var cell = cells[idx];
+                if (!cell || cell.dataset.cellEditable) return;
+                cell.dataset.cellEditable = "1";
+
+                cell.addEventListener("click", function (e) {
+                  if (
+                    e.target.tagName === "A" ||
+                    e.target.tagName === "BUTTON" ||
+                    e.target.closest("a") ||
+                    e.target.closest("button")
+                  )
+                    return;
+                  if (cell.classList.contains("cell-editing")) return;
+                  startCellEdit(cell, row, idx);
+                });
+              });
+            });
+        }
+
+        function startCellEdit(cell, row, colIdx) {
+          // Store original HTML for cancel (before adding hint)
+          cell.dataset.origHtml = cell.innerHTML;
+
+          cell.classList.add("cell-editing");
+          cell.contentEditable = "true";
+
+          // Hide Open All buttons temporarily
+          cell.querySelectorAll(".open-all-btn").forEach(function (b) {
+            b.style.display = "none";
+          });
+
+          // Add hint
+          var hint = document.createElement("span");
+          hint.className = "cell-edit-hint";
+          hint.textContent =
+            "\u2318K to add link \u00b7 Click outside to save \u00b7 Esc to cancel";
+          cell.appendChild(hint);
+
+          cell.focus();
+
+          function onKeyDown(e) {
+            if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+              e.preventDefault();
+              insertLink(cell);
+            }
+            if (e.key === "Escape") {
+              e.preventDefault();
+              cancelCellEdit(cell);
+              cell.removeEventListener("keydown", onKeyDown);
+            }
+          }
+          cell.addEventListener("keydown", onKeyDown);
+
+          cell.addEventListener(
+            "blur",
+            function onBlur() {
+              setTimeout(function () {
+                if (cell.classList.contains("cell-editing")) {
+                  commitCellEdit(cell, row, colIdx);
+                  cell.removeEventListener("keydown", onKeyDown);
+                }
+              }, 150);
+            },
+            { once: true },
+          );
+        }
+
+        function cancelCellEdit(cell) {
+          cell.contentEditable = "false";
+          cell.classList.remove("cell-editing");
+          if (cell.dataset.origHtml) cell.innerHTML = cell.dataset.origHtml;
+          cell.querySelectorAll(".open-all-btn").forEach(function (b) {
+            b.style.display = "";
+          });
+        }
+
+        function commitCellEdit(cell, row, colIdx) {
+          cell.contentEditable = "false";
+          cell.classList.remove("cell-editing");
+          cell.querySelectorAll(".cell-edit-hint").forEach(function (h) {
+            h.remove();
+          });
+
+          autoLinkUrls(cell);
+          updateOpenAllButton(cell);
+          cell.querySelectorAll(".open-all-btn").forEach(function (b) {
+            b.style.display = "";
+          });
+
+          saveCellEdit(row, colIdx, cell.innerHTML);
+          refreshTimeline();
+        }
+
+        function insertLink(cell) {
+          var sel = window.getSelection();
+          var selectedText = sel.toString().trim();
+          if (!selectedText) {
+            selectedText = prompt("Link text:");
+            if (!selectedText) return;
+          }
+          var url = prompt('URL for "' + selectedText + '":');
+          if (!url) return;
+          if (!/^https?:\/\//i.test(url)) url = "https://" + url;
+
+          var link = document.createElement("a");
+          link.href = url;
+          link.target = "_blank";
+          link.style.cssText =
+            "color: var(--highlight); text-decoration: underline; font-size: 0.85em;";
+          link.textContent = selectedText;
+
+          if (sel.rangeCount > 0 && sel.toString().trim()) {
+            var range = sel.getRangeAt(0);
+            range.deleteContents();
+            range.insertNode(link);
+          } else {
+            cell.appendChild(document.createTextNode(" "));
+            cell.appendChild(link);
+          }
+          sel.removeAllRanges();
+        }
+
+        function autoLinkUrls(cell) {
+          var walker = document.createTreeWalker(
+            cell,
+            NodeFilter.SHOW_TEXT,
+            null,
+            false,
+          );
+          var textNodes = [];
+          while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+          var urlRegex = /(https?:\/\/[^\s<>"'\)]+)/gi;
+          textNodes.forEach(function (node) {
+            if (node.parentElement && node.parentElement.tagName === "A")
+              return;
+            var text = node.textContent;
+            if (!urlRegex.test(text)) return;
+            urlRegex.lastIndex = 0;
+
+            var frag = document.createDocumentFragment();
+            var lastIdx = 0;
+            var match;
+            while ((match = urlRegex.exec(text)) !== null) {
+              if (match.index > lastIdx)
+                frag.appendChild(
+                  document.createTextNode(text.substring(lastIdx, match.index)),
+                );
+              var a = document.createElement("a");
+              a.href = match[1];
+              a.target = "_blank";
+              a.style.cssText =
+                "color: var(--highlight); text-decoration: underline; font-size: 0.85em;";
+              a.textContent = match[1];
+              frag.appendChild(a);
+              lastIdx = match.index + match[0].length;
+            }
+            if (lastIdx < text.length)
+              frag.appendChild(
+                document.createTextNode(text.substring(lastIdx)),
+              );
+            node.parentNode.replaceChild(frag, node);
+          });
+        }
+
+        function updateOpenAllButton(cell) {
+          cell.querySelectorAll(".open-all-btn").forEach(function (b) {
+            b.remove();
+          });
+          var links = cell.querySelectorAll("a[href]");
+          if (links.length >= 2) {
+            var btn = document.createElement("button");
+            btn.className = "open-all-btn";
+            btn.textContent = "\u25b6 Open All";
+            btn.onclick = function () {
+              cell.querySelectorAll("a[href]").forEach(function (a) {
+                window.open(a.href, "_blank");
+              });
+            };
+            cell.appendChild(btn);
+          }
+        }
+
+        function saveCellEdit(row, colIdx, html) {
+          var rowKey = getRowKey(row);
+          if (!rowKey) return;
+          var dayDiv = row.closest(".day-content");
+          if (!dayDiv) return;
+          var dayId = dayDiv.id;
+
+          var saved = JSON.parse(localStorage.getItem(EDITS_KEY) || "{}");
+          if (!saved[dayId]) saved[dayId] = {};
+          if (!saved[dayId][rowKey]) saved[dayId][rowKey] = {};
+          saved[dayId][rowKey][colIdx === 2 ? "activity" : "detail"] = html;
+          localStorage.setItem(EDITS_KEY, JSON.stringify(saved));
+        }
+
+        function restoreCellEdits() {
+          var saved = JSON.parse(localStorage.getItem(EDITS_KEY) || "{}");
+          Object.keys(saved).forEach(function (dayId) {
+            var dayDiv = document.getElementById(dayId);
+            if (!dayDiv) return;
+            var dayEdits = saved[dayId];
+            dayDiv.querySelectorAll("table tbody tr").forEach(function (row) {
+              var rowKey = getRowKey(row);
+              if (!rowKey || !dayEdits[rowKey]) return;
+              var cells = row.querySelectorAll("td");
+              if (dayEdits[rowKey].activity && cells[2])
+                cells[2].innerHTML = dayEdits[rowKey].activity;
+              if (dayEdits[rowKey].detail && cells[3])
+                cells[3].innerHTML = dayEdits[rowKey].detail;
+            });
+          });
+        }
+
         // ── Init ──
         saveOriginalTimes();
         restoreOrder();
         addDragHandles();
         makeTimesEditable();
+        makeCellsEditable();
+        restoreCellEdits();
       })();
     </script>
   </body>
