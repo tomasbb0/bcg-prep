@@ -2116,8 +2116,8 @@
         <div class="card card-accent">
           <h3>📊 Pill Timeline & Tracker</h3>
           <p style="color: var(--text-muted); margin-bottom: 12px">
-            Clica "Tomei" quando tomares cada med. Timeline atualiza
-            automaticamente. Regista sintomas para enviar ao médico.
+            Clica "Tomei" para registar a hora atual. Arrasta a barra no
+            timeline para ajustar o horário exato.
           </p>
 
           <!-- PILL TAKE BUTTONS -->
@@ -2139,16 +2139,6 @@
             >
               <strong style="color: #1976d2">💊 Concerta 27mg</strong><br />
               <small>ADHD — duração 10-12h</small><br />
-              <input
-                type="time"
-                id="time-concerta"
-                style="
-                  margin-top: 4px;
-                  padding: 3px 6px;
-                  border-radius: 4px;
-                  border: 1px solid #ccc;
-                "
-              />
               <button
                 onclick="takePill('concerta')"
                 id="btn-concerta"
@@ -2184,16 +2174,6 @@
             >
               <strong style="color: #e65100">💊 Rubifen 20mg</strong><br />
               <small>ADHD boost — duração 3-4h</small><br />
-              <input
-                type="time"
-                id="time-rubifen"
-                style="
-                  margin-top: 4px;
-                  padding: 3px 6px;
-                  border-radius: 4px;
-                  border: 1px solid #ccc;
-                "
-              />
               <button
                 onclick="takePill('rubifen')"
                 id="btn-rubifen"
@@ -2241,15 +2221,6 @@
                 <option value="10">10mg (1 cp)</option>
                 <option value="20">20mg (2 cp)</option>
               </select>
-              <input
-                type="time"
-                id="time-propranolol"
-                style="
-                  padding: 3px 6px;
-                  border-radius: 4px;
-                  border: 1px solid #ccc;
-                "
-              />
               <button
                 onclick="takePill('propranolol')"
                 id="btn-propranolol"
@@ -2297,15 +2268,6 @@
                 <option value="0.25">0,25mg (1 cp)</option>
                 <option value="0.5">0,5mg (2 cp)</option>
               </select>
-              <input
-                type="time"
-                id="time-alprazolam"
-                style="
-                  padding: 3px 6px;
-                  border-radius: 4px;
-                  border: 1px solid #ccc;
-                "
-              />
               <button
                 onclick="takePill('alprazolam')"
                 id="btn-alprazolam"
@@ -2344,43 +2306,51 @@
               margin-bottom: 16px;
             "
           >
-            <strong>⏱️ Timeline Visual (14:00 → 02:00)</strong>
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 8px;
+              "
+            >
+              <button
+                onclick="changeDay(-1)"
+                style="
+                  padding: 4px 12px;
+                  border-radius: 6px;
+                  border: 1px solid var(--border);
+                  background: transparent;
+                  cursor: pointer;
+                "
+              >
+                ← Dia anterior
+              </button>
+              <strong id="timeline-day-label">⏱️ Timeline Visual — Hoje</strong>
+              <button
+                onclick="changeDay(1)"
+                style="
+                  padding: 4px 12px;
+                  border-radius: 6px;
+                  border: 1px solid var(--border);
+                  background: transparent;
+                  cursor: pointer;
+                "
+              >
+                Dia seguinte →
+              </button>
+            </div>
             <div style="position: relative; margin-top: 12px">
-              <!-- Hour labels -->
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  font-size: 0.75em;
-                  color: var(--text-muted);
-                  margin-bottom: 4px;
-                  padding: 0 2px;
-                "
-              >
-                <span>14</span><span>15</span><span>16</span><span>17</span
-                ><span>18</span><span>19</span><span>20</span><span>21</span
-                ><span>22</span><span>23</span><span>00</span><span>01</span
-                ><span>02</span>
-              </div>
-              <!-- Grid lines -->
-              <div
-                style="
-                  position: relative;
-                  height: 4px;
-                  background: var(--border);
-                  border-radius: 2px;
-                  margin-bottom: 8px;
-                "
-              >
+              <!-- Timeline ruler with 30-min ticks -->
+              <div style="display: flex; gap: 8px; margin-bottom: 2px">
+                <span style="width: 100px"></span>
                 <div
+                  id="timeline-ruler"
                   style="
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    bottom: 0;
-                    width: 1px;
-                    background: var(--text-muted);
-                    opacity: 0.3;
+                    flex: 1;
+                    position: relative;
+                    height: 28px;
+                    overflow: visible;
                   "
                 ></div>
               </div>
@@ -2404,7 +2374,7 @@
                     style="
                       flex: 1;
                       position: relative;
-                      height: 20px;
+                      height: 32px;
                       background: var(--border);
                       border-radius: 4px;
                       overflow: hidden;
@@ -2416,6 +2386,7 @@
                         position: absolute;
                         height: 100%;
                         border-radius: 4px;
+                        cursor: grab;
                       "
                     ></div>
                   </div>
@@ -2440,7 +2411,7 @@
                     style="
                       flex: 1;
                       position: relative;
-                      height: 20px;
+                      height: 32px;
                       background: var(--border);
                       border-radius: 4px;
                       overflow: hidden;
@@ -2452,6 +2423,7 @@
                         position: absolute;
                         height: 100%;
                         border-radius: 4px;
+                        cursor: grab;
                       "
                     ></div>
                   </div>
@@ -2476,7 +2448,7 @@
                     style="
                       flex: 1;
                       position: relative;
-                      height: 20px;
+                      height: 32px;
                       background: var(--border);
                       border-radius: 4px;
                       overflow: hidden;
@@ -2488,6 +2460,7 @@
                         position: absolute;
                         height: 100%;
                         border-radius: 4px;
+                        cursor: grab;
                       "
                     ></div>
                   </div>
@@ -2512,7 +2485,7 @@
                     style="
                       flex: 1;
                       position: relative;
-                      height: 20px;
+                      height: 32px;
                       background: var(--border);
                       border-radius: 4px;
                       overflow: hidden;
@@ -2524,6 +2497,7 @@
                         position: absolute;
                         height: 100%;
                         border-radius: 4px;
+                        cursor: grab;
                       "
                     ></div>
                   </div>
@@ -2536,20 +2510,24 @@
                   position: absolute;
                   top: 0;
                   bottom: 0;
-                  width: 2px;
+                  width: 3px;
                   background: red;
                   z-index: 10;
                   display: none;
+                  box-shadow: 0 0 6px rgba(255, 0, 0, 0.5);
                 "
               >
                 <span
+                  id="now-indicator-label"
                   style="
                     position: absolute;
-                    top: -16px;
-                    left: -8px;
+                    top: -18px;
+                    left: 50%;
+                    transform: translateX(-50%);
                     font-size: 0.65em;
                     color: red;
                     font-weight: bold;
+                    white-space: nowrap;
                   "
                   >NOW</span
                 >
@@ -2584,6 +2562,164 @@
               </thead>
               <tbody id="effects-tbody"></tbody>
             </table>
+          </div>
+
+          <!-- CHECK-IN QUESTIONNAIRE SCHEDULER -->
+          <div
+            id="checkin-section"
+            style="
+              display: none;
+              margin-bottom: 16px;
+              padding: 12px;
+              border: 2px solid #ff9800;
+              border-radius: 8px;
+              background: rgba(255, 152, 0, 0.05);
+            "
+          >
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+              "
+            >
+              <strong style="color: #ff9800">📋 Check-in Agendado</strong>
+              <span
+                id="checkin-countdown"
+                style="
+                  font-family: monospace;
+                  font-size: 0.95em;
+                  color: var(--text-muted);
+                "
+              ></span>
+            </div>
+            <p
+              id="checkin-reason"
+              style="
+                font-size: 0.85em;
+                color: var(--text-muted);
+                margin: 4px 0 0;
+              "
+            ></p>
+          </div>
+
+          <!-- CHECK-IN MODAL (hidden by default) -->
+          <div
+            id="checkin-modal"
+            style="
+              display: none;
+              position: fixed;
+              inset: 0;
+              background: rgba(0, 0, 0, 0.6);
+              z-index: 9999;
+              display: none;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            <div
+              style="
+                background: var(--bg-card);
+                border-radius: 12px;
+                padding: 24px;
+                max-width: 400px;
+                width: 90%;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+              "
+            >
+              <h3 style="margin: 0 0 12px">📋 Como te sentes agora?</h3>
+              <p
+                style="
+                  font-size: 0.85em;
+                  color: var(--text-muted);
+                  margin-bottom: 16px;
+                "
+              >
+                5 minutos — responde honestamente para o médico
+              </p>
+              <div style="margin-bottom: 12px">
+                <label style="font-weight: bold; font-size: 0.9em"
+                  >🧠 Foco (1-5):</label
+                >
+                <div
+                  id="checkin-focus"
+                  style="display: flex; gap: 4px; margin-top: 4px"
+                ></div>
+              </div>
+              <div style="margin-bottom: 12px">
+                <label style="font-weight: bold; font-size: 0.9em"
+                  >😰 Ansiedade (1-5):</label
+                >
+                <div
+                  id="checkin-anxiety"
+                  style="display: flex; gap: 4px; margin-top: 4px"
+                ></div>
+              </div>
+              <div style="margin-bottom: 12px">
+                <label style="font-weight: bold; font-size: 0.9em"
+                  >💊 Efeitos secundários (1-5):</label
+                >
+                <div
+                  id="checkin-sideeffects"
+                  style="display: flex; gap: 4px; margin-top: 4px"
+                ></div>
+              </div>
+              <div style="margin-bottom: 12px">
+                <label style="font-weight: bold; font-size: 0.9em"
+                  >😊 Humor geral (1-5):</label
+                >
+                <div
+                  id="checkin-mood"
+                  style="display: flex; gap: 4px; margin-top: 4px"
+                ></div>
+              </div>
+              <div style="margin-bottom: 16px">
+                <label style="font-weight: bold; font-size: 0.9em"
+                  >📝 Notas:</label
+                >
+                <textarea
+                  id="checkin-notes"
+                  rows="2"
+                  style="
+                    width: 100%;
+                    margin-top: 4px;
+                    padding: 6px;
+                    border-radius: 6px;
+                    border: 1px solid var(--border);
+                    font-family: inherit;
+                    resize: vertical;
+                  "
+                ></textarea>
+              </div>
+              <div style="display: flex; gap: 8px; justify-content: flex-end">
+                <button
+                  onclick="dismissCheckin()"
+                  style="
+                    padding: 8px 16px;
+                    border-radius: 6px;
+                    border: 1px solid var(--border);
+                    background: transparent;
+                    cursor: pointer;
+                  "
+                >
+                  Depois
+                </button>
+                <button
+                  onclick="submitCheckin()"
+                  style="
+                    padding: 8px 16px;
+                    border-radius: 6px;
+                    border: none;
+                    background: #ff9800;
+                    color: white;
+                    cursor: pointer;
+                    font-weight: bold;
+                  "
+                >
+                  Guardar
+                </button>
+              </div>
+            </div>
           </div>
 
           <!-- SYMPTOM LOG -->
@@ -8512,31 +8648,182 @@
           durationMin: 300,
         },
       };
-      const TIMELINE_START = 14; // 14:00
+      const TIMELINE_START = 6; // 06:00
       const TIMELINE_END = 26; // 02:00 next day (26 = 24+2)
       const TIMELINE_HOURS = TIMELINE_END - TIMELINE_START;
+      const TZ = "Europe/Lisbon";
+
+      // Get hours and minutes in Lisbon timezone (works regardless of system TZ)
+      function getTimeInLisbon(date) {
+        const d = date || new Date();
+        const parts = new Intl.DateTimeFormat("pt-PT", {
+          timeZone: TZ,
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+          hour12: false,
+        }).formatToParts(d);
+        const h = parseInt(parts.find((p) => p.type === "hour").value);
+        const m = parseInt(parts.find((p) => p.type === "minute").value);
+        const s = parseInt(parts.find((p) => p.type === "second").value);
+        return {
+          hours: h,
+          minutes: m,
+          seconds: s,
+          fractionalHours: h + m / 60 + s / 3600,
+        };
+      }
+
+      function getNow() {
+        return new Date();
+      }
+
+      // Live clock (always Lisbon time)
+      function updateLiveClock() {
+        const t = getTimeInLisbon();
+        const hh = String(t.hours).padStart(2, "0");
+        const mm = String(t.minutes).padStart(2, "0");
+        const ss = String(t.seconds).padStart(2, "0");
+        const el = document.getElementById("live-clock");
+        if (el) {
+          el.textContent = hh + ":" + mm + ":" + ss;
+          el.style.color = "#00c853";
+          el.title = "Hora de Lisboa (Europe/Lisbon)";
+        }
+      }
+      setInterval(updateLiveClock, 1000);
+      updateLiveClock();
+
+      // Generate timeline ruler with 30-min ticks
+      (function buildRuler() {
+        const ruler = document.getElementById("timeline-ruler");
+        if (!ruler) return;
+        // 20 hours = 40 half-hour slots, so 41 tick positions
+        for (let i = 0; i <= 40; i++) {
+          const pct = (i / 40) * 100;
+          const hour = TIMELINE_START + i * 0.5;
+          const isFullHour = hour % 1 === 0;
+          const isEvenHour = hour % 2 === 0;
+          const h24 = Math.floor(hour) % 24;
+          const m = hour % 1 === 0 ? "00" : "30";
+
+          const tick = document.createElement("div");
+          tick.style.cssText = `position:absolute;left:${pct}%;bottom:0;width:1px;transform:translateX(-50%);`;
+
+          if (isEvenHour && isFullHour) {
+            // Major tick: tall + label
+            tick.style.height = "16px";
+            tick.style.background = "var(--text-muted)";
+            tick.style.opacity = "0.6";
+            const label = document.createElement("span");
+            label.style.cssText =
+              "position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:0.7em;color:var(--text-muted);white-space:nowrap;";
+            label.textContent = String(h24).padStart(2, "0");
+            tick.appendChild(label);
+          } else if (isFullHour) {
+            // Odd hour tick: medium
+            tick.style.height = "10px";
+            tick.style.background = "var(--text-muted)";
+            tick.style.opacity = "0.35";
+            const label = document.createElement("span");
+            label.style.cssText =
+              "position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-size:0.6em;color:var(--text-muted);opacity:0.6;white-space:nowrap;";
+            label.textContent = String(h24).padStart(2, "0");
+            tick.appendChild(label);
+          } else {
+            // 30-min tick: small
+            tick.style.height = "6px";
+            tick.style.background = "var(--text-muted)";
+            tick.style.opacity = "0.2";
+          }
+          ruler.appendChild(tick);
+        }
+        // Bottom baseline
+        const baseline = document.createElement("div");
+        baseline.style.cssText =
+          "position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--border);";
+        ruler.appendChild(baseline);
+      })();
+
+      // Multi-day pill log system
+      let viewDate = new Date(); // which day is displayed
+
+      function getDayKey(date) {
+        const d = date || viewDate;
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        return "bcg-pill-log-" + y + "-" + m + "-" + dd;
+      }
+
+      function isToday(date) {
+        const now = getNow();
+        return (
+          date.getFullYear() === now.getFullYear() &&
+          date.getMonth() === now.getMonth() &&
+          date.getDate() === now.getDate()
+        );
+      }
 
       function getPillLog() {
         return JSON.parse(
-          localStorage.getItem("bcg-pill-log") || '{"pills":{},"symptoms":[]}',
+          localStorage.getItem(getDayKey()) || '{"pills":{},"symptoms":[]}',
         );
       }
       function savePillLog(log) {
-        localStorage.setItem("bcg-pill-log", JSON.stringify(log));
+        localStorage.setItem(getDayKey(), JSON.stringify(log));
       }
+
+      // Auto-migrate old single-key data to today's key
+      (function migrateOldData() {
+        const old = localStorage.getItem("bcg-pill-log");
+        if (old) {
+          const todayKey = getDayKey(getNow());
+          if (!localStorage.getItem(todayKey)) {
+            localStorage.setItem(todayKey, old);
+          }
+          localStorage.removeItem("bcg-pill-log");
+        }
+      })();
+
+      function updateDayLabel() {
+        const label = document.getElementById("timeline-day-label");
+        if (!label) return;
+        const clockSpan =
+          '<span id="live-clock" style="font-family:monospace;">--:--</span>';
+        if (isToday(viewDate)) {
+          label.innerHTML = "⏱️ Timeline — Hoje " + clockSpan;
+        } else {
+          const opts = { weekday: "short", day: "numeric", month: "short" };
+          const dateStr = viewDate.toLocaleDateString("pt-PT", opts);
+          label.innerHTML = "⏱️ Timeline — " + dateStr + " " + clockSpan;
+        }
+      }
+
+      function changeDay(delta) {
+        viewDate = new Date(viewDate.getTime() + delta * 86400000);
+        // Don't allow future days
+        const now = getNow();
+        if (viewDate > now) viewDate = new Date(now);
+        updateDayLabel();
+        // Reset button states then reload UI for the viewed day
+        ["concerta", "rubifen", "propranolol", "alprazolam"].forEach((id) => {
+          const btn = document.getElementById("btn-" + id);
+          btn.textContent = "Tomei";
+          btn.style.background = PILL_DATA[id].color;
+          btn.disabled = false;
+          document.getElementById(id + "-time").textContent = "";
+          document.getElementById("bar-" + id).style.display = "none";
+        });
+        updatePillUI();
+      }
+
+      updateDayLabel();
 
       function takePill(pillId) {
         const log = getPillLog();
-        // Use time input if set, otherwise use current time
-        const timeInput = document.getElementById("time-" + pillId);
-        let now;
-        if (timeInput && timeInput.value) {
-          const [hh, mm] = timeInput.value.split(":").map(Number);
-          now = new Date();
-          now.setHours(hh, mm, 0, 0);
-        } else {
-          now = new Date();
-        }
+        // Always use current synced time — user can drag bar to adjust
+        const now = getNow();
         const dose =
           pillId === "propranolol"
             ? document.getElementById("propranolol-dose").value + "mg"
@@ -8548,6 +8835,7 @@
         log.pills[pillId] = {
           time: now.toISOString(),
           timeStr: now.toLocaleTimeString("pt-PT", {
+            timeZone: TZ,
             hour: "2-digit",
             minute: "2-digit",
           }),
@@ -8556,19 +8844,6 @@
         savePillLog(log);
         updatePillUI();
       }
-
-      // Initialize time inputs to current time
-      function initTimeInputs() {
-        const now = new Date();
-        const hh = String(now.getHours()).padStart(2, "0");
-        const mm = String(now.getMinutes()).padStart(2, "0");
-        const timeStr = hh + ":" + mm;
-        ["concerta", "rubifen", "propranolol", "alprazolam"].forEach((id) => {
-          const input = document.getElementById("time-" + id);
-          if (input && !input.value) input.value = timeStr;
-        });
-      }
-      initTimeInputs();
 
       function hourToPercent(h) {
         let adjusted = h;
@@ -8597,26 +8872,18 @@
           const pill = log.pills[pillId];
           const data = PILL_DATA[pillId];
           const taken = new Date(pill.time);
-          const takenH = taken.getHours() + taken.getMinutes() / 60;
+          const takenTZ = getTimeInLisbon(taken);
+          const takenH = takenTZ.fractionalHours;
 
           const onsetH = takenH + data.onsetMin / 60;
           const peakH = takenH + data.peakMin / 60;
           const fadeH = takenH + data.durationMin / 60;
 
-          // Update button — allow re-click to adjust time
+          // Update button — show registered, allow re-click
           const btn = document.getElementById("btn-" + pillId);
-          btn.textContent = "✅ Atualizar hora";
+          btn.textContent = "✅ " + pill.timeStr;
           btn.style.background = "#666";
           btn.disabled = false;
-
-          // Update time input to show recorded time
-          const timeInput = document.getElementById("time-" + pillId);
-          if (timeInput) {
-            timeInput.value =
-              String(taken.getHours()).padStart(2, "0") +
-              ":" +
-              String(taken.getMinutes()).padStart(2, "0");
-          }
 
           // Update time display
           const timeSpan = document.getElementById(pillId + "-time");
@@ -8667,22 +8934,39 @@
 
         // Render symptoms
         renderSymptoms();
+
+        // Re-attach drag listeners (bars now visible)
+        setTimeout(attachDragListeners, 50);
+
+        // Schedule check-in based on pill peaks
+        scheduleCheckin();
       }
 
       function updateNowIndicator() {
-        const now = new Date();
-        const nowH = now.getHours() + now.getMinutes() / 60;
+        const now = getNow();
+        const nowTZ = getTimeInLisbon(now);
+        const nowH = nowTZ.fractionalHours;
         const indicator = document.getElementById("now-indicator");
         const log = getPillLog();
 
-        if (Object.keys(log.pills).length > 0) {
+        // Only show NOW marker when viewing today
+        if (isToday(viewDate) && Object.keys(log.pills).length > 0) {
           const pct = hourToPercent(nowH);
           if (pct > 0 && pct < 100) {
             indicator.style.display = "block";
             indicator.style.left = `calc(108px + (100% - 116px) * ${pct / 100})`;
+            // Update NOW label with current Lisbon time
+            const lbl = document.getElementById("now-indicator-label");
+            if (lbl)
+              lbl.textContent =
+                String(nowTZ.hours).padStart(2, "0") +
+                ":" +
+                String(nowTZ.minutes).padStart(2, "0");
           } else {
             indicator.style.display = "none";
           }
+        } else {
+          indicator.style.display = "none";
         }
       }
 
@@ -8692,7 +8976,7 @@
         const note = document.getElementById("symptom-note").value.trim();
         if (!note && !mood) return;
 
-        const now = new Date();
+        const now = getNow();
         // Figure out which pills are currently active
         const activePills = [];
         Object.keys(log.pills).forEach((pillId) => {
@@ -8814,8 +9098,15 @@
       }
 
       function clearPillData() {
-        if (confirm("Apagar todos os registos de hoje? (pills + sintomas)")) {
-          localStorage.removeItem("bcg-pill-log");
+        const dayStr = isToday(viewDate)
+          ? "hoje"
+          : viewDate.toLocaleDateString("pt-PT");
+        if (
+          confirm(
+            "Apagar todos os registos de " + dayStr + "? (pills + sintomas)",
+          )
+        ) {
+          localStorage.removeItem(getDayKey());
           // Reset buttons
           ["concerta", "rubifen", "propranolol", "alprazolam"].forEach((id) => {
             const btn = document.getElementById("btn-" + id);
@@ -8833,8 +9124,218 @@
 
       // Initialize pill tracker on load
       updatePillUI();
-      // Update NOW indicator every minute
-      setInterval(updateNowIndicator, 60000);
+      // Update NOW indicator every 10 seconds
+      setInterval(updateNowIndicator, 10000);
+
+      // Initialize pill tracker on load
+      updatePillUI();
+      // Update NOW indicator every 10 seconds
+      setInterval(updateNowIndicator, 10000);
+
+      // ═══════════════════════════════════════════════════
+      // CHECK-IN QUESTIONNAIRE SCHEDULER
+      // ═══════════════════════════════════════════════════
+      let checkinTimer = null;
+      let checkinTargetTime = null;
+
+      // Request notification permission
+      if ("Notification" in window && Notification.permission === "default") {
+        Notification.requestPermission();
+      }
+
+      function scheduleCheckin() {
+        const log = getPillLog();
+        if (!isToday(viewDate) || Object.keys(log.pills).length === 0) {
+          document.getElementById("checkin-section").style.display = "none";
+          return;
+        }
+        // Already did check-in today?
+        if (log.checkin) {
+          document.getElementById("checkin-section").style.display = "none";
+          return;
+        }
+
+        // Find the best check-in time: when the latest pill hits peak
+        let latestPeakTime = null;
+        let reason = "";
+        Object.keys(log.pills).forEach((pillId) => {
+          const pill = log.pills[pillId];
+          const data = PILL_DATA[pillId];
+          const taken = new Date(pill.time);
+          const peakTime = new Date(taken.getTime() + data.peakMin * 60000);
+          if (!latestPeakTime || peakTime > latestPeakTime) {
+            latestPeakTime = peakTime;
+            reason =
+              data.name +
+              " atinge pico às " +
+              peakTime.toLocaleTimeString("pt-PT", {
+                timeZone: TZ,
+                hour: "2-digit",
+                minute: "2-digit",
+              });
+          }
+        });
+
+        if (!latestPeakTime) return;
+
+        // Schedule 5 minutes after peak of last pill (let it stabilize)
+        checkinTargetTime = new Date(latestPeakTime.getTime() + 5 * 60000);
+
+        // Show the section
+        const section = document.getElementById("checkin-section");
+        section.style.display = "block";
+        document.getElementById("checkin-reason").textContent =
+          "💡 " +
+          reason +
+          " — check-in agendado para " +
+          checkinTargetTime.toLocaleTimeString("pt-PT", {
+            timeZone: TZ,
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+
+        // Start countdown
+        if (checkinTimer) clearInterval(checkinTimer);
+        checkinTimer = setInterval(updateCheckinCountdown, 1000);
+        updateCheckinCountdown();
+      }
+
+      function updateCheckinCountdown() {
+        if (!checkinTargetTime) return;
+        const now = getNow();
+        const diff = checkinTargetTime.getTime() - now.getTime();
+        const el = document.getElementById("checkin-countdown");
+
+        if (diff <= 0) {
+          // Time to check in!
+          el.textContent = "🔔 AGORA!";
+          el.style.color = "#ff9800";
+          el.style.fontWeight = "bold";
+          showCheckinModal();
+          clearInterval(checkinTimer);
+          checkinTimer = null;
+          // Browser notification
+          if (
+            "Notification" in window &&
+            Notification.permission === "granted"
+          ) {
+            new Notification("📋 Check-in de Medicação", {
+              body: "Como te sentes agora? Responde ao questionário rápido (5 min)",
+              icon: "💊",
+              requireInteraction: true,
+            });
+          }
+        } else {
+          const mins = Math.floor(diff / 60000);
+          const secs = Math.floor((diff % 60000) / 1000);
+          el.textContent =
+            "⏳ em " + mins + "m " + String(secs).padStart(2, "0") + "s";
+        }
+      }
+
+      // Build rating buttons for check-in modal
+      function buildRatingButtons(containerId, labels) {
+        const container = document.getElementById(containerId);
+        if (!container || container.children.length > 0) return;
+        const defaultLabels = labels || ["1", "2", "3", "4", "5"];
+        for (let i = 1; i <= 5; i++) {
+          const btn = document.createElement("button");
+          btn.textContent = defaultLabels[i - 1] || i;
+          btn.dataset.value = i;
+          btn.style.cssText =
+            "padding:8px 14px;border-radius:6px;border:1px solid var(--border);background:transparent;cursor:pointer;font-size:0.9em;min-width:40px;";
+          btn.onclick = function () {
+            container.querySelectorAll("button").forEach((b) => {
+              b.style.background = "transparent";
+              b.style.color = "inherit";
+            });
+            btn.style.background = "#ff9800";
+            btn.style.color = "white";
+            container.dataset.selected = i;
+          };
+          container.appendChild(btn);
+        }
+      }
+
+      // Init rating buttons
+      buildRatingButtons("checkin-focus", ["1 💤", "2", "3", "4", "5 🧠"]);
+      buildRatingButtons("checkin-anxiety", ["1 😌", "2", "3", "4", "5 😰"]);
+      buildRatingButtons("checkin-sideeffects", [
+        "1 ✅",
+        "2",
+        "3",
+        "4",
+        "5 🤢",
+      ]);
+      buildRatingButtons("checkin-mood", ["1 😞", "2", "3", "4", "5 😊"]);
+
+      function showCheckinModal() {
+        const modal = document.getElementById("checkin-modal");
+        modal.style.display = "flex";
+      }
+
+      function dismissCheckin() {
+        document.getElementById("checkin-modal").style.display = "none";
+        // Reschedule in 10 minutes
+        checkinTargetTime = new Date(getNow().getTime() + 10 * 60000);
+        if (checkinTimer) clearInterval(checkinTimer);
+        checkinTimer = setInterval(updateCheckinCountdown, 1000);
+        document.getElementById("checkin-countdown").textContent =
+          "⏳ adiado 10 min";
+      }
+
+      function submitCheckin() {
+        const log = getPillLog();
+        const nowTZ = getTimeInLisbon();
+        log.checkin = {
+          time: getNow().toISOString(),
+          timeStr:
+            String(nowTZ.hours).padStart(2, "0") +
+            ":" +
+            String(nowTZ.minutes).padStart(2, "0"),
+          focus: parseInt(
+            document.getElementById("checkin-focus").dataset.selected || "0",
+          ),
+          anxiety: parseInt(
+            document.getElementById("checkin-anxiety").dataset.selected || "0",
+          ),
+          sideEffects: parseInt(
+            document.getElementById("checkin-sideeffects").dataset.selected ||
+              "0",
+          ),
+          mood: parseInt(
+            document.getElementById("checkin-mood").dataset.selected || "0",
+          ),
+          notes: document.getElementById("checkin-notes").value.trim(),
+        };
+        savePillLog(log);
+        document.getElementById("checkin-modal").style.display = "none";
+        document.getElementById("checkin-section").style.display = "none";
+
+        // Add as symptom entry too
+        const summary =
+          "📋 Check-in: Foco=" +
+          log.checkin.focus +
+          " Ansiedade=" +
+          log.checkin.anxiety +
+          " Efeitos=" +
+          log.checkin.sideEffects +
+          " Humor=" +
+          log.checkin.mood +
+          (log.checkin.notes ? " | " + log.checkin.notes : "");
+        log.symptoms.push({
+          time: log.checkin.time,
+          timeStr: log.checkin.timeStr,
+          mood: "📋",
+          note: summary,
+          activePills: Object.keys(log.pills),
+        });
+        savePillLog(log);
+        renderSymptoms();
+        alert(
+          "✅ Check-in guardado! Dados disponíveis no relatório para o médico.",
+        );
+      }
 
       // ═══════════════════════════════════════════════════
       // DRAGGABLE TIMELINE BARS
@@ -8909,10 +9410,11 @@
         const hours = Math.floor(newHour) % 24;
         const mins = Math.round((newHour % 1) * 60);
 
-        // Update time input live
-        const timeInput = document.getElementById("time-" + dragState.pillId);
-        if (timeInput) {
-          timeInput.value =
+        // Update button text live
+        const btn = document.getElementById("btn-" + dragState.pillId);
+        if (btn) {
+          btn.textContent =
+            "✅ " +
             String(hours).padStart(2, "0") +
             ":" +
             String(mins).padStart(2, "0");
@@ -8951,10 +9453,11 @@
         const mins = Math.round((newHour % 1) * 60);
 
         const log = getPillLog();
-        const now = new Date();
+        const now = getNow();
         now.setHours(hours, mins, 0, 0);
         log.pills[dragState.pillId].time = now.toISOString();
         log.pills[dragState.pillId].timeStr = now.toLocaleTimeString("pt-PT", {
+          timeZone: TZ,
           hour: "2-digit",
           minute: "2-digit",
         });
