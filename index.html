@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <title>BCG Interview Prep — Tomás Batalha</title>
@@ -2615,7 +2618,6 @@
               inset: 0;
               background: rgba(0, 0, 0, 0.6);
               z-index: 9999;
-              display: none;
               align-items: center;
               justify-content: center;
             "
@@ -9470,19 +9472,22 @@
         updatePillUI();
       }
 
-      // Attach drag listeners to bar fills
+      // Attach drag listeners to bar fills (only once per element)
       function attachDragListeners() {
         ["concerta", "rubifen", "propranolol", "alprazolam"].forEach(
           (pillId) => {
             const fillEl = document.getElementById("bar-" + pillId + "-fill");
-            if (fillEl) {
+            if (fillEl && !fillEl._dragAttached) {
               fillEl.style.cursor = "grab";
+              fillEl.style.pointerEvents = "auto";
+              fillEl.style.touchAction = "none";
               fillEl.addEventListener("mousedown", (e) => startDrag(e, pillId));
               fillEl.addEventListener(
                 "touchstart",
                 (e) => startDrag(e, pillId),
                 { passive: false },
               );
+              fillEl._dragAttached = true;
             }
           },
         );
