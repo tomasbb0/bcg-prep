@@ -208,7 +208,14 @@
         min-height: 28px;
       }
       .cell-editing a {
-        pointer-events: none;
+        pointer-events: auto;
+        cursor: pointer;
+        position: relative;
+      }
+      .cell-editing a:hover {
+        outline: 1px dashed var(--bcg-green);
+        outline-offset: 2px;
+        border-radius: 2px;
       }
       .cell-edit-hint {
         display: block;
@@ -216,6 +223,101 @@
         color: var(--text-muted);
         margin-top: 4px;
         opacity: 0.6;
+      }
+
+      /* LINK POPOVER */
+      .link-popover {
+        position: fixed;
+        background: #1a1a1a;
+        color: #fff;
+        border-radius: 8px;
+        padding: 6px 10px;
+        font-size: 11px;
+        z-index: 10001;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        max-width: 350px;
+        animation: pop-in 0.12s ease;
+      }
+      @keyframes pop-in {
+        from { opacity: 0; transform: translateY(4px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .link-popover-url {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #7defa0;
+        font-family: monospace;
+        font-size: 10px;
+        max-width: 200px;
+      }
+      .link-popover-btn {
+        background: none;
+        border: 1px solid rgba(255,255,255,0.15);
+        color: #fff;
+        cursor: pointer;
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: 4px;
+        opacity: 0.8;
+        white-space: nowrap;
+        transition: all 0.12s;
+      }
+      .link-popover-btn:hover {
+        opacity: 1;
+        background: rgba(255,255,255,0.12);
+      }
+      .link-popover-btn.danger {
+        color: #ff6b6b;
+        border-color: rgba(255,107,107,0.3);
+      }
+      .link-popover-btn.danger:hover {
+        background: rgba(255,107,107,0.15);
+      }
+
+      /* CMD+K INLINE URL INPUT */
+      .cmdk-box {
+        position: fixed;
+        background: #fff;
+        border: 2px solid var(--bcg-green);
+        border-radius: 10px;
+        padding: 8px 12px;
+        z-index: 10001;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        animation: pop-in 0.12s ease;
+      }
+      .cmdk-box label {
+        font-weight: 600;
+        color: var(--text-muted);
+        font-size: 11px;
+        white-space: nowrap;
+      }
+      .cmdk-box input {
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 5px 10px;
+        font-size: 12px;
+        width: 250px;
+        outline: none;
+        font-family: inherit;
+      }
+      .cmdk-box input:focus {
+        border-color: var(--bcg-green);
+        box-shadow: 0 0 0 2px rgba(0,166,81,0.15);
+      }
+      .cmdk-hint {
+        font-size: 9px;
+        color: var(--text-muted);
+        opacity: 0.6;
+        white-space: nowrap;
       }
       .time-edit-input.invalid {
         border-color: #d32f2f;
@@ -12240,6 +12342,9 @@
           cell.classList.add("cell-editing");
           cell.contentEditable = "true";
 
+          // In edit mode, intercept link clicks to show popover instead of navigating
+          cell.addEventListener('click', cellEditClickHandler);
+
           // Hide Open All buttons temporarily
           cell.querySelectorAll(".open-all-btn").forEach(function (b) {
             b.style.display = "none";
@@ -12284,6 +12389,9 @@
         function cancelCellEdit(cell) {
           cell.contentEditable = "false";
           cell.classList.remove("cell-editing");
+          cell.removeEventListener('click', cellEditClickHandler);
+          dismissPopover();
+          dismissCmdkBox();
           if (cell.dataset.origHtml) cell.innerHTML = cell.dataset.origHtml;
           cell.querySelectorAll(".open-all-btn").forEach(function (b) {
             b.style.display = "";
@@ -12293,6 +12401,9 @@
         function commitCellEdit(cell, row, colIdx) {
           cell.contentEditable = "false";
           cell.classList.remove("cell-editing");
+          cell.removeEventListener('click', cellEditClickHandler);
+          dismissPopover();
+          dismissCmdkBox();
           cell.querySelectorAll(".cell-edit-hint").forEach(function (h) {
             h.remove();
           });
@@ -12307,33 +12418,185 @@
           refreshTimeline();
         }
 
+        // ── Link popover (shown when clicking a link in edit mode) ──
+        var activePopover = null;
+        var activeCmdkBox = null;
+
+        function cellEditClickHandler(e) {
+          var linkEl = e.target.closest('a');
+          if (linkEl && linkEl.closest('.cell-editing')) {
+            e.preventDefault();
+            e.stopPropagation();
+            showLinkPopover(linkEl);
+            return;
+          }
+          // Clicking elsewhere in the cell dismisses popover
+          dismissPopover();
+        }
+
+        function showLinkPopover(linkEl) {
+          dismissPopover();
+          var rect = linkEl.getBoundingClientRect();
+
+          var pop = document.createElement('div');
+          pop.className = 'link-popover';
+
+          var urlSpan = document.createElement('span');
+          urlSpan.className = 'link-popover-url';
+          urlSpan.textContent = linkEl.href;
+          urlSpan.title = linkEl.href;
+
+          var openBtn = document.createElement('button');
+          openBtn.className = 'link-popover-btn';
+          openBtn.textContent = 'Open';
+          openBtn.onclick = function(e) { e.stopPropagation(); window.open(linkEl.href, '_blank'); };
+
+          var editBtn = document.createElement('button');
+          editBtn.className = 'link-popover-btn';
+          editBtn.textContent = '\u270f\ufe0f Edit';
+          editBtn.onclick = function(e) {
+            e.stopPropagation();
+            dismissPopover();
+            showCmdkBox(linkEl.closest('.cell-editing'), linkEl);
+          };
+
+          var removeBtn = document.createElement('button');
+          removeBtn.className = 'link-popover-btn danger';
+          removeBtn.textContent = '\u2715 Unlink';
+          removeBtn.onclick = function(e) {
+            e.stopPropagation();
+            // Replace <a> with its text content
+            var text = document.createTextNode(linkEl.textContent);
+            linkEl.parentNode.replaceChild(text, linkEl);
+            dismissPopover();
+          };
+
+          pop.appendChild(urlSpan);
+          pop.appendChild(openBtn);
+          pop.appendChild(editBtn);
+          pop.appendChild(removeBtn);
+          document.body.appendChild(pop);
+
+          // Position below the link
+          pop.style.left = Math.min(rect.left, window.innerWidth - 370) + 'px';
+          pop.style.top = (rect.bottom + 6) + 'px';
+
+          activePopover = pop;
+
+          // Close on outside click (delayed to avoid immediate close)
+          setTimeout(function() {
+            document.addEventListener('mousedown', popoverOutsideClick);
+          }, 50);
+        }
+
+        function popoverOutsideClick(e) {
+          if (activePopover && !activePopover.contains(e.target)) {
+            dismissPopover();
+          }
+        }
+
+        function dismissPopover() {
+          if (activePopover) {
+            activePopover.remove();
+            activePopover = null;
+            document.removeEventListener('mousedown', popoverOutsideClick);
+          }
+        }
+
+        // ── Cmd+K inline URL input ──
         function insertLink(cell) {
           var sel = window.getSelection();
           var selectedText = sel.toString().trim();
-          if (!selectedText) {
-            selectedText = prompt("Link text:");
-            if (!selectedText) return;
-          }
-          var url = prompt('URL for "' + selectedText + '":');
-          if (!url) return;
-          if (!/^https?:\/\//i.test(url)) url = "https://" + url;
+          // Save selection range for later insertion
+          var savedRange = sel.rangeCount > 0 ? sel.getRangeAt(0).cloneRange() : null;
+          showCmdkBox(cell, null, selectedText, savedRange);
+        }
 
-          var link = document.createElement("a");
-          link.href = url;
-          link.target = "_blank";
-          link.style.cssText =
-            "color: var(--highlight); text-decoration: underline; font-size: 0.85em;";
-          link.textContent = selectedText;
+        function showCmdkBox(cell, existingLink, selectedText, savedRange) {
+          dismissCmdkBox();
 
-          if (sel.rangeCount > 0 && sel.toString().trim()) {
-            var range = sel.getRangeAt(0);
-            range.deleteContents();
-            range.insertNode(link);
-          } else {
-            cell.appendChild(document.createTextNode(" "));
-            cell.appendChild(link);
+          var box = document.createElement('div');
+          box.className = 'cmdk-box';
+
+          var label = document.createElement('label');
+          label.textContent = existingLink ? 'Edit URL:' : '\ud83d\udd17 URL:';
+
+          var input = document.createElement('input');
+          input.type = 'text';
+          input.placeholder = 'https://...';
+          input.value = existingLink ? existingLink.href : '';
+
+          var hint = document.createElement('span');
+          hint.className = 'cmdk-hint';
+          hint.textContent = 'Enter \u21b5 to save \u00b7 Esc to cancel';
+
+          box.appendChild(label);
+          box.appendChild(input);
+          box.appendChild(hint);
+          document.body.appendChild(box);
+
+          // Position near cursor or cell
+          var cellRect = cell.getBoundingClientRect();
+          box.style.left = Math.min(cellRect.left + 20, window.innerWidth - 400) + 'px';
+          box.style.top = (cellRect.bottom + 6) + 'px';
+
+          activeCmdkBox = box;
+          input.focus();
+
+          input.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              var url = input.value.trim();
+              if (!url) { dismissCmdkBox(); cell.focus(); return; }
+              if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+
+              if (existingLink) {
+                // Update existing link
+                existingLink.href = url;
+              } else {
+                // Create new link
+                var linkText = selectedText || url.replace(/^https?:\/\/(www\.)?/i, '').split('/')[0];
+                var a = document.createElement('a');
+                a.href = url;
+                a.target = '_blank';
+                a.style.cssText = 'color: var(--highlight); text-decoration: underline; font-size: 0.85em;';
+                a.textContent = linkText;
+
+                if (savedRange && selectedText) {
+                  // Restore selection and replace
+                  var sel = window.getSelection();
+                  sel.removeAllRanges();
+                  sel.addRange(savedRange);
+                  savedRange.deleteContents();
+                  savedRange.insertNode(a);
+                  sel.removeAllRanges();
+                } else {
+                  cell.appendChild(document.createTextNode(' '));
+                  cell.appendChild(a);
+                }
+              }
+
+              dismissCmdkBox();
+              cell.focus();
+            }
+            if (e.key === 'Escape') {
+              e.preventDefault();
+              dismissCmdkBox();
+              cell.focus();
+            }
+          });
+
+          // Prevent blur from committing the cell edit while Cmd+K box is open
+          input.addEventListener('blur', function() {
+            setTimeout(function() { dismissCmdkBox(); }, 100);
+          });
+        }
+
+        function dismissCmdkBox() {
+          if (activeCmdkBox) {
+            activeCmdkBox.remove();
+            activeCmdkBox = null;
           }
-          sel.removeAllRanges();
         }
 
         function autoLinkUrls(cell) {
