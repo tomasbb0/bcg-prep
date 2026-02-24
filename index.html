@@ -10032,9 +10032,15 @@
       function startDrag(e, pillId) {
         e.preventDefault();
         e.stopPropagation();
+        console.log("[DRAG] startDrag called for", pillId);
         const log = getPillLog();
+        console.log("[DRAG] log.pills:", JSON.stringify(log.pills));
         // Only allow dragging taken pills (not expected)
-        if (!log.pills[pillId]) return;
+        if (!log.pills[pillId]) {
+          console.log("[DRAG] BLOCKED - pill not taken yet:", pillId);
+          return;
+        }
+        console.log("[DRAG] Starting drag for", pillId);
 
         const fillEl = document.getElementById("bar-" + pillId + "-fill");
         const trackEl = fillEl.parentElement;
@@ -10062,6 +10068,7 @@
 
       function handleDrag(e) {
         if (!dragState) return;
+        console.log("[DRAG] handleDrag moving", dragState.pillId);
         e.preventDefault();
 
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -10110,6 +10117,7 @@
 
       function endDrag() {
         if (!dragState) return;
+        console.log("[DRAG] endDrag for", dragState.pillId);
 
         dragState.fillEl.style.cursor = "grab";
         document.body.style.userSelect = "";
@@ -10142,20 +10150,47 @@
 
       // Attach drag listeners to bar fills (only once per element)
       function attachDragListeners() {
+        console.log("[DRAG] attachDragListeners called");
         ["concerta", "rubifen", "propranolol", "alprazolam"].forEach(
           (pillId) => {
             const fillEl = document.getElementById("bar-" + pillId + "-fill");
             if (fillEl && !fillEl._dragAttached) {
+              console.log(
+                "[DRAG] Attaching to",
+                pillId,
+                "fill:",
+                fillEl,
+                "display:",
+                fillEl.parentElement.style.display,
+                "w:",
+                fillEl.style.width,
+                "l:",
+                fillEl.style.left,
+              );
               fillEl.style.cursor = "grab";
               fillEl.style.pointerEvents = "auto";
               fillEl.style.touchAction = "none";
-              fillEl.addEventListener("mousedown", (e) => startDrag(e, pillId));
+              fillEl.addEventListener("mousedown", (e) => {
+                console.log(
+                  "[DRAG] mousedown on",
+                  pillId,
+                  "target:",
+                  e.target.tagName,
+                  e.target.className,
+                );
+                startDrag(e, pillId);
+              });
               fillEl.addEventListener(
                 "touchstart",
-                (e) => startDrag(e, pillId),
+                (e) => {
+                  console.log("[DRAG] touchstart on", pillId);
+                  startDrag(e, pillId);
+                },
                 { passive: false },
               );
               fillEl._dragAttached = true;
+            } else if (fillEl && fillEl._dragAttached) {
+              console.log("[DRAG] Already attached to", pillId);
             }
           },
         );
