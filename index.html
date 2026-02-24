@@ -85,6 +85,110 @@
         opacity: 1;
       }
 
+      /* DRAG & DROP SCHEDULE REORDER */
+      .drag-handle {
+        cursor: grab;
+        color: #ccc;
+        font-size: 16px;
+        user-select: none;
+        padding: 0 6px 0 0;
+        transition: color 0.15s;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .drag-handle:hover {
+        color: var(--bcg-green);
+      }
+      .drag-handle:active {
+        cursor: grabbing;
+      }
+
+      tr.dragging {
+        opacity: 0.35;
+        background: rgba(0, 166, 81, 0.04) !important;
+      }
+      tr.drag-over-above td {
+        box-shadow: inset 0 3px 0 0 var(--bcg-green);
+      }
+      tr.drag-over-below td {
+        box-shadow: inset 0 -3px 0 0 var(--bcg-green);
+      }
+
+      .overlap-warning {
+        display: inline-block;
+        background: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffc107;
+        border-radius: 6px;
+        padding: 2px 8px;
+        font-size: 11px;
+        font-weight: 600;
+        margin-left: 8px;
+        animation: pulse-warn 1.5s infinite;
+      }
+      @keyframes pulse-warn {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.55;
+        }
+      }
+
+      .time-col {
+        cursor: pointer;
+        position: relative;
+      }
+      .time-col:hover::after {
+        content: "";
+        position: absolute;
+        right: 4px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 12px;
+        height: 12px;
+        opacity: 0.35;
+        background: currentColor;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13.23 1h-1.46L3.52 9.25l-.16.22L1 13.59 2.41 15l4.12-2.36.22-.16L15 4.23V2.77L13.23 1zM2.41 13.59l1.51-3 1.45 1.45-2.96 1.55zm3.83-2.06L4.47 9.76l8-8 1.77 1.77-8 8z'/%3E%3C/svg%3E") no-repeat center / contain;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13.23 1h-1.46L3.52 9.25l-.16.22L1 13.59 2.41 15l4.12-2.36.22-.16L15 4.23V2.77L13.23 1zM2.41 13.59l1.51-3 1.45 1.45-2.96 1.55zm3.83-2.06L4.47 9.76l8-8 1.77 1.77-8 8z'/%3E%3C/svg%3E") no-repeat center / contain;
+      }
+      .time-edit-input {
+        width: 100px;
+        font-size: 13px;
+        font-weight: 600;
+        font-family: inherit;
+        color: var(--bcg-green);
+        border: 2px solid var(--bcg-green);
+        border-radius: 4px;
+        padding: 2px 4px;
+        text-align: center;
+        background: #f0fdf4;
+        outline: none;
+      }
+      .time-edit-input.invalid {
+        border-color: #d32f2f;
+        background: #fff5f5;
+        color: #d32f2f;
+      }
+
+      .schedule-reset-btn {
+        margin-left: 12px;
+        font-size: 11px;
+        padding: 4px 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        background: #fff;
+        cursor: pointer;
+        color: var(--text-muted);
+        font-weight: 600;
+        transition: all 0.15s;
+      }
+      .schedule-reset-btn:hover {
+        border-color: var(--bcg-green);
+        color: var(--bcg-green);
+      }
+
       /* SIDEBAR */
       .sidebar {
         width: var(--sidebar-width);
@@ -717,7 +821,7 @@
 
       .back-to-top {
         position: fixed;
-        bottom: 24px;
+        bottom: 80px;
         right: 24px;
         width: 40px;
         height: 40px;
@@ -11556,6 +11660,493 @@
             }
           }
         });
+      })();
+    </script>
+
+    <!-- ═══════ DRAG & DROP SCHEDULE REORDER ═══════ -->
+    <script>
+      (function initScheduleDragDrop() {
+        const STORAGE_KEY = "bcg-schedule-order";
+
+        // ── Helpers ──
+        function parseT(s) {
+          const p = s.split(":").map(Number);
+          return p[0] * 60 + p[1];
+        }
+        function fmtT(mins) {
+          return (
+            String(Math.floor(mins / 60) % 24).padStart(2, "0") +
+            ":" +
+            String(mins % 60).padStart(2, "0")
+          );
+        }
+
+        // ── Save original times from HTML (before any reorder) ──
+        function saveOriginalTimes() {
+          document
+            .querySelectorAll(".day-content table tbody tr")
+            .forEach(function (row) {
+              var tc = row.querySelector(".time-col");
+              if (tc && !row.dataset.origTime) {
+                row.dataset.origTime = tc.textContent.trim();
+              }
+            });
+        }
+
+        // ── Add drag handles to schedule rows ──
+        function addDragHandles() {
+          document
+            .querySelectorAll(".day-content table tbody tr")
+            .forEach(function (row) {
+              if (row.querySelector(".drag-handle")) return;
+              var firstTd = row.querySelector("td");
+              if (!firstTd) return;
+
+              var handle = document.createElement("span");
+              handle.className = "drag-handle";
+              handle.innerHTML = "⠿";
+              handle.title = "Drag to reorder";
+              firstTd.insertBefore(handle, firstTd.firstChild);
+
+              row.draggable = true;
+              row.addEventListener("dragstart", onDragStart);
+              row.addEventListener("dragend", onDragEnd);
+              row.addEventListener("dragover", onDragOver);
+              row.addEventListener("dragenter", function (e) {
+                e.preventDefault();
+              });
+              row.addEventListener("dragleave", onDragLeave);
+              row.addEventListener("drop", onDrop);
+
+              // Touch support via handle
+              handle.addEventListener("touchstart", onTouchStart, {
+                passive: false,
+              });
+            });
+        }
+
+        var draggedRow = null;
+
+        function onDragStart(e) {
+          draggedRow = this;
+          this.classList.add("dragging");
+          e.dataTransfer.effectAllowed = "move";
+          e.dataTransfer.setData("text/plain", "");
+        }
+
+        function onDragEnd() {
+          this.classList.remove("dragging");
+          clearIndicators();
+          draggedRow = null;
+        }
+
+        function onDragOver(e) {
+          if (!draggedRow || draggedRow === this) return;
+          e.preventDefault();
+          e.dataTransfer.dropEffect = "move";
+          clearIndicators();
+          var rect = this.getBoundingClientRect();
+          this.classList.add(
+            e.clientY < rect.top + rect.height / 2
+              ? "drag-over-above"
+              : "drag-over-below",
+          );
+        }
+
+        function onDragLeave() {
+          this.classList.remove("drag-over-above", "drag-over-below");
+        }
+
+        function onDrop(e) {
+          e.preventDefault();
+          if (!draggedRow || draggedRow === this) return;
+          var tbody = this.closest("tbody");
+          if (!tbody || draggedRow.closest("tbody") !== tbody) return;
+
+          var rect = this.getBoundingClientRect();
+          if (e.clientY < rect.top + rect.height / 2) {
+            tbody.insertBefore(draggedRow, this);
+          } else {
+            tbody.insertBefore(draggedRow, this.nextSibling);
+          }
+
+          clearIndicators();
+          recalcTimes(tbody);
+          saveOrder(tbody);
+          refreshTimeline();
+        }
+
+        // ── Touch drag (mobile) ──
+        var touchState = null;
+
+        function onTouchStart(e) {
+          e.preventDefault();
+          var row = this.closest("tr");
+          if (!row) return;
+          touchState = { row: row, tbody: row.closest("tbody") };
+          row.classList.add("dragging");
+          document.addEventListener("touchmove", onTouchMove, {
+            passive: false,
+          });
+          document.addEventListener("touchend", onTouchEnd);
+        }
+
+        function onTouchMove(e) {
+          if (!touchState) return;
+          e.preventDefault();
+          var touch = e.touches[0];
+          var target = document.elementFromPoint(touch.clientX, touch.clientY);
+          if (!target) return;
+          var targetRow = target.closest("tr");
+          clearIndicators();
+          if (
+            targetRow &&
+            targetRow !== touchState.row &&
+            targetRow.closest("tbody") === touchState.tbody
+          ) {
+            var rect = targetRow.getBoundingClientRect();
+            targetRow.classList.add(
+              touch.clientY < rect.top + rect.height / 2
+                ? "drag-over-above"
+                : "drag-over-below",
+            );
+          }
+        }
+
+        function onTouchEnd(e) {
+          if (!touchState) return;
+          var touch = e.changedTouches[0];
+          var target = document.elementFromPoint(touch.clientX, touch.clientY);
+          var targetRow = target ? target.closest("tr") : null;
+
+          if (
+            targetRow &&
+            targetRow !== touchState.row &&
+            targetRow.closest("tbody") === touchState.tbody
+          ) {
+            var rect = targetRow.getBoundingClientRect();
+            if (touch.clientY < rect.top + rect.height / 2) {
+              touchState.tbody.insertBefore(touchState.row, targetRow);
+            } else {
+              touchState.tbody.insertBefore(
+                touchState.row,
+                targetRow.nextSibling,
+              );
+            }
+            recalcTimes(touchState.tbody);
+            saveOrder(touchState.tbody);
+            refreshTimeline();
+          }
+
+          touchState.row.classList.remove("dragging");
+          clearIndicators();
+          document.removeEventListener("touchmove", onTouchMove);
+          document.removeEventListener("touchend", onTouchEnd);
+          touchState = null;
+        }
+
+        function clearIndicators() {
+          document
+            .querySelectorAll(".drag-over-above, .drag-over-below")
+            .forEach(function (el) {
+              el.classList.remove("drag-over-above", "drag-over-below");
+            });
+        }
+
+        // ── Recalculate times after reorder ──
+        function recalcTimes(tbody) {
+          var rows = Array.from(tbody.querySelectorAll("tr"));
+
+          // Collect tasks with their original durations
+          var tasks = [];
+          rows.forEach(function (row) {
+            var tc = row.querySelector(".time-col");
+            if (!tc) return;
+            var origTime = row.dataset.origTime || tc.textContent.trim();
+            var match = origTime.match(/(\d{1,2}:\d{2})-(\d{1,2}:\d{2})/);
+            if (!match) return;
+            var s = parseT(match[1]),
+              e = parseT(match[2]);
+            var dur = e > s ? e - s : e + 1440 - s;
+            tasks.push({ row: row, tc: tc, duration: dur });
+          });
+
+          if (tasks.length === 0) return;
+
+          // Find the day's earliest original start time
+          var baseStart = Infinity;
+          rows.forEach(function (row) {
+            var orig = row.dataset.origTime;
+            if (orig) {
+              var m = orig.match(/(\d{1,2}:\d{2})/);
+              if (m) {
+                var t = parseT(m[1]);
+                if (t < baseStart) baseStart = t;
+              }
+            }
+          });
+          if (baseStart === Infinity) return;
+
+          // Sequential time assignment (preserving durations)
+          var currentTime = baseStart;
+
+          // Remove old overlap warnings
+          tbody.querySelectorAll(".overlap-warning").forEach(function (el) {
+            el.remove();
+          });
+
+          tasks.forEach(function (task) {
+            task.newStart = currentTime;
+            task.newEnd = currentTime + task.duration;
+            task.tc.textContent = fmtT(task.newStart) + "-" + fmtT(task.newEnd);
+            currentTime = task.newEnd;
+          });
+
+          // Overlap detection (safety — check all pairs)
+          for (var i = 0; i < tasks.length; i++) {
+            for (var j = i + 1; j < tasks.length; j++) {
+              if (
+                tasks[i].newEnd > tasks[j].newStart &&
+                tasks[i].newStart < tasks[j].newEnd
+              ) {
+                addOverlapWarning(tasks[i].row);
+                addOverlapWarning(tasks[j].row);
+              }
+            }
+          }
+        }
+
+        function addOverlapWarning(row) {
+          if (row.querySelector(".overlap-warning")) return;
+          var cells = row.querySelectorAll("td");
+          var actCell = cells.length >= 3 ? cells[2] : cells[1];
+          if (!actCell) return;
+          var warn = document.createElement("span");
+          warn.className = "overlap-warning";
+          warn.textContent = "⚠️ Fix overlap!";
+          actCell.appendChild(warn);
+        }
+
+        // ── Persistence (saves order + custom times) ──
+        var TIMES_KEY = "bcg-schedule-times";
+
+        function saveOrder(tbody) {
+          var dayDiv = tbody.closest(".day-content");
+          if (!dayDiv) return;
+          var dayId = dayDiv.id;
+
+          var order = [];
+          var times = {};
+          tbody.querySelectorAll("tr").forEach(function (row) {
+            var cb = row.querySelector(".schedule-check");
+            var tc = row.querySelector(".time-col");
+            var key = cb
+              ? cb.id
+              : tc
+                ? "_nocheck_" + (row.dataset.origTime || tc.textContent.trim())
+                : null;
+            if (key) {
+              order.push(key);
+              // Save custom time if it differs from original
+              if (
+                tc &&
+                row.dataset.origTime &&
+                tc.textContent.trim() !== row.dataset.origTime
+              ) {
+                times[key] = tc.textContent.trim();
+              }
+            }
+          });
+
+          var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+          saved[dayId] = order;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+
+          var savedTimes = JSON.parse(localStorage.getItem(TIMES_KEY) || "{}");
+          savedTimes[dayId] = times;
+          localStorage.setItem(TIMES_KEY, JSON.stringify(savedTimes));
+        }
+
+        function restoreOrder() {
+          var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+          var savedTimes = JSON.parse(localStorage.getItem(TIMES_KEY) || "{}");
+          Object.keys(saved).forEach(function (dayId) {
+            var dayDiv = document.getElementById(dayId);
+            if (!dayDiv) return;
+            var tbody = dayDiv.querySelector("table tbody");
+            if (!tbody) return;
+
+            var order = saved[dayId];
+            var times = savedTimes[dayId] || {};
+            var rowMap = new Map();
+
+            tbody.querySelectorAll("tr").forEach(function (row) {
+              var cb = row.querySelector(".schedule-check");
+              var tc = row.querySelector(".time-col");
+              var key = cb
+                ? cb.id
+                : tc
+                  ? "_nocheck_" + tc.textContent.trim()
+                  : null;
+              if (key) rowMap.set(key, row);
+            });
+
+            var changed = false;
+            order.forEach(function (key) {
+              var row = rowMap.get(key);
+              if (row) {
+                tbody.appendChild(row);
+                changed = true;
+                // Restore custom time if saved
+                if (times[key]) {
+                  var tc = row.querySelector(".time-col");
+                  if (tc) {
+                    tc.textContent = times[key];
+                    row.dataset.origTime = times[key];
+                  }
+                }
+              }
+            });
+
+            if (changed) {
+              recalcTimes(tbody);
+              checkOverlaps(tbody);
+            }
+          });
+        }
+
+        // ── Refresh floating timeline ──
+        function refreshTimeline() {
+          var cb = document.querySelector(".schedule-check");
+          if (cb) cb.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+
+        // ── Reset button ──
+        document.querySelectorAll("h2").forEach(function (h) {
+          if (h.textContent.indexOf("Schedule") !== -1) {
+            var btn = document.createElement("button");
+            btn.className = "schedule-reset-btn";
+            btn.textContent = "↺ Reset Order";
+            btn.title = "Reset schedule to original order";
+            btn.onclick = function () {
+              localStorage.removeItem(STORAGE_KEY);
+              localStorage.removeItem(TIMES_KEY);
+              location.reload();
+            };
+            h.appendChild(btn);
+          }
+        });
+
+        // ── Inline time editing ──
+        function makeTimesEditable() {
+          document
+            .querySelectorAll(".day-content table tbody .time-col")
+            .forEach(function (tc) {
+              if (tc.dataset.editable) return;
+              tc.dataset.editable = "1";
+              tc.addEventListener("click", function (e) {
+                if (tc.querySelector(".time-edit-input")) return; // already editing
+                var currentText = tc.textContent.trim();
+                var input = document.createElement("input");
+                input.type = "text";
+                input.className = "time-edit-input";
+                input.value = currentText;
+                input.placeholder = "HH:MM-HH:MM";
+                tc.textContent = "";
+                tc.appendChild(input);
+                input.focus();
+                input.select();
+
+                function commitEdit() {
+                  var val = input.value.trim();
+                  var match = val.match(
+                    /^(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})$/,
+                  );
+                  if (!match) {
+                    // Invalid — revert
+                    tc.textContent = currentText;
+                    return;
+                  }
+                  var newTime =
+                    fmtT(parseT(match[1])) + "-" + fmtT(parseT(match[2]));
+                  tc.textContent = newTime;
+
+                  // Update origTime so duration is recalculated for future drags
+                  var row = tc.closest("tr");
+                  if (row) row.dataset.origTime = newTime;
+
+                  // Run overlap check on entire day
+                  var tbody = tc.closest("tbody");
+                  if (tbody) {
+                    checkOverlaps(tbody);
+                    saveOrder(tbody);
+                  }
+                  refreshTimeline();
+                }
+
+                input.addEventListener("blur", commitEdit);
+                input.addEventListener("keydown", function (ke) {
+                  if (ke.key === "Enter") {
+                    ke.preventDefault();
+                    input.blur();
+                  }
+                  if (ke.key === "Escape") {
+                    tc.textContent = currentText;
+                  }
+                });
+
+                // Live validation while typing
+                input.addEventListener("input", function () {
+                  var v = input.value.trim();
+                  var ok = /^\d{1,2}:\d{2}\s*-\s*\d{1,2}:\d{2}$/.test(v);
+                  input.classList.toggle("invalid", v.length > 0 && !ok);
+                });
+              });
+            });
+        }
+
+        // ── Overlap detection (without sequential recalc) ──
+        function checkOverlaps(tbody) {
+          var rows = Array.from(tbody.querySelectorAll("tr"));
+          // Remove old warnings
+          tbody.querySelectorAll(".overlap-warning").forEach(function (el) {
+            el.remove();
+          });
+
+          // Collect time ranges
+          var tasks = [];
+          rows.forEach(function (row) {
+            var tc = row.querySelector(".time-col");
+            if (!tc) return;
+            var match = tc.textContent
+              .trim()
+              .match(/(\d{1,2}:\d{2})-(\d{1,2}:\d{2})/);
+            if (!match) return;
+            var s = parseT(match[1]),
+              e = parseT(match[2]);
+            if (e <= s) e += 1440; // handle overnight
+            tasks.push({ row: row, start: s, end: e });
+          });
+
+          // Check all pairs
+          for (var i = 0; i < tasks.length; i++) {
+            for (var j = i + 1; j < tasks.length; j++) {
+              if (
+                tasks[i].end > tasks[j].start &&
+                tasks[i].start < tasks[j].end
+              ) {
+                addOverlapWarning(tasks[i].row);
+                addOverlapWarning(tasks[j].row);
+              }
+            }
+          }
+        }
+
+        // ── Init ──
+        saveOriginalTimes();
+        restoreOrder();
+        addDragHandles();
+        makeTimesEditable();
       })();
     </script>
   </body>
