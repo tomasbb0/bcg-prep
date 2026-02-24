@@ -41,6 +41,26 @@
         font-size: 14px;
       }
 
+
+      /* SCHEDULE CHECKBOXES */
+      .schedule-check {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        accent-color: var(--bcg-green);
+      }
+      .schedule-check:checked {
+        opacity: 1;
+      }
+      tr:has(.schedule-check:checked) td {
+        text-decoration: line-through;
+        opacity: 0.5;
+      }
+      tr:has(.schedule-check:checked) td:first-child {
+        text-decoration: none;
+        opacity: 1;
+      }
+
       /* SIDEBAR */
       .sidebar {
         width: var(--sidebar-width);
@@ -819,6 +839,9 @@
         <a href="#" onclick="showSection('game-day')" data-section="game-day">
           <span class="icon">🏆</span> Game Day
         </a>
+        <a href="#" onclick="showSection('wellness')" data-section="wellness">
+          <span class="icon">💊</span> Wellness & Meds
+        </a>
       </nav>
     </aside>
 
@@ -828,12 +851,689 @@
       <!-- SECTION: MASTER PLAN -->
       <!-- ═══════════════════════════════════════════════════════ -->
       <div class="section active" id="master-plan">
-        <div class="section-title">📋 Master Plan</div>
+        <div class="section-title">📋 Schedule</div>
         <div class="section-subtitle">
           Plano hora-a-hora — Domingo 22 Feb → Sexta 27 Feb
         </div>
 
-        <div class="card card-accent">
+<!-- SCHEDULE TABS -->
+        <h2>📅 Schedule</h2>
+        <div style="margin-bottom: 16px">
+          <span
+            class="day-tab"
+            onclick="showDay('sun')"
+            style="opacity: 0.4; text-decoration: line-through"
+            >Dom 22</span
+          >
+          <span
+            class="day-tab"
+            onclick="showDay('mon')"
+            style="opacity: 0.4; text-decoration: line-through"
+            >Seg 23</span
+          >
+          <span class="day-tab active" onclick="showDay('tue')">Ter 24 🔥</span>
+          <span class="day-tab" onclick="showDay('wed')">Qua 25</span>
+          <span class="day-tab" onclick="showDay('thu')">Qui 26</span>
+          <span class="day-tab" onclick="showDay('fri')">Sex 27 🏆</span>
+        </div>
+
+        <!-- SUNDAY -->
+        <div class="day-content" id="day-sun">
+          <div class="card" style="opacity: 0.5; border: 1px dashed #ccc">
+            <h3>
+              Domingo 22 Feb
+              <span class="badge" style="background: #999; color: white"
+                >⏭️ SKIPPED</span
+              >
+            </h3>
+            <p style="color: var(--text-muted)">
+              Não feito. Conteúdo absorvido na Terça 24. A começar do zero.
+            </p>
+          </div>
+        </div>
+        <!-- MONDAY -->
+        <div class="day-content" id="day-mon">
+          <div class="card" style="opacity: 0.5; border: 1px dashed #ccc">
+            <h3>
+              Segunda 23 Feb
+              <span class="badge" style="background: #999; color: white"
+                >⏭️ SKIPPED</span
+              >
+            </h3>
+            <p style="color: var(--text-muted)">
+              Não feito. Conteúdo absorvido na Terça e Quarta. A começar do
+              zero.
+            </p>
+          </div>
+        </div>
+        <!-- TUESDAY -->
+        <div class="day-content active" id="day-tue">
+          <div class="card">
+            <h3>
+              Terça 24 Feb
+              <span class="badge badge-red">🔥 DAY 1 — LEARN + DO</span>
+            </h3>
+            <p style="color: var(--text-muted); margin-bottom: 12px">
+              A começar do ZERO. CaseCoach Case Prep Course (Bloco 1-2), Math
+              Course (Bloco 1), 1º Practice Room, 2 casos solo, SCAR stories.
+              Busy 16-17h e 22-00h.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:30px">✓</th>
+                  <th>Hora</th>
+                  <th>Atividade</th>
+                  <th>Detalhes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-tue-1" onchange="saveCheck(this)"></td>
+                  <td class="time-col">10:00-10:15</td>
+                  <td>☀️ Acordar + meds</td>
+                  <td>
+                    Pequeno-almoço + Concerta 27mg + Aerius. Configurar
+                    CaseCoach.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-tue-2" onchange="saveCheck(this)"></td>
+                  <td class="time-col">10:15-11:15</td>
+                  <td class="activity-col">
+                    📹 CaseCoach: Case Prep Course Bloco 1
+                  </td>
+                  <td>
+                    Structuring (3-4 vídeos). AIM test: Answer-focused,
+                    Insightful, MECE. Anotar takeaways.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-tue-3" onchange="saveCheck(this)"></td>
+                  <td class="time-col">11:15-12:15</td>
+                  <td class="activity-col">
+                    📚 CaseCoach Caso Solo #1: Roko Hotel (Profitability)
+                  </td>
+                  <td>
+                    Easy. Aplicar IMEDIATAMENTE o que aprendeu no Bloco 1. Foco:
+                    ESTRUTURAR em max 2 min.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-tue-4" onchange="saveCheck(this)"></td>
+                  <td class="time-col">12:30-13:30</td>
+                  <td class="activity-col">
+                    📹 CaseCoach: Case Prep Course Bloco 2
+                  </td>
+                  <td>
+                    Math in Cases + Exhibits. Anotar fórmulas-chave. + 5
+                    Structures drills.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-tue-5" onchange="saveCheck(this)"></td>
+                  <td class="time-col">14:00-15:00</td>
+                  <td class="activity-col">🤝 CaseCoach Practice Room #1</td>
+                  <td>
+                    Profitability/Revenue Growth. TU lideras. Aplicar Bloco 2.
+                    Pedir feedback estruturação.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-tue-6" onchange="saveCheck(this)"></td>
+                  <td class="time-col">15:00-15:30</td>
+                  <td class="activity-col">⚡ CaseCoach Drills</td>
+                  <td>
+                    10 Calculations + 5 Structures. Target: 15-30 seg cada.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-tue-7" onchange="saveCheck(this)"></td>
+                  <td class="time-col">15:30-16:00</td>
+                  <td class="activity-col">
+                    📝 FIT: Brainstorm 4 SCAR stories
+                  </td>
+                  <td>
+                    Situation → Complication → Action → Result. Em PT. Mapear
+                    para BCG 5 qualities.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-tue-8" onchange="saveCheck(this)"></td>
+                  <td class="time-col" style="color: var(--danger)">
+                    16:00-17:00
+                  </td>
+                  <td>❌ Indisponível</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-tue-9" onchange="saveCheck(this)"></td>
+                  <td class="time-col">17:00-18:00</td>
+                  <td class="activity-col">
+                    📹 CaseCoach: Math Course Bloco 1
+                  </td>
+                  <td>
+                    Fundamentos: operações, frações, percentagens, termos PT. +
+                    3 Case Math drills.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-tue-10" onchange="saveCheck(this)"></td>
+                  <td class="time-col" style="color: var(--highlight)">
+                    18:00-19:00
+                  </td>
+                  <td class="activity-col">
+                    <strong
+                      >🎯 CASO #2: AMIGA PT — CaseCoach Case (Clean-All)</strong
+                    >
+                  </td>
+                  <td>
+                    Growth Strategy (Easy). EM PORTUGUÊS. Pedir feedback sobre
+                    comunicação e estrutura.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-tue-11" onchange="saveCheck(this)"></td>
+                  <td class="time-col">19:00-19:30</td>
+                  <td class="activity-col">📝 Debrief com amiga</td>
+                  <td>"A estrutura foi clara? O meu PT soou natural?"</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-tue-12" onchange="saveCheck(this)"></td>
+                  <td class="time-col">20:30-21:30</td>
+                  <td class="activity-col">
+                    📚 CaseCoach Caso Solo #3: FlashFash (M&A)
+                  </td>
+                  <td>
+                    Caso médio. Full solo protocol. Foco: síntese/recomendação
+                    final top-down.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-tue-13" onchange="saveCheck(this)"></td>
+                  <td class="time-col">21:30-22:00</td>
+                  <td class="activity-col">
+                    📝 FIT: SCAR stories em voz alta PT + Review
+                  </td>
+                  <td>
+                    Praticar 4 histórias. 5 key takeaways do dia. Preparar lista
+                    para amanhã.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-tue-14" onchange="saveCheck(this)"></td>
+                  <td class="time-col" style="color: var(--danger)">
+                    22:00-00:00
+                  </td>
+                  <td>❌ Indisponível</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- WEDNESDAY -->
+        <div class="day-content" id="day-wed">
+          <div class="card">
+            <h3>
+              Quarta 25 Feb
+              <span class="badge badge-red">🔥 DAY 2 — PEAK INTENSITY</span>
+            </h3>
+            <p style="color: var(--text-muted); margin-bottom: 12px">
+              Courses Bloco 3-4 + Math Bloco 2-3. Target: 5 casos. 3 Practice
+              Room + Drills blitz. Todas as áreas fracas atacadas.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:30px">✓</th>
+                  <th>Hora</th>
+                  <th>Atividade</th>
+                  <th>Detalhes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-wed-1" onchange="saveCheck(this)"></td>
+                  <td class="time-col">10:00-10:15</td>
+                  <td>☀️ Acordar + meds</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-wed-2" onchange="saveCheck(this)"></td>
+                  <td class="time-col">10:15-11:15</td>
+                  <td class="activity-col">
+                    📹 CaseCoach: Case Prep Course Bloco 3
+                  </td>
+                  <td>
+                    Creativity & Judgment aulas. + 5 Creativity drills após. AIM
+                    check.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-wed-3" onchange="saveCheck(this)"></td>
+                  <td class="time-col">11:15-12:15</td>
+                  <td class="activity-col">🤝 CaseCoach Practice Room #2</td>
+                  <td>
+                    Market Entry/Operations (BCG favorites). Praticar hipótese
+                    inicial + brainstorming criativo.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-wed-4" onchange="saveCheck(this)"></td>
+                  <td class="time-col">12:30-13:30</td>
+                  <td class="activity-col">
+                    📹 CaseCoach: Case Prep Course Bloco 4
+                  </td>
+                  <td>
+                    Synthesis & Case Leadership. Watch 1 sample interview (MBB
+                    candidate).
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-wed-5" onchange="saveCheck(this)"></td>
+                  <td class="time-col">14:00-15:00</td>
+                  <td class="activity-col">🤝 CaseCoach Practice Room #3</td>
+                  <td>
+                    Profitability case diferente. Foco em Math + síntese
+                    top-down.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-wed-6" onchange="saveCheck(this)"></td>
+                  <td class="time-col" style="color: var(--highlight)">
+                    15:00-16:00
+                  </td>
+                  <td class="activity-col">
+                    <strong
+                      >🎯 CASO #4: AMIGA PT — CaseCoach Case (Canadian
+                      Wildlife)</strong
+                    >
+                  </td>
+                  <td>
+                    Strategy/Non-profit. Mock completo em PT. Entrevistadora
+                    dura. Foco: comunicação.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-wed-7" onchange="saveCheck(this)"></td>
+                  <td class="time-col">17:00-18:00</td>
+                  <td class="activity-col">
+                    📹 CaseCoach: Math Course Bloco 2 + Drills
+                  </td>
+                  <td>
+                    Weighted avg, growth, breakeven. + 10 Calculations + 5
+                    Market Sizing drills.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-wed-8" onchange="saveCheck(this)"></td>
+                  <td class="time-col">18:00-19:00</td>
+                  <td class="activity-col">
+                    📚 CaseCoach Caso Solo #5: A-EYE (Pricing/Tech)
+                  </td>
+                  <td>
+                    Market entry + pricing. Full solo protocol. Caso médio.
+                    Foco: Math + criatividade.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-wed-9" onchange="saveCheck(this)"></td>
+                  <td class="time-col">20:00-21:00</td>
+                  <td class="activity-col">
+                    📹 CaseCoach: Math Course Bloco 3
+                  </td>
+                  <td>
+                    Pro Tips: atalhos, arredondamento, simplificação. +
+                    CaseCoach Charts drills.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-wed-10" onchange="saveCheck(this)"></td>
+                  <td class="time-col">21:00-22:00</td>
+                  <td class="activity-col">🤝 CaseCoach Practice Room #4</td>
+                  <td>
+                    Cost Cutting/Operations (BCG favorites). Último caso hard do
+                    dia.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-wed-11" onchange="saveCheck(this)"></td>
+                  <td class="time-col">22:00-22:30</td>
+                  <td class="activity-col">📝 Confidence check</td>
+                  <td>Escrever avaliação do dia</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-wed-12" onchange="saveCheck(this)"></td>
+                  <td class="time-col">22:30</td>
+                  <td>🛌 Cama cedo</td>
+                  <td>Descanso é crítico!</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- THURSDAY -->
+        <div class="day-content" id="day-thu">
+          <div class="card">
+            <h3>
+              Quinta 26 Feb
+              <span class="badge badge-green">🇵🇹 DAY 3 — CONSOLIDATION</span>
+            </h3>
+            <p style="color: var(--text-muted); margin-bottom: 12px">
+              Math Course Bloco 4 + Fit Course + Practice Room #5. Target: 4
+              casos (2 amiga PT). BCG research. Sample interview. Noite cedo.
+              Plan A: remoto | Plan B: uni
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:30px">✓</th>
+                  <th>Hora</th>
+                  <th>Atividade</th>
+                  <th>Detalhes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-thu-1" onchange="saveCheck(this)"></td>
+                  <td class="time-col">10:00-10:15</td>
+                  <td>☀️ Acordar + meds</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-thu-2" onchange="saveCheck(this)"></td>
+                  <td class="time-col">10:15-11:15</td>
+                  <td class="activity-col">
+                    📹 CaseCoach: Math Course Bloco 4 + Fit Course
+                  </td>
+                  <td>
+                    Business Math (Revenue, Cost, Profit) + Fit Interview Prep
+                    (7 aulas, ~1h). Consolidar fórmulas + BCG fit format.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-thu-3" onchange="saveCheck(this)"></td>
+                  <td class="time-col" style="color: var(--highlight)">
+                    11:15-12:15
+                  </td>
+                  <td class="activity-col">
+                    <strong
+                      >🎯 CASO #6: Mock PT com amiga — CaseCoach Case (Fruit
+                      Nation)</strong
+                    >
+                  </td>
+                  <td>
+                    Market Entry/Chemicals. CRITICAL SESSION. Simular condições
+                    reais: timer, sem notas, formal.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-thu-4" onchange="saveCheck(this)"></td>
+                  <td class="time-col">12:00-12:30</td>
+                  <td class="activity-col">📝 Debrief detalhado</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-thu-5" onchange="saveCheck(this)"></td>
+                  <td class="time-col">12:30-13:00</td>
+                  <td>🔄 Ajudar amiga (Google prep)</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-thu-6" onchange="saveCheck(this)"></td>
+                  <td class="time-col" style="color: var(--highlight)">
+                    13:30-14:30
+                  </td>
+                  <td class="activity-col">
+                    <strong>🎯 CASO #7: 2º mock PT — CaseCoach Case</strong>
+                  </td>
+                  <td>
+                    Tipo diferente do anterior. Entrevistadora tough. Foco: Math
+                    + criatividade.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-thu-7" onchange="saveCheck(this)"></td>
+                  <td class="time-col">15:00-16:00</td>
+                  <td class="activity-col">🤝 CaseCoach Practice Room #5</td>
+                  <td>
+                    Revenue Growth/Cost Cutting. Last Practice Room session.
+                    Push for excellence.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-thu-8" onchange="saveCheck(this)"></td>
+                  <td class="time-col">16:00-17:00</td>
+                  <td class="activity-col">
+                    📹 CaseCoach Sample Interview + BCG Research
+                  </td>
+                  <td>
+                    Watch 1 top-rated MBB interview. Verificar checklist BCG.
+                    Recent BCG cases/announcements.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-thu-9" onchange="saveCheck(this)"></td>
+                  <td class="time-col">17:00-18:00</td>
+                  <td class="activity-col">
+                    📝 FIT: Final SCAR stories + All Notes Review
+                  </td>
+                  <td>
+                    Dizer cada SCAR 1x em voz alta em PT. Gravar. BCG 5
+                    qualities. Top 3 takeaways.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-thu-10" onchange="saveCheck(this)"></td>
+                  <td class="time-col">18:00-18:30</td>
+                  <td class="activity-col">
+                    📚 CaseCoach Caso Solo #8: Confidence Builder
+                  </td>
+                  <td>
+                    Caso fácil da Case Library. Acabar com VITÓRIA. Full
+                    protocol minimal notes.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-thu-11" onchange="saveCheck(this)"></td>
+                  <td class="time-col" style="color: var(--success)">18:30+</td>
+                  <td><strong>🛌 PARAR DE ESTUDAR</strong></td>
+                  <td>
+                    Relaxar. Ver algo. Walk. Comer bem. Cama antes da
+                    meia-noite.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- FRIDAY -->
+        <div class="day-content" id="day-fri">
+          <div class="card" style="border: 2px solid var(--bcg-green)">
+            <h3>
+              Sexta 27 Feb 🏆 <span class="badge badge-green">GAME DAY</span>
+            </h3>
+            <p style="color: var(--text-muted); margin-bottom: 12px">
+              💊 Concerta 27mg manhã | 💊 Rubifen 20mg almoço | 💊 Alprazolam +
+              Propranolol ~14:30
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:30px">✓</th>
+                  <th>Hora</th>
+                  <th>Atividade</th>
+                  <th>Detalhes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-fri-1" onchange="saveCheck(this)"></td>
+                  <td class="time-col">09:00-09:30</td>
+                  <td>☀️ Acordar, duche, pequeno-almoço leve</td>
+                  <td>Proteína + carbos complexos</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-fri-2" onchange="saveCheck(this)"></td>
+                  <td class="time-col" style="color: var(--bcg-green)">
+                    09:30
+                  </td>
+                  <td><strong>💊 Concerta 27mg + Aerius</strong></td>
+                  <td>Com pequeno-almoço</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-fri-3" onchange="saveCheck(this)"></td>
+                  <td class="time-col">10:00-10:30</td>
+                  <td class="activity-col">📖 Light review</td>
+                  <td>Skim frameworks. NÃO deep study.</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-fri-4" onchange="saveCheck(this)"></td>
+                  <td class="time-col">10:30-11:00</td>
+                  <td class="activity-col">📝 Ler fit stories</td>
+                  <td>Ler, não memorizar. Sentir as histórias.</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-fri-5" onchange="saveCheck(this)"></td>
+                  <td class="time-col">11:00-11:30</td>
+                  <td class="activity-col">🎯 Quick warm-up</td>
+                  <td>5 math problems + estruturar 1 prompt simples (2 min)</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-fri-6" onchange="saveCheck(this)"></td>
+                  <td class="time-col">11:30-12:30</td>
+                  <td>🍽️ Almoço LEVE + 💊 Rubifen 20mg</td>
+                  <td>
+                    Evitar carbs pesados. Frango grelhado + salada. Tomar
+                    Rubifen com almoço.
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-fri-7" onchange="saveCheck(this)"></td>
+                  <td class="time-col">12:30-13:30</td>
+                  <td>😌 REST</td>
+                  <td>Nap 20 min if possible. Música. Walk.</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-fri-8" onchange="saveCheck(this)"></td>
+                  <td class="time-col">13:30-14:00</td>
+                  <td>👔 Preparar-se</td>
+                  <td>Business formal. Look sharp.</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-fri-9" onchange="saveCheck(this)"></td>
+                  <td class="time-col">14:00-14:15</td>
+                  <td class="activity-col">📋 Final checklist</td>
+                  <td>→ Game Day tab neste site</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-fri-10" onchange="saveCheck(this)"></td>
+                  <td class="time-col" style="color: var(--bcg-green)">
+                    14:30
+                  </td>
+                  <td>
+                    <strong>💊 Alprazolam 0,25mg + Propranolol 10mg</strong>
+                  </td>
+                  <td>Peak em ~30-45 min = quando a entrevista começa</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-fri-11" onchange="saveCheck(this)"></td>
+                  <td class="time-col">14:45</td>
+                  <td>🚗 Sair</td>
+                  <td>Chegar 15 min antes</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-fri-12" onchange="saveCheck(this)"></td>
+                  <td class="time-col">15:15</td>
+                  <td>🏢 Chegar</td>
+                  <td>Respirar fundo. Sorrir. You've got this.</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="schedule-check" id="chk-fri-13" onchange="saveCheck(this)"></td>
+                  <td
+                    class="time-col"
+                    style="color: var(--bcg-green); font-size: 16px"
+                  >
+                    15:30
+                  </td>
+                  <td style="font-size: 16px; font-weight: 700">
+                    🎯 ENTREVISTA
+                  </td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+<!-- CASE TARGETS -->
+        <h2>📊 Case Count Target</h2>
+        <div class="card">
+          <table>
+            <thead>
+              <tr>
+                <th>Dia</th>
+                <th>Casos</th>
+                <th>Tipo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="opacity: 0.4; text-decoration: line-through">
+                  Domingo
+                </td>
+                <td style="opacity: 0.4">—</td>
+                <td style="opacity: 0.4">⏭️ SKIPPED</td>
+              </tr>
+              <tr>
+                <td style="opacity: 0.4; text-decoration: line-through">
+                  Segunda
+                </td>
+                <td style="opacity: 0.4">—</td>
+                <td style="opacity: 0.4">⏭️ SKIPPED</td>
+              </tr>
+              <tr>
+                <td><strong>Terça (DAY 1)</strong></td>
+                <td><strong>3</strong></td>
+                <td>
+                  1 Practice Room #1 + 1 amiga PT (Clean-All) + 1 solo
+                  (FlashFash)
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Quarta (DAY 2)</strong></td>
+                <td><strong>5</strong></td>
+                <td>
+                  3 Practice Room (#2-4) + 1 amiga PT (Canadian Wildlife) + 1
+                  solo (A-EYE)
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Quinta (DAY 3)</strong></td>
+                <td><strong>4</strong></td>
+                <td>
+                  1 Practice Room (#5) + 2 amiga PT (Fruit Nation + outro) + 1
+                  solo confidence
+                </td>
+              </tr>
+              <tr>
+                <td style="font-weight: 700; color: var(--bcg-green)">TOTAL</td>
+                <td style="font-weight: 700; color: var(--bcg-green)">12</td>
+                <td>
+                  5 Practice Room, 3 solo CaseCoach, 3 amiga PT, 1 confidence
+                  builder
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>📋 Situation Assessment</h2>
+<div class="card card-accent">
           <h3>Situation Assessment</h3>
           <table>
             <tr>
@@ -882,9 +1582,19 @@
             </tr>
           </table>
         </div>
+      </div>
 
-        <!-- MEDICATION -->
-        <h2>💊 Medication & Wellness</h2>
+
+      <!-- ═══════════════════════════════════════════════════════ -->
+      <!-- SECTION: WELLNESS -->
+      <!-- ═══════════════════════════════════════════════════════ -->
+      <div class="section" id="wellness">
+        <div class="section-title">💊 Wellness & Meds</div>
+        <div class="section-subtitle">
+          Medicação, sono, energia — Protocolo para a semana
+        </div>
+
+<h2>💊 Medication & Wellness</h2>
         <div class="card card-warning">
           <h3>Protocolo Medicação (atualizado pelo médico)</h3>
           <ul>
@@ -956,628 +1666,6 @@
               ansiedade, melhora foco.
             </li>
           </ul>
-        </div>
-
-        <!-- SCHEDULE TABS -->
-        <h2>📅 Schedule</h2>
-        <div style="margin-bottom: 16px">
-          <span
-            class="day-tab"
-            onclick="showDay('sun')"
-            style="opacity: 0.4; text-decoration: line-through"
-            >Dom 22</span
-          >
-          <span
-            class="day-tab"
-            onclick="showDay('mon')"
-            style="opacity: 0.4; text-decoration: line-through"
-            >Seg 23</span
-          >
-          <span class="day-tab active" onclick="showDay('tue')">Ter 24 🔥</span>
-          <span class="day-tab" onclick="showDay('wed')">Qua 25</span>
-          <span class="day-tab" onclick="showDay('thu')">Qui 26</span>
-          <span class="day-tab" onclick="showDay('fri')">Sex 27 🏆</span>
-        </div>
-
-        <!-- SUNDAY -->
-        <div class="day-content" id="day-sun">
-          <div class="card" style="opacity: 0.5; border: 1px dashed #ccc">
-            <h3>
-              Domingo 22 Feb
-              <span class="badge" style="background: #999; color: white"
-                >⏭️ SKIPPED</span
-              >
-            </h3>
-            <p style="color: var(--text-muted)">
-              Não feito. Conteúdo absorvido na Terça 24. A começar do zero.
-            </p>
-          </div>
-        </div>
-        <!-- MONDAY -->
-        <div class="day-content" id="day-mon">
-          <div class="card" style="opacity: 0.5; border: 1px dashed #ccc">
-            <h3>
-              Segunda 23 Feb
-              <span class="badge" style="background: #999; color: white"
-                >⏭️ SKIPPED</span
-              >
-            </h3>
-            <p style="color: var(--text-muted)">
-              Não feito. Conteúdo absorvido na Terça e Quarta. A começar do
-              zero.
-            </p>
-          </div>
-        </div>
-        <!-- TUESDAY -->
-        <div class="day-content active" id="day-tue">
-          <div class="card">
-            <h3>
-              Terça 24 Feb
-              <span class="badge badge-red">🔥 DAY 1 — LEARN + DO</span>
-            </h3>
-            <p style="color: var(--text-muted); margin-bottom: 12px">
-              A começar do ZERO. CaseCoach Case Prep Course (Bloco 1-2), Math
-              Course (Bloco 1), 1º Practice Room, 2 casos solo, SCAR stories.
-              Busy 16-17h e 22-00h.
-            </p>
-            <table>
-              <thead>
-                <tr>
-                  <th>Hora</th>
-                  <th>Atividade</th>
-                  <th>Detalhes</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="time-col">10:00-10:15</td>
-                  <td>☀️ Acordar + meds</td>
-                  <td>
-                    Pequeno-almoço + Concerta 27mg + Aerius. Configurar
-                    CaseCoach.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">10:15-11:15</td>
-                  <td class="activity-col">
-                    📹 CaseCoach: Case Prep Course Bloco 1
-                  </td>
-                  <td>
-                    Structuring (3-4 vídeos). AIM test: Answer-focused,
-                    Insightful, MECE. Anotar takeaways.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">11:15-12:15</td>
-                  <td class="activity-col">
-                    📚 CaseCoach Caso Solo #1: Roko Hotel (Profitability)
-                  </td>
-                  <td>
-                    Easy. Aplicar IMEDIATAMENTE o que aprendeu no Bloco 1. Foco:
-                    ESTRUTURAR em max 2 min.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">12:30-13:30</td>
-                  <td class="activity-col">
-                    📹 CaseCoach: Case Prep Course Bloco 2
-                  </td>
-                  <td>
-                    Math in Cases + Exhibits. Anotar fórmulas-chave. + 5
-                    Structures drills.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">14:00-15:00</td>
-                  <td class="activity-col">🤝 CaseCoach Practice Room #1</td>
-                  <td>
-                    Profitability/Revenue Growth. TU lideras. Aplicar Bloco 2.
-                    Pedir feedback estruturação.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">15:00-15:30</td>
-                  <td class="activity-col">⚡ CaseCoach Drills</td>
-                  <td>
-                    10 Calculations + 5 Structures. Target: 15-30 seg cada.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">15:30-16:00</td>
-                  <td class="activity-col">
-                    📝 FIT: Brainstorm 4 SCAR stories
-                  </td>
-                  <td>
-                    Situation → Complication → Action → Result. Em PT. Mapear
-                    para BCG 5 qualities.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col" style="color: var(--danger)">
-                    16:00-17:00
-                  </td>
-                  <td>❌ Indisponível</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td class="time-col">17:00-18:00</td>
-                  <td class="activity-col">
-                    📹 CaseCoach: Math Course Bloco 1
-                  </td>
-                  <td>
-                    Fundamentos: operações, frações, percentagens, termos PT. +
-                    3 Case Math drills.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col" style="color: var(--highlight)">
-                    18:00-19:00
-                  </td>
-                  <td class="activity-col">
-                    <strong
-                      >🎯 CASO #2: AMIGA PT — CaseCoach Case (Clean-All)</strong
-                    >
-                  </td>
-                  <td>
-                    Growth Strategy (Easy). EM PORTUGUÊS. Pedir feedback sobre
-                    comunicação e estrutura.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">19:00-19:30</td>
-                  <td class="activity-col">📝 Debrief com amiga</td>
-                  <td>"A estrutura foi clara? O meu PT soou natural?"</td>
-                </tr>
-                <tr>
-                  <td class="time-col">20:30-21:30</td>
-                  <td class="activity-col">
-                    📚 CaseCoach Caso Solo #3: FlashFash (M&A)
-                  </td>
-                  <td>
-                    Caso médio. Full solo protocol. Foco: síntese/recomendação
-                    final top-down.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">21:30-22:00</td>
-                  <td class="activity-col">
-                    📝 FIT: SCAR stories em voz alta PT + Review
-                  </td>
-                  <td>
-                    Praticar 4 histórias. 5 key takeaways do dia. Preparar lista
-                    para amanhã.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col" style="color: var(--danger)">
-                    22:00-00:00
-                  </td>
-                  <td>❌ Indisponível</td>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- WEDNESDAY -->
-        <div class="day-content" id="day-wed">
-          <div class="card">
-            <h3>
-              Quarta 25 Feb
-              <span class="badge badge-red">🔥 DAY 2 — PEAK INTENSITY</span>
-            </h3>
-            <p style="color: var(--text-muted); margin-bottom: 12px">
-              Courses Bloco 3-4 + Math Bloco 2-3. Target: 5 casos. 3 Practice
-              Room + Drills blitz. Todas as áreas fracas atacadas.
-            </p>
-            <table>
-              <thead>
-                <tr>
-                  <th>Hora</th>
-                  <th>Atividade</th>
-                  <th>Detalhes</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="time-col">10:00-10:15</td>
-                  <td>☀️ Acordar + meds</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td class="time-col">10:15-11:15</td>
-                  <td class="activity-col">
-                    📹 CaseCoach: Case Prep Course Bloco 3
-                  </td>
-                  <td>
-                    Creativity & Judgment aulas. + 5 Creativity drills após. AIM
-                    check.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">11:15-12:15</td>
-                  <td class="activity-col">🤝 CaseCoach Practice Room #2</td>
-                  <td>
-                    Market Entry/Operations (BCG favorites). Praticar hipótese
-                    inicial + brainstorming criativo.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">12:30-13:30</td>
-                  <td class="activity-col">
-                    📹 CaseCoach: Case Prep Course Bloco 4
-                  </td>
-                  <td>
-                    Synthesis & Case Leadership. Watch 1 sample interview (MBB
-                    candidate).
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">14:00-15:00</td>
-                  <td class="activity-col">🤝 CaseCoach Practice Room #3</td>
-                  <td>
-                    Profitability case diferente. Foco em Math + síntese
-                    top-down.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col" style="color: var(--highlight)">
-                    15:00-16:00
-                  </td>
-                  <td class="activity-col">
-                    <strong
-                      >🎯 CASO #4: AMIGA PT — CaseCoach Case (Canadian
-                      Wildlife)</strong
-                    >
-                  </td>
-                  <td>
-                    Strategy/Non-profit. Mock completo em PT. Entrevistadora
-                    dura. Foco: comunicação.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">17:00-18:00</td>
-                  <td class="activity-col">
-                    📹 CaseCoach: Math Course Bloco 2 + Drills
-                  </td>
-                  <td>
-                    Weighted avg, growth, breakeven. + 10 Calculations + 5
-                    Market Sizing drills.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">18:00-19:00</td>
-                  <td class="activity-col">
-                    📚 CaseCoach Caso Solo #5: A-EYE (Pricing/Tech)
-                  </td>
-                  <td>
-                    Market entry + pricing. Full solo protocol. Caso médio.
-                    Foco: Math + criatividade.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">20:00-21:00</td>
-                  <td class="activity-col">
-                    📹 CaseCoach: Math Course Bloco 3
-                  </td>
-                  <td>
-                    Pro Tips: atalhos, arredondamento, simplificação. +
-                    CaseCoach Charts drills.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">21:00-22:00</td>
-                  <td class="activity-col">🤝 CaseCoach Practice Room #4</td>
-                  <td>
-                    Cost Cutting/Operations (BCG favorites). Último caso hard do
-                    dia.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">22:00-22:30</td>
-                  <td class="activity-col">📝 Confidence check</td>
-                  <td>Escrever avaliação do dia</td>
-                </tr>
-                <tr>
-                  <td class="time-col">22:30</td>
-                  <td>🛌 Cama cedo</td>
-                  <td>Descanso é crítico!</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- THURSDAY -->
-        <div class="day-content" id="day-thu">
-          <div class="card">
-            <h3>
-              Quinta 26 Feb
-              <span class="badge badge-green">🇵🇹 DAY 3 — CONSOLIDATION</span>
-            </h3>
-            <p style="color: var(--text-muted); margin-bottom: 12px">
-              Math Course Bloco 4 + Fit Course + Practice Room #5. Target: 4
-              casos (2 amiga PT). BCG research. Sample interview. Noite cedo.
-              Plan A: remoto | Plan B: uni
-            </p>
-            <table>
-              <thead>
-                <tr>
-                  <th>Hora</th>
-                  <th>Atividade</th>
-                  <th>Detalhes</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="time-col">10:00-10:15</td>
-                  <td>☀️ Acordar + meds</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td class="time-col">10:15-11:15</td>
-                  <td class="activity-col">
-                    📹 CaseCoach: Math Course Bloco 4 + Fit Course
-                  </td>
-                  <td>
-                    Business Math (Revenue, Cost, Profit) + Fit Interview Prep
-                    (7 aulas, ~1h). Consolidar fórmulas + BCG fit format.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col" style="color: var(--highlight)">
-                    11:15-12:15
-                  </td>
-                  <td class="activity-col">
-                    <strong
-                      >🎯 CASO #6: Mock PT com amiga — CaseCoach Case (Fruit
-                      Nation)</strong
-                    >
-                  </td>
-                  <td>
-                    Market Entry/Chemicals. CRITICAL SESSION. Simular condições
-                    reais: timer, sem notas, formal.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">12:00-12:30</td>
-                  <td class="activity-col">📝 Debrief detalhado</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td class="time-col">12:30-13:00</td>
-                  <td>🔄 Ajudar amiga (Google prep)</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td class="time-col" style="color: var(--highlight)">
-                    13:30-14:30
-                  </td>
-                  <td class="activity-col">
-                    <strong>🎯 CASO #7: 2º mock PT — CaseCoach Case</strong>
-                  </td>
-                  <td>
-                    Tipo diferente do anterior. Entrevistadora tough. Foco: Math
-                    + criatividade.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">15:00-16:00</td>
-                  <td class="activity-col">🤝 CaseCoach Practice Room #5</td>
-                  <td>
-                    Revenue Growth/Cost Cutting. Last Practice Room session.
-                    Push for excellence.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">16:00-17:00</td>
-                  <td class="activity-col">
-                    📹 CaseCoach Sample Interview + BCG Research
-                  </td>
-                  <td>
-                    Watch 1 top-rated MBB interview. Verificar checklist BCG.
-                    Recent BCG cases/announcements.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">17:00-18:00</td>
-                  <td class="activity-col">
-                    📝 FIT: Final SCAR stories + All Notes Review
-                  </td>
-                  <td>
-                    Dizer cada SCAR 1x em voz alta em PT. Gravar. BCG 5
-                    qualities. Top 3 takeaways.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">18:00-18:30</td>
-                  <td class="activity-col">
-                    📚 CaseCoach Caso Solo #8: Confidence Builder
-                  </td>
-                  <td>
-                    Caso fácil da Case Library. Acabar com VITÓRIA. Full
-                    protocol minimal notes.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col" style="color: var(--success)">18:30+</td>
-                  <td><strong>🛌 PARAR DE ESTUDAR</strong></td>
-                  <td>
-                    Relaxar. Ver algo. Walk. Comer bem. Cama antes da
-                    meia-noite.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- FRIDAY -->
-        <div class="day-content" id="day-fri">
-          <div class="card" style="border: 2px solid var(--bcg-green)">
-            <h3>
-              Sexta 27 Feb 🏆 <span class="badge badge-green">GAME DAY</span>
-            </h3>
-            <p style="color: var(--text-muted); margin-bottom: 12px">
-              💊 Concerta 27mg manhã | 💊 Rubifen 20mg almoço | 💊 Alprazolam +
-              Propranolol ~14:30
-            </p>
-            <table>
-              <thead>
-                <tr>
-                  <th>Hora</th>
-                  <th>Atividade</th>
-                  <th>Detalhes</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="time-col">09:00-09:30</td>
-                  <td>☀️ Acordar, duche, pequeno-almoço leve</td>
-                  <td>Proteína + carbos complexos</td>
-                </tr>
-                <tr>
-                  <td class="time-col" style="color: var(--bcg-green)">
-                    09:30
-                  </td>
-                  <td><strong>💊 Concerta 27mg + Aerius</strong></td>
-                  <td>Com pequeno-almoço</td>
-                </tr>
-                <tr>
-                  <td class="time-col">10:00-10:30</td>
-                  <td class="activity-col">📖 Light review</td>
-                  <td>Skim frameworks. NÃO deep study.</td>
-                </tr>
-                <tr>
-                  <td class="time-col">10:30-11:00</td>
-                  <td class="activity-col">📝 Ler fit stories</td>
-                  <td>Ler, não memorizar. Sentir as histórias.</td>
-                </tr>
-                <tr>
-                  <td class="time-col">11:00-11:30</td>
-                  <td class="activity-col">🎯 Quick warm-up</td>
-                  <td>5 math problems + estruturar 1 prompt simples (2 min)</td>
-                </tr>
-                <tr>
-                  <td class="time-col">11:30-12:30</td>
-                  <td>🍽️ Almoço LEVE + 💊 Rubifen 20mg</td>
-                  <td>
-                    Evitar carbs pesados. Frango grelhado + salada. Tomar
-                    Rubifen com almoço.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="time-col">12:30-13:30</td>
-                  <td>😌 REST</td>
-                  <td>Nap 20 min if possible. Música. Walk.</td>
-                </tr>
-                <tr>
-                  <td class="time-col">13:30-14:00</td>
-                  <td>👔 Preparar-se</td>
-                  <td>Business formal. Look sharp.</td>
-                </tr>
-                <tr>
-                  <td class="time-col">14:00-14:15</td>
-                  <td class="activity-col">📋 Final checklist</td>
-                  <td>→ Game Day tab neste site</td>
-                </tr>
-                <tr>
-                  <td class="time-col" style="color: var(--bcg-green)">
-                    14:30
-                  </td>
-                  <td>
-                    <strong>💊 Alprazolam 0,25mg + Propranolol 10mg</strong>
-                  </td>
-                  <td>Peak em ~30-45 min = quando a entrevista começa</td>
-                </tr>
-                <tr>
-                  <td class="time-col">14:45</td>
-                  <td>🚗 Sair</td>
-                  <td>Chegar 15 min antes</td>
-                </tr>
-                <tr>
-                  <td class="time-col">15:15</td>
-                  <td>🏢 Chegar</td>
-                  <td>Respirar fundo. Sorrir. You've got this.</td>
-                </tr>
-                <tr>
-                  <td
-                    class="time-col"
-                    style="color: var(--bcg-green); font-size: 16px"
-                  >
-                    15:30
-                  </td>
-                  <td style="font-size: 16px; font-weight: 700">
-                    🎯 ENTREVISTA
-                  </td>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- CASE TARGETS -->
-        <h2>📊 Case Count Target</h2>
-        <div class="card">
-          <table>
-            <thead>
-              <tr>
-                <th>Dia</th>
-                <th>Casos</th>
-                <th>Tipo</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="opacity: 0.4; text-decoration: line-through">
-                  Domingo
-                </td>
-                <td style="opacity: 0.4">—</td>
-                <td style="opacity: 0.4">⏭️ SKIPPED</td>
-              </tr>
-              <tr>
-                <td style="opacity: 0.4; text-decoration: line-through">
-                  Segunda
-                </td>
-                <td style="opacity: 0.4">—</td>
-                <td style="opacity: 0.4">⏭️ SKIPPED</td>
-              </tr>
-              <tr>
-                <td><strong>Terça (DAY 1)</strong></td>
-                <td><strong>3</strong></td>
-                <td>
-                  1 Practice Room #1 + 1 amiga PT (Clean-All) + 1 solo
-                  (FlashFash)
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Quarta (DAY 2)</strong></td>
-                <td><strong>5</strong></td>
-                <td>
-                  3 Practice Room (#2-4) + 1 amiga PT (Canadian Wildlife) + 1
-                  solo (A-EYE)
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Quinta (DAY 3)</strong></td>
-                <td><strong>4</strong></td>
-                <td>
-                  1 Practice Room (#5) + 2 amiga PT (Fruit Nation + outro) + 1
-                  solo confidence
-                </td>
-              </tr>
-              <tr>
-                <td style="font-weight: 700; color: var(--bcg-green)">TOTAL</td>
-                <td style="font-weight: 700; color: var(--bcg-green)">12</td>
-                <td>
-                  5 Practice Room, 3 solo CaseCoach, 3 amiga PT, 1 confidence
-                  builder
-                </td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
 
@@ -7317,6 +7405,21 @@
       updateCountdown();
       setInterval(updateCountdown, 60000);
 
+      // Schedule checkbox persistence
+      function saveCheck(cb) {
+        const checks = JSON.parse(localStorage.getItem('bcg-prep-checks') || '{}');
+        checks[cb.id] = cb.checked;
+        localStorage.setItem('bcg-prep-checks', JSON.stringify(checks));
+      }
+      function loadChecks() {
+        const checks = JSON.parse(localStorage.getItem('bcg-prep-checks') || '{}');
+        Object.keys(checks).forEach(id => {
+          const cb = document.getElementById(id);
+          if (cb) cb.checked = checks[id];
+        });
+      }
+      loadChecks();
+
       // Keyboard navigation
       document.addEventListener("keydown", function (e) {
         const sections = [
@@ -7330,6 +7433,7 @@
           "casecoach",
           "fit",
           "game-day",
+          "wellness",
         ];
         const current = sections.findIndex((s) =>
           document.getElementById(s).classList.contains("active"),
