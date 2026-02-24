@@ -41,7 +41,6 @@
         font-size: 14px;
       }
 
-
       /* SCHEDULE CHECKBOXES */
       .schedule-check {
         width: 18px;
@@ -856,7 +855,7 @@
           Plano hora-a-hora — Domingo 22 Feb → Sexta 27 Feb
         </div>
 
-<!-- SCHEDULE TABS -->
+        <!-- SCHEDULE TABS -->
         <h2>📅 Schedule</h2>
         <div style="margin-bottom: 16px">
           <span
@@ -914,13 +913,13 @@
               <span class="badge badge-red">🔥 DAY 1 — LATE START 15:00</span>
             </h3>
             <p style="color: var(--text-muted); margin-bottom: 12px">
-              Início tardio — comprimir Bloco 1-2, Math Bloco 1, 1 caso solo, SCAR stories.
-              Busy 16-17h e 22-00h. O que não couber passa para Quarta.
+              Início tardio — Bloco 1-2, Math Bloco 1, 2 casos solo, SCAR
+              stories, drills. Busy 16-17h. A trabalhar até meia-noite.
             </p>
             <table>
               <thead>
                 <tr>
-                  <th style="width:30px">✓</th>
+                  <th style="width: 30px">✓</th>
                   <th>Hora</th>
                   <th>Atividade</th>
                   <th>Detalhes</th>
@@ -928,15 +927,30 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-tue-1" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-tue-1"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">15:00-15:10</td>
                   <td>☀️ Setup + meds</td>
                   <td>
-                    Concerta 27mg (se ainda não tomou) + Aerius. Abrir CaseCoach. Foco total.
+                    Concerta 27mg (se ainda não tomou) + Aerius. Abrir
+                    CaseCoach. Foco total.
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-tue-2" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-tue-2"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">15:10-15:55</td>
                   <td class="activity-col">
                     📹 CaseCoach: Case Prep Course Bloco 1 (speed)
@@ -947,7 +961,14 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-tue-3" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-tue-3"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col" style="color: var(--danger)">
                     16:00-17:00
                   </td>
@@ -955,81 +976,194 @@
                   <td></td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-tue-4" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-tue-4"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">17:00-17:50</td>
                   <td class="activity-col">
                     📹 CaseCoach: Case Prep Course Bloco 2 (speed)
                   </td>
                   <td>
-                    Math in Cases + Exhibits a 1.5x. Anotar fórmulas-chave. Focar no essencial.
+                    Math in Cases + Exhibits a 1.5x. Anotar fórmulas-chave.
+                    Focar no essencial.
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-tue-5" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-tue-5"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">17:50-18:20</td>
                   <td class="activity-col">⚡ CaseCoach Drills</td>
                   <td>
-                    10 Calculations + 5 Structures. Target: 15-30 seg cada. Aplicar Bloco 1+2.
+                    10 Calculations + 5 Structures. Target: 15-30 seg cada.
+                    Aplicar Bloco 1+2.
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-tue-6" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-tue-6"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">18:20-19:20</td>
                   <td class="activity-col">
                     📚 CaseCoach Caso Solo #1: Roko Hotel (Profitability)
                   </td>
                   <td>
-                    Easy. Aplicar IMEDIATAMENTE Bloco 1+2. Foco: ESTRUTURAR em max 2 min. Full solo protocol.
+                    Easy. Aplicar IMEDIATAMENTE Bloco 1+2. Foco: ESTRUTURAR em
+                    max 2 min. Full solo protocol.
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-tue-7" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-tue-7"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">19:20-20:00</td>
                   <td>🍽️ Jantar + pausa</td>
                   <td>Comer bem. Descansar a cabeça 40 min.</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-tue-8" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-tue-8"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
+                  <td class="time-col" style="color: var(--bcg-green)">
+                    20:00
+                  </td>
+                  <td>
+                    <strong>💊 Propranolol 10mg — TESTE</strong>
+                  </td>
+                  <td>
+                    Tomar antes da sessão de estudo. Observar: tonto? frio?
+                    cansaço? Apontar tudo. Se ok → usar Sex.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-tue-9"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">20:00-20:50</td>
                   <td class="activity-col">
                     📹 CaseCoach: Math Course Bloco 1
                   </td>
                   <td>
-                    Fundamentos: operações, frações, percentagens, termos PT. + 3 Case Math drills.
+                    Fundamentos: operações, frações, percentagens, termos PT. +
+                    3 Case Math drills.
+                    <strong
+                      >Nota: estás sob efeito do Propranolol — avaliar impacto
+                      no math.</strong
+                    >
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-tue-9" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-tue-10"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">20:50-21:30</td>
                   <td class="activity-col">
                     📝 FIT: Brainstorm 4 SCAR stories
                   </td>
                   <td>
-                    Situation → Complication → Action → Result. Em PT. Mapear para BCG 5 qualities. Dizer em voz alta.
+                    Situation → Complication → Action → Result. Em PT. Mapear
+                    para BCG 5 qualities. Dizer em voz alta.
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-tue-10" onchange="saveCheck(this)"></td>
-                  <td class="time-col">21:30-22:00</td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-tue-11"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
+                  <td class="time-col">21:30-22:30</td>
                   <td class="activity-col">
-                    📝 Review do dia + Preparar Quarta
+                    📚 CaseCoach Caso Solo #2: FlashFash (M&A)
                   </td>
                   <td>
-                    5 key takeaways. Lista do que ficou por fazer → absorver amanhã. Cama cedo.
+                    Caso médio. Full solo protocol. Foco: síntese/recomendação
+                    final top-down.
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-tue-11" onchange="saveCheck(this)"></td>
-                  <td class="time-col" style="color: var(--danger)">
-                    22:00-00:00
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-tue-12"
+                      onchange="saveCheck(this)"
+                    />
                   </td>
-                  <td>❌ Indisponível</td>
-                  <td></td>
+                  <td class="time-col">22:30-23:00</td>
+                  <td class="activity-col">
+                    📝 FIT: SCAR stories em voz alta PT
+                  </td>
+                  <td>
+                    Praticar 4 histórias em voz alta. Gravar se possível.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-tue-13"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
+                  <td class="time-col">23:00-00:00</td>
+                  <td class="activity-col">
+                    📝 Review do dia + Anotar efeito Propranolol
+                  </td>
+                  <td>
+                    5 key takeaways. Escrever: o Propranolol afetou
+                    concentração/math? Decisão: usar na Sex ou não? Preparar
+                    lista para Quarta.
+                  </td>
                 </tr>
               </tbody>
             </table>
-            <div class="card card-warning" style="margin-top: 12px">
-              <strong>⚠️ Movido para Quarta:</strong> Practice Room #1, Caso #2 com amiga PT (Clean-All), Caso Solo #3 (FlashFash M&A). A Quarta absorve estes + o seu plano original.
+            <div class="card card-info" style="margin-top: 12px">
+              <strong>💊 Plano de teste SOS meds:</strong><br />
+              <strong>Hoje (Ter):</strong> Propranolol 10mg às 20:00 — testar
+              durante Math + caso solo. Apontar efeitos.<br />
+              <strong>Amanhã (Qua) ~14:00:</strong> Alprazolam 0.25mg — testar
+              durante practice case. Avaliar se causa sonolência.<br />
+              <strong>Decisão Sex:</strong> Usar o(s) que funcionou(aram) bem. Se
+              ambos ok → usar os dois 30 min antes da entrevista.
             </div>
           </div>
         </div>
@@ -1048,7 +1182,7 @@
             <table>
               <thead>
                 <tr>
-                  <th style="width:30px">✓</th>
+                  <th style="width: 30px">✓</th>
                   <th>Hora</th>
                   <th>Atividade</th>
                   <th>Detalhes</th>
@@ -1056,13 +1190,27 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-wed-1" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-wed-1"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">10:00-10:15</td>
                   <td>☀️ Acordar + meds</td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-wed-2" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-wed-2"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">10:15-11:15</td>
                   <td class="activity-col">
                     📹 CaseCoach: Case Prep Course Bloco 3
@@ -1073,7 +1221,14 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-wed-3" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-wed-3"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">11:15-12:15</td>
                   <td class="activity-col">🤝 CaseCoach Practice Room #2</td>
                   <td>
@@ -1082,7 +1237,14 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-wed-4" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-wed-4"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">12:30-13:30</td>
                   <td class="activity-col">
                     📹 CaseCoach: Case Prep Course Bloco 4
@@ -1093,7 +1255,14 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-wed-5" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-wed-5"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">14:00-15:00</td>
                   <td class="activity-col">🤝 CaseCoach Practice Room #3</td>
                   <td>
@@ -1102,7 +1271,14 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-wed-6" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-wed-6"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col" style="color: var(--highlight)">
                     15:00-16:00
                   </td>
@@ -1118,7 +1294,14 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-wed-7" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-wed-7"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">17:00-18:00</td>
                   <td class="activity-col">
                     📹 CaseCoach: Math Course Bloco 2 + Drills
@@ -1129,7 +1312,14 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-wed-8" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-wed-8"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">18:00-19:00</td>
                   <td class="activity-col">
                     📚 CaseCoach Caso Solo #5: A-EYE (Pricing/Tech)
@@ -1140,7 +1330,14 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-wed-9" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-wed-9"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">20:00-21:00</td>
                   <td class="activity-col">
                     📹 CaseCoach: Math Course Bloco 3
@@ -1151,7 +1348,14 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-wed-10" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-wed-10"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">21:00-22:00</td>
                   <td class="activity-col">🤝 CaseCoach Practice Room #4</td>
                   <td>
@@ -1160,13 +1364,27 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-wed-11" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-wed-11"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">22:00-22:30</td>
                   <td class="activity-col">📝 Confidence check</td>
                   <td>Escrever avaliação do dia</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-wed-12" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-wed-12"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">22:30</td>
                   <td>🛌 Cama cedo</td>
                   <td>Descanso é crítico!</td>
@@ -1191,7 +1409,7 @@
             <table>
               <thead>
                 <tr>
-                  <th style="width:30px">✓</th>
+                  <th style="width: 30px">✓</th>
                   <th>Hora</th>
                   <th>Atividade</th>
                   <th>Detalhes</th>
@@ -1199,13 +1417,27 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-thu-1" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-thu-1"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">10:00-10:15</td>
                   <td>☀️ Acordar + meds</td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-thu-2" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-thu-2"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">10:15-11:15</td>
                   <td class="activity-col">
                     📹 CaseCoach: Math Course Bloco 4 + Fit Course
@@ -1216,7 +1448,14 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-thu-3" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-thu-3"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col" style="color: var(--highlight)">
                     11:15-12:15
                   </td>
@@ -1232,19 +1471,40 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-thu-4" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-thu-4"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">12:00-12:30</td>
                   <td class="activity-col">📝 Debrief detalhado</td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-thu-5" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-thu-5"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">12:30-13:00</td>
                   <td>🔄 Ajudar amiga (Google prep)</td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-thu-6" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-thu-6"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col" style="color: var(--highlight)">
                     13:30-14:30
                   </td>
@@ -1257,7 +1517,14 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-thu-7" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-thu-7"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">15:00-16:00</td>
                   <td class="activity-col">🤝 CaseCoach Practice Room #5</td>
                   <td>
@@ -1266,7 +1533,14 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-thu-8" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-thu-8"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">16:00-17:00</td>
                   <td class="activity-col">
                     📹 CaseCoach Sample Interview + BCG Research
@@ -1277,7 +1551,14 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-thu-9" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-thu-9"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">17:00-18:00</td>
                   <td class="activity-col">
                     📝 FIT: Final SCAR stories + All Notes Review
@@ -1288,7 +1569,14 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-thu-10" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-thu-10"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">18:00-18:30</td>
                   <td class="activity-col">
                     📚 CaseCoach Caso Solo #8: Confidence Builder
@@ -1299,7 +1587,14 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-thu-11" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-thu-11"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col" style="color: var(--success)">18:30+</td>
                   <td><strong>🛌 PARAR DE ESTUDAR</strong></td>
                   <td>
@@ -1325,7 +1620,7 @@
             <table>
               <thead>
                 <tr>
-                  <th style="width:30px">✓</th>
+                  <th style="width: 30px">✓</th>
                   <th>Hora</th>
                   <th>Atividade</th>
                   <th>Detalhes</th>
@@ -1333,13 +1628,27 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-fri-1" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-fri-1"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">09:00-09:30</td>
                   <td>☀️ Acordar, duche, pequeno-almoço leve</td>
                   <td>Proteína + carbos complexos</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-fri-2" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-fri-2"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col" style="color: var(--bcg-green)">
                     09:30
                   </td>
@@ -1347,25 +1656,53 @@
                   <td>Com pequeno-almoço</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-fri-3" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-fri-3"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">10:00-10:30</td>
                   <td class="activity-col">📖 Light review</td>
                   <td>Skim frameworks. NÃO deep study.</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-fri-4" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-fri-4"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">10:30-11:00</td>
                   <td class="activity-col">📝 Ler fit stories</td>
                   <td>Ler, não memorizar. Sentir as histórias.</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-fri-5" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-fri-5"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">11:00-11:30</td>
                   <td class="activity-col">🎯 Quick warm-up</td>
                   <td>5 math problems + estruturar 1 prompt simples (2 min)</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-fri-6" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-fri-6"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">11:30-12:30</td>
                   <td>🍽️ Almoço LEVE + 💊 Rubifen 20mg</td>
                   <td>
@@ -1374,25 +1711,53 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-fri-7" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-fri-7"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">12:30-13:30</td>
                   <td>😌 REST</td>
                   <td>Nap 20 min if possible. Música. Walk.</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-fri-8" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-fri-8"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">13:30-14:00</td>
                   <td>👔 Preparar-se</td>
                   <td>Business formal. Look sharp.</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-fri-9" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-fri-9"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">14:00-14:15</td>
                   <td class="activity-col">📋 Final checklist</td>
                   <td>→ Game Day tab neste site</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-fri-10" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-fri-10"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col" style="color: var(--bcg-green)">
                     14:30
                   </td>
@@ -1402,19 +1767,40 @@
                   <td>Peak em ~30-45 min = quando a entrevista começa</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-fri-11" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-fri-11"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">14:45</td>
                   <td>🚗 Sair</td>
                   <td>Chegar 15 min antes</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-fri-12" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-fri-12"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td class="time-col">15:15</td>
                   <td>🏢 Chegar</td>
                   <td>Respirar fundo. Sorrir. You've got this.</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" class="schedule-check" id="chk-fri-13" onchange="saveCheck(this)"></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="schedule-check"
+                      id="chk-fri-13"
+                      onchange="saveCheck(this)"
+                    />
+                  </td>
                   <td
                     class="time-col"
                     style="color: var(--bcg-green); font-size: 16px"
@@ -1431,7 +1817,7 @@
           </div>
         </div>
 
-<!-- CASE TARGETS -->
+        <!-- CASE TARGETS -->
         <h2>📊 Case Count Target</h2>
         <div class="card">
           <table>
@@ -1459,17 +1845,15 @@
               </tr>
               <tr>
                 <td><strong>Terça (DAY 1)</strong></td>
-                <td><strong>1</strong></td>
-                <td>
-                  1 solo (Roko Hotel) — late start 15:00
-                </td>
+                <td><strong>2</strong></td>
+                <td>2 solo (Roko Hotel + FlashFash M&A) — late start 15:00</td>
               </tr>
               <tr>
                 <td><strong>Quarta (DAY 2)</strong></td>
-                <td><strong>7</strong></td>
+                <td><strong>6</strong></td>
                 <td>
-                  3 Practice Room (#1-3) + 1 amiga PT (Clean-All) + 2 solo
-                  (FlashFash + A-EYE) + 1 amiga PT (Canadian Wildlife)
+                  3 Practice Room (#1-3) + 1 amiga PT (Clean-All) + 1 solo
+                  (A-EYE) + 1 amiga PT (Canadian Wildlife)
                 </td>
               </tr>
               <tr>
@@ -1493,7 +1877,7 @@
         </div>
 
         <h2>📋 Situation Assessment</h2>
-<div class="card card-accent">
+        <div class="card card-accent">
           <h3>Situation Assessment</h3>
           <table>
             <tr>
@@ -1544,7 +1928,6 @@
         </div>
       </div>
 
-
       <!-- ═══════════════════════════════════════════════════════ -->
       <!-- SECTION: WELLNESS -->
       <!-- ═══════════════════════════════════════════════════════ -->
@@ -1554,7 +1937,7 @@
           Medicação, sono, energia — Protocolo para a semana
         </div>
 
-<h2>💊 Medication & Wellness</h2>
+        <h2>💊 Medication & Wellness</h2>
         <div class="card card-warning">
           <h3>Protocolo Medicação (atualizado pelo médico)</h3>
           <ul>
@@ -7367,13 +7750,17 @@
 
       // Schedule checkbox persistence
       function saveCheck(cb) {
-        const checks = JSON.parse(localStorage.getItem('bcg-prep-checks') || '{}');
+        const checks = JSON.parse(
+          localStorage.getItem("bcg-prep-checks") || "{}",
+        );
         checks[cb.id] = cb.checked;
-        localStorage.setItem('bcg-prep-checks', JSON.stringify(checks));
+        localStorage.setItem("bcg-prep-checks", JSON.stringify(checks));
       }
       function loadChecks() {
-        const checks = JSON.parse(localStorage.getItem('bcg-prep-checks') || '{}');
-        Object.keys(checks).forEach(id => {
+        const checks = JSON.parse(
+          localStorage.getItem("bcg-prep-checks") || "{}",
+        );
+        Object.keys(checks).forEach((id) => {
           const cb = document.getElementById(id);
           if (cb) cb.checked = checks[id];
         });
