@@ -8528,10 +8528,10 @@
       function takePill(pillId) {
         const log = getPillLog();
         // Use time input if set, otherwise use current time
-        const timeInput = document.getElementById('time-' + pillId);
+        const timeInput = document.getElementById("time-" + pillId);
         let now;
         if (timeInput && timeInput.value) {
-          const [hh, mm] = timeInput.value.split(':').map(Number);
+          const [hh, mm] = timeInput.value.split(":").map(Number);
           now = new Date();
           now.setHours(hh, mm, 0, 0);
         } else {
@@ -8560,11 +8560,11 @@
       // Initialize time inputs to current time
       function initTimeInputs() {
         const now = new Date();
-        const hh = String(now.getHours()).padStart(2, '0');
-        const mm = String(now.getMinutes()).padStart(2, '0');
-        const timeStr = hh + ':' + mm;
-        ['concerta', 'rubifen', 'propranolol', 'alprazolam'].forEach(id => {
-          const input = document.getElementById('time-' + id);
+        const hh = String(now.getHours()).padStart(2, "0");
+        const mm = String(now.getMinutes()).padStart(2, "0");
+        const timeStr = hh + ":" + mm;
+        ["concerta", "rubifen", "propranolol", "alprazolam"].forEach((id) => {
+          const input = document.getElementById("time-" + id);
           if (input && !input.value) input.value = timeStr;
         });
       }
@@ -8610,9 +8610,12 @@
           btn.disabled = false;
 
           // Update time input to show recorded time
-          const timeInput = document.getElementById('time-' + pillId);
+          const timeInput = document.getElementById("time-" + pillId);
           if (timeInput) {
-            timeInput.value = String(taken.getHours()).padStart(2,'0') + ':' + String(taken.getMinutes()).padStart(2,'0');
+            timeInput.value =
+              String(taken.getHours()).padStart(2, "0") +
+              ":" +
+              String(taken.getMinutes()).padStart(2, "0");
           }
 
           // Update time display
@@ -8832,6 +8835,153 @@
       updatePillUI();
       // Update NOW indicator every minute
       setInterval(updateNowIndicator, 60000);
+
+      // ═══════════════════════════════════════════════════
+      // DRAGGABLE TIMELINE BARS
+      // ═══════════════════════════════════════════════════
+      let dragState = null;
+
+      function getTimelineContainer() {
+        // The container holding hour labels + bars
+        const bars = document.querySelectorAll(".pill-bar");
+        for (const bar of bars) {
+          if (bar.style.display !== "none") {
+            // The flex container inside the bar
+            const flexDiv = bar.querySelector("div");
+            if (flexDiv) {
+              const trackDiv =
+                flexDiv.querySelector('div[style*="position:relative"]') ||
+                flexDiv.children[1];
+              return trackDiv;
+            }
+          }
+        }
+        return null;
+      }
+
+      function percentToHour(pct) {
+        const h = TIMELINE_START + (pct / 100) * TIMELINE_HOURS;
+        return h;
+      }
+
+      function startDrag(e, pillId) {
+        e.preventDefault();
+        const log = getPillLog();
+        if (!log.pills[pillId]) return;
+
+        const fillEl = document.getElementById("bar-" + pillId + "-fill");
+        const trackEl = fillEl.parentElement;
+        const rect = trackEl.getBoundingClientRect();
+
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const startX = clientX;
+        const origLeft = parseFloat(fillEl.style.left) || 0;
+
+        fillEl.style.cursor = "grabbing";
+
+        dragState = {
+          pillId,
+          fillEl,
+          trackEl,
+          rect,
+          startX,
+          origLeft,
+        };
+      }
+
+      document.addEventListener("mousemove", handleDrag);
+      document.addEventListener("touchmove", handleDrag, { passive: false });
+
+      function handleDrag(e) {
+        if (!dragState) return;
+        e.preventDefault();
+
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const dx = clientX - dragState.startX;
+        const dxPct = (dx / dragState.rect.width) * 100;
+        let newLeft = dragState.origLeft + dxPct;
+
+        // Clamp
+        newLeft = Math.max(0, Math.min(95, newLeft));
+
+        // Calculate new time
+        const newHour = percentToHour(newLeft);
+        const hours = Math.floor(newHour) % 24;
+        const mins = Math.round((newHour % 1) * 60);
+
+        // Update time input live
+        const timeInput = document.getElementById("time-" + dragState.pillId);
+        if (timeInput) {
+          timeInput.value =
+            String(hours).padStart(2, "0") +
+            ":" +
+            String(mins).padStart(2, "0");
+        }
+
+        // Update time display
+        const timeSpan = document.getElementById(dragState.pillId + "-time");
+        if (timeSpan) {
+          timeSpan.textContent =
+            "⏰ " +
+            String(hours).padStart(2, "0") +
+            ":" +
+            String(mins).padStart(2, "0");
+        }
+
+        // Move the bar visually
+        const data = PILL_DATA[dragState.pillId];
+        const fadeHours = data.durationMin / 60;
+        const endPct = hourToPercent(newHour + fadeHours);
+        dragState.fillEl.style.left = newLeft + "%";
+        dragState.fillEl.style.width = Math.max(1, endPct - newLeft) + "%";
+      }
+
+      document.addEventListener("mouseup", endDrag);
+      document.addEventListener("touchend", endDrag);
+
+      function endDrag() {
+        if (!dragState) return;
+
+        dragState.fillEl.style.cursor = "grab";
+
+        // Save the new time
+        const newLeft = parseFloat(dragState.fillEl.style.left);
+        const newHour = percentToHour(newLeft);
+        const hours = Math.floor(newHour) % 24;
+        const mins = Math.round((newHour % 1) * 60);
+
+        const log = getPillLog();
+        const now = new Date();
+        now.setHours(hours, mins, 0, 0);
+        log.pills[dragState.pillId].time = now.toISOString();
+        log.pills[dragState.pillId].timeStr = now.toLocaleTimeString("pt-PT", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        savePillLog(log);
+
+        dragState = null;
+        updatePillUI();
+      }
+
+      // Attach drag listeners to bar fills
+      function attachDragListeners() {
+        ["concerta", "rubifen", "propranolol", "alprazolam"].forEach(
+          (pillId) => {
+            const fillEl = document.getElementById("bar-" + pillId + "-fill");
+            if (fillEl) {
+              fillEl.style.cursor = "grab";
+              fillEl.addEventListener("mousedown", (e) => startDrag(e, pillId));
+              fillEl.addEventListener(
+                "touchstart",
+                (e) => startDrag(e, pillId),
+                { passive: false },
+              );
+            }
+          },
+        );
+      }
+      attachDragListeners();
     </script>
   </body>
 </html>
