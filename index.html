@@ -1402,6 +1402,16 @@
         >
           <span class="icon">📐</span> Frameworks & Playbooks
         </a>
+        <a href="#" onclick="showSection('fw-tree')" data-section="fw-tree">
+          <span class="icon">🌳</span> Framework Finder
+        </a>
+        <a
+          href="#"
+          onclick="showSection('typical-case')"
+          data-section="typical-case"
+        >
+          <span class="icon">🎯</span> Model Case
+        </a>
         <a href="#" onclick="showSection('math')" data-section="math">
           <span class="icon">🔢</span> Formulas & Math
         </a>
@@ -3341,16 +3351,26 @@
           <h3>💊 Plano para Sexta (Game Day)</h3>
           <ul>
             <li><strong>09:00:</strong> Concerta 27mg + pequeno-almoço</li>
-            <li><strong>12:00-12:30:</strong> Almoço (sem Rubifen — guardar para mais tarde)</li>
-            <li><strong>13:30:</strong> Rubifen 20mg (com snack leve) — peak 14:30, ativo até ~17:00</li>
             <li>
-              <strong>14:00:</strong> Propranolol 20mg + Alprazolam 0,5mg <br /><em
-                style="font-size: 0.88em; color: var(--text-muted)"
-                >⏱️ Prop peak ~15:15 | Alp peak ~15:00-16:00 | Rubifen strong → tudo no pico às 15:30</em
+              <strong>12:00-12:30:</strong> Almoço (sem Rubifen — guardar para
+              mais tarde)
+            </li>
+            <li>
+              <strong>13:30:</strong> Rubifen 20mg (com snack leve) — peak
+              14:30, ativo até ~17:00
+            </li>
+            <li>
+              <strong>14:00:</strong> Propranolol 20mg + Alprazolam 0,5mg
+              <br /><em style="font-size: 0.88em; color: var(--text-muted)"
+                >⏱️ Prop peak ~15:15 | Alp peak ~15:00-16:00 | Rubifen strong →
+                tudo no pico às 15:30</em
               >
             </li>
             <li><strong>15:30:</strong> Entrevista BCG 🏆 (tudo no pico!)</li>
-            <li><strong>~17:30:</strong> Fim da entrevista — medicação ainda ativa ✅</li>
+            <li>
+              <strong>~17:30:</strong> Fim da entrevista — medicação ainda ativa
+              ✅
+            </li>
             <li><strong>21:00:</strong> Britellix 15mg + Aerius</li>
           </ul>
         </div>
@@ -3677,6 +3697,42 @@
                 "
               ></span>
             </div>
+            <div
+              style="
+                padding: 10px;
+                border: 2px solid #00bcd4;
+                border-radius: 8px;
+                background: rgba(0, 188, 212, 0.05);
+                grid-column: span 2;
+              "
+            >
+              <strong style="color: #00bcd4">💊 Aerius 5mg</strong><br />
+              <small>Anti-histamínico — tomar à meia-noite (~00h)</small><br />
+              <button
+                onclick="takePill('aerius')"
+                id="btn-aerius"
+                style="
+                  margin-top: 6px;
+                  padding: 6px 16px;
+                  border-radius: 6px;
+                  border: none;
+                  background: #00bcd4;
+                  color: white;
+                  cursor: pointer;
+                  font-weight: bold;
+                "
+              >
+                Tomei
+              </button>
+              <span
+                id="aerius-time"
+                style="
+                  margin-left: 8px;
+                  font-size: 0.88em;
+                  color: var(--text-muted);
+                "
+              ></span>
+            </div>
           </div>
 
           <!-- VISUAL TIMELINE -->
@@ -3914,6 +3970,43 @@
                   >
                     <div
                       id="bar-britellix-fill"
+                      style="
+                        position: absolute;
+                        height: 100%;
+                        border-radius: 4px;
+                        cursor: grab;
+                      "
+                    ></div>
+                  </div>
+                </div>
+              </div>
+              <div
+                id="bar-aerius"
+                class="pill-bar"
+                style="display: none; margin-bottom: 6px"
+              >
+                <div style="display: flex; align-items: center; gap: 8px">
+                  <span
+                    style="
+                      font-size: 0.8em;
+                      width: 100px;
+                      color: #00bcd4;
+                      font-weight: bold;
+                    "
+                    >Aerius</span
+                  >
+                  <div
+                    style="
+                      flex: 1;
+                      position: relative;
+                      height: 32px;
+                      background: var(--border);
+                      border-radius: 4px;
+                      overflow: visible;
+                    "
+                  >
+                    <div
+                      id="bar-aerius-fill"
                       style="
                         position: absolute;
                         height: 100%;
@@ -7811,59 +7904,69 @@
               <div id="cg-case-text"></div>
             </div>
 
-            <!-- INDUSTRY INTRO CARD (context during case) -->
-            <div
-              id="cg-industry-intro"
-              style="
-                background: linear-gradient(135deg, #f8fafe, #eef5ff);
-                border: 1px solid #cde0f5;
-                border-radius: 12px;
-                padding: 16px 20px;
-                margin-bottom: 16px;
-                display: none;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-              "
+            <!-- INDUSTRY INTRO CARD (collapsed by default) -->
+            <details
+              id="cg-industry-intro-details"
+              style="margin-bottom: 16px; display: none"
             >
-              <div
+              <summary
                 style="
+                  cursor: pointer;
+                  font-weight: 600;
+                  font-size: 0.88em;
+                  color: #1565c0;
+                  padding: 8px 12px;
+                  background: linear-gradient(135deg, #f8fafe, #eef5ff);
+                  border: 1px solid #cde0f5;
+                  border-radius: 8px;
+                  list-style: none;
                   display: flex;
                   align-items: center;
-                  gap: 8px;
-                  margin-bottom: 6px;
+                  gap: 6px;
                 "
               >
                 <span
                   id="cg-industry-intro-icon"
-                  style="font-size: 1.3em"
+                  style="font-size: 1.2em"
                 ></span>
-                <span
-                  style="font-weight: 700; font-size: 0.92em; color: #1565c0"
-                  id="cg-industry-intro-title"
-                ></span>
-              </div>
+                <span id="cg-industry-intro-title"></span>
+                <span style="margin-left: auto; font-size: 0.8em; color: #888"
+                  >▼ Industry Brief</span
+                >
+              </summary>
               <div
                 style="
-                  font-size: 0.85em;
-                  color: #444;
-                  line-height: 1.55;
-                  margin-bottom: 8px;
+                  background: linear-gradient(135deg, #f8fafe, #eef5ff);
+                  border: 1px solid #cde0f5;
+                  border-top: none;
+                  border-radius: 0 0 12px 12px;
+                  padding: 14px 20px;
                 "
-                id="cg-industry-intro-text"
-              ></div>
-              <div style="display: flex; gap: 8px; flex-wrap: wrap">
-                <span
-                  id="cg-industry-intro-metrics"
+              >
+                <div
                   style="
-                    background: white;
-                    border: 1px solid #e0e0e0;
-                    border-radius: 6px;
-                    padding: 4px 10px;
-                    font-size: 0.75em;
-                    color: #555;
+                    font-size: 0.85em;
+                    color: #444;
+                    line-height: 1.55;
+                    margin-bottom: 8px;
                   "
-                ></span>
+                  id="cg-industry-intro-text"
+                ></div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap">
+                  <span
+                    id="cg-industry-intro-metrics"
+                    style="
+                      background: white;
+                      border: 1px solid #e0e0e0;
+                      border-radius: 6px;
+                      padding: 4px 10px;
+                      font-size: 0.75em;
+                      color: #555;
+                    "
+                  ></span>
+                </div>
               </div>
-            </div>
+            </details>
 
             <!-- SECTION CONTENT (swapped by navigation) -->
             <div id="cg-section-content">
@@ -7871,13 +7974,14 @@
               <div
                 id="cg-section-prompt"
                 style="
-                  background: #f8f9fa;
-                  border-left: 4px solid var(--bcg-green);
-                  border-radius: 0 8px 8px 0;
-                  padding: 16px 20px;
+                  background: #1a1a1a;
+                  color: #e0e0e0;
+                  border-radius: 12px;
+                  padding: 20px 24px;
                   margin-bottom: 16px;
-                  font-size: 0.95em;
-                  line-height: 1.6;
+                  font-family: &quot;Courier New&quot;, monospace;
+                  font-size: 0.92em;
+                  line-height: 1.7;
                 "
               ></div>
 
@@ -7969,6 +8073,23 @@
 
             <!-- NAVIGATION BUTTONS -->
             <div style="display: flex; gap: 12px; margin-top: 20px">
+              <button
+                id="cg-q1-btn"
+                onclick="cgGoToSection(1)"
+                style="
+                  padding: 12px 16px;
+                  background: transparent;
+                  color: var(--bcg-green);
+                  border: 2px solid var(--bcg-green);
+                  border-radius: 8px;
+                  font-size: 0.85em;
+                  font-weight: 600;
+                  cursor: pointer;
+                  display: none;
+                "
+              >
+                ↩ Q1
+              </button>
               <button
                 id="cg-prev-btn"
                 onclick="cgPrevSection()"
@@ -12726,6 +12847,884 @@
           </p>
         </div>
       </div>
+
+      <!-- ═══════════════════════════════════════════════════════════ -->
+      <!-- FRAMEWORK DECISION TREE                                     -->
+      <!-- ═══════════════════════════════════════════════════════════ -->
+      <div class="section" id="fw-tree">
+        <div class="section-title">🌳 Framework Finder</div>
+        <div class="section-subtitle">
+          Answer yes/no questions → get the ideal framework for any case
+        </div>
+
+        <!-- WHY FRAMEWORKS AREN'T ALL "JUST PROFITABILITY" -->
+        <div class="card card-accent" style="margin-bottom: 20px">
+          <h3>💡 "But isn't every case just about profits?"</h3>
+          <p style="margin-bottom: 10px">
+            You're partly right —
+            <strong>every company ultimately wants profit</strong>. But the
+            <em>question being asked</em> determines the structure, not the end
+            goal. Think of it like medicine: every patient wants health, but the
+            doctor picks a different treatment based on the <em>symptom</em>.
+          </p>
+          <table style="font-size: 0.9em">
+            <thead>
+              <tr>
+                <th>Question Type</th>
+                <th>Why NOT just "Profitability"</th>
+                <th>Right Framework</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>"Should we enter market X?"</td>
+                <td>
+                  You need to assess market size, capability fit, and
+                  competitive dynamics <em>before</em> you can even estimate
+                  profit
+                </td>
+                <td>Market Entry</td>
+              </tr>
+              <tr>
+                <td>"How should we grow?"</td>
+                <td>
+                  Growth has different levers (core vs. adjacent vs. new) that
+                  aren't captured by Revenue = P×Q
+                </td>
+                <td>Growth</td>
+              </tr>
+              <tr>
+                <td>"Competitor just launched X"</td>
+                <td>
+                  You need to assess <em>threat magnitude</em> and
+                  <em>response options</em> — profitability is the outcome, not
+                  the analysis
+                </td>
+                <td>Competitive Response</td>
+              </tr>
+              <tr>
+                <td>"Should we buy Company Y?"</td>
+                <td>
+                  You need standalone valuation + synergies + integration risk —
+                  much richer than cost/revenue split
+                </td>
+                <td>M&A</td>
+              </tr>
+              <tr>
+                <td>"Our operations are slow"</td>
+                <td>
+                  Process optimization looks at bottlenecks, capacity,
+                  utilization — not revenue/cost
+                </td>
+                <td>Process Optimization</td>
+              </tr>
+            </tbody>
+          </table>
+          <p
+            style="margin-top: 10px; color: var(--bcg-green); font-weight: 600"
+          >
+            TL;DR: The framework matches the QUESTION, not the end goal.
+            Profitability is for "why are profits declining?" Everything else
+            has a more specific tool.
+          </p>
+        </div>
+
+        <!-- INTERACTIVE DECISION TREE -->
+        <div class="card" style="padding: 24px">
+          <h3 style="margin-bottom: 16px">🔀 Interactive Framework Finder</h3>
+          <p
+            style="
+              margin-bottom: 16px;
+              color: var(--text-muted);
+              font-size: 0.9em;
+            "
+          >
+            Answer the questions below. The tree will guide you to the best
+            framework in 2-3 clicks.
+          </p>
+          <div id="fw-tree-container" style="min-height: 200px"></div>
+          <div
+            id="fw-tree-result"
+            style="
+              display: none;
+              margin-top: 20px;
+              padding: 20px;
+              background: #1a1a1a;
+              border-radius: 12px;
+              border: 2px solid var(--bcg-green);
+            "
+          ></div>
+          <button
+            onclick="fwTreeReset()"
+            style="
+              margin-top: 16px;
+              padding: 8px 20px;
+              background: var(--bcg-green);
+              color: white;
+              border: none;
+              border-radius: 6px;
+              cursor: pointer;
+              font-weight: 600;
+            "
+          >
+            🔄 Start Over
+          </button>
+        </div>
+
+        <!-- QUICK REFERENCE CHEAT SHEET -->
+        <div
+          class="collapsible"
+          onclick="toggleCollapsible(this)"
+          style="margin-top: 20px"
+        >
+          📋 Quick Reference — When to Use Each Framework
+        </div>
+        <div class="collapsible-content">
+          <table style="font-size: 0.85em">
+            <thead>
+              <tr>
+                <th>Framework</th>
+                <th>Trigger Words in Prompt</th>
+                <th>Key Question</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>💰 Profitability</strong></td>
+                <td>
+                  "profits declining", "margins shrinking", "losing money",
+                  "cost overruns"
+                </td>
+                <td>Why is profit changing?</td>
+              </tr>
+              <tr>
+                <td><strong>📈 Growth</strong></td>
+                <td>
+                  "grow revenue", "expand", "scale", "increase market share"
+                </td>
+                <td>How to grow the business?</td>
+              </tr>
+              <tr>
+                <td><strong>📉 Cost Reduction</strong></td>
+                <td>
+                  "cut costs", "reduce expenses", "improve efficiency", "budget
+                  pressure"
+                </td>
+                <td>How to spend less?</td>
+              </tr>
+              <tr>
+                <td><strong>🚀 Market Entry</strong></td>
+                <td>
+                  "enter market", "new geography", "new segment", "launch in"
+                </td>
+                <td>Should we enter? How?</td>
+              </tr>
+              <tr>
+                <td><strong>🆕 New Product</strong></td>
+                <td>"launch product", "new offering", "product strategy"</td>
+                <td>How to launch successfully?</td>
+              </tr>
+              <tr>
+                <td><strong>🏷️ Pricing</strong></td>
+                <td>"set price", "pricing strategy", "premium vs value"</td>
+                <td>What should we charge?</td>
+              </tr>
+              <tr>
+                <td><strong>💼 Investment</strong></td>
+                <td>"invest in", "CapEx decision", "ROI", "build vs buy"</td>
+                <td>Is this worth the investment?</td>
+              </tr>
+              <tr>
+                <td><strong>🤝 M&A</strong></td>
+                <td>"acquire", "merger", "buy company", "target valuation"</td>
+                <td>Should we buy? At what price?</td>
+              </tr>
+              <tr>
+                <td><strong>⚔️ Competitive Response</strong></td>
+                <td>
+                  "competitor launched", "price war", "market share loss to
+                  rival"
+                </td>
+                <td>How to respond to threat?</td>
+              </tr>
+              <tr>
+                <td><strong>⚙️ Process Optimization</strong></td>
+                <td>
+                  "operations slow", "bottleneck", "capacity", "improve
+                  throughput"
+                </td>
+                <td>How to fix the process?</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════════════ -->
+      <!-- TYPICAL CASE — MODEL BCG CASE WITH TIPS                     -->
+      <!-- ═══════════════════════════════════════════════════════════ -->
+      <div class="section" id="typical-case">
+        <div class="section-title">🎯 Model Case — Full Walkthrough</div>
+        <div class="section-subtitle">
+          A realistic BCG-style case with ideal responses, exhibit analysis, and
+          CaseCoach tips at every step
+        </div>
+
+        <!-- THE CASE PROMPT -->
+        <div
+          class="card"
+          style="
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 24px;
+            margin-bottom: 20px;
+          "
+        >
+          <h3 style="color: #4caf50; margin-bottom: 12px">
+            📋 THE CASE — EcoBottle Inc.
+          </h3>
+          <p
+            style="
+              color: #e0e0e0;
+              font-family: &quot;Courier New&quot;, monospace;
+              line-height: 1.7;
+              font-size: 0.95em;
+            "
+          >
+            Our client is <strong style="color: #81c784">EcoBottle</strong>, a
+            mid-sized European manufacturer of reusable water bottles. They have
+            <strong style="color: #81c784">€120M in annual revenue</strong> and
+            have been profitable for the last 10 years.<br /><br />
+            Over the past
+            <strong style="color: #ff8a65"
+              >18 months, profits have declined by 25%</strong
+            >
+            despite revenue remaining roughly flat. The CEO has hired BCG to
+            understand
+            <strong style="color: #fff176"
+              >why profits are falling and what to do about it</strong
+            >.<br /><br />
+            How would you approach this?
+          </p>
+        </div>
+
+        <!-- SECTION A: STRUCTURING -->
+        <div
+          class="card"
+          style="margin-bottom: 20px; border-left: 4px solid var(--bcg-green)"
+        >
+          <h3>🅰️ Section 1: Structuring (The First 60 Seconds)</h3>
+
+          <div class="collapsible" onclick="toggleCollapsible(this)">
+            💡 Tips BEFORE You Start
+          </div>
+          <div class="collapsible-content">
+            <div
+              style="
+                background: #1a1a1a;
+                padding: 16px;
+                border-radius: 8px;
+                color: #e0e0e0;
+                font-size: 0.9em;
+                line-height: 1.6;
+              "
+            >
+              <p>
+                🎯 <strong style="color: #4caf50">AIM Test</strong> — Your
+                structure must be: <strong>A</strong>nswer-focused (addresses
+                the question), <strong>I</strong>nsightful (tailored to client),
+                <strong>M</strong>ECE (no overlaps, no gaps).
+              </p>
+              <p style="margin-top: 8px">
+                ⏱️
+                <strong style="color: #fff176"
+                  >Take 60 seconds of silence.</strong
+                >
+                Say: "Let me take a minute to structure my thoughts." The
+                interviewer EXPECTS this. Don't rush.
+              </p>
+              <p style="margin-top: 8px">
+                📝 <strong style="color: #81c784">Write it down.</strong> Draw
+                your issue tree on paper while thinking. You'll present from it.
+              </p>
+              <p style="margin-top: 8px">
+                🔑
+                <strong style="color: #ff8a65">Framework Selection:</strong> The
+                prompt says "profits declining + revenue flat" → this is a
+                <strong>Profitability case</strong>. The equation: Profit =
+                Revenue - Costs. Since revenue is flat, the problem is likely on
+                the COST side. But you MUST check both.
+              </p>
+              <p style="margin-top: 8px">
+                🚫 <strong style="color: #ef5350">DON'T:</strong> Just list
+                "Revenue and Costs" generically. <strong>Tailor it</strong> to
+                EcoBottle — mention manufacturing, raw materials, distribution.
+                Show you listened to the brief.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="collapsible"
+            onclick="toggleCollapsible(this)"
+            style="margin-top: 8px"
+          >
+            ✅ Ideal Response — Structuring
+          </div>
+          <div class="collapsible-content">
+            <div
+              style="
+                background: #1a1a1a;
+                padding: 16px;
+                border-radius: 8px;
+                color: #e0e0e0;
+                font-size: 0.9em;
+                line-height: 1.7;
+                font-family: &quot;Courier New&quot;, monospace;
+              "
+            >
+              <p>"Thank you. Let me take a minute to organize my thoughts."</p>
+              <p style="margin-top: 12px">
+                <em>[60 seconds of silence — write issue tree]</em>
+              </p>
+              <p style="margin-top: 12px">
+                "To understand EcoBottle's profit decline, I'd structure my
+                analysis around two main areas:
+              </p>
+              <p style="margin-top: 8px">
+                <strong style="color: #4caf50">1. REVENUE</strong> — You
+                mentioned revenue is roughly flat, but I'd want to dig deeper:
+              </p>
+              <ul style="margin-left: 20px; color: #b0bec5">
+                <li>
+                  <strong>Price:</strong> Have average selling prices changed?
+                  Any discounting pressure?
+                </li>
+                <li>
+                  <strong>Volume:</strong> Is unit volume stable? Any mix shift
+                  toward lower-margin products?
+                </li>
+                <li>
+                  <strong>Product mix:</strong> EcoBottle may have multiple
+                  product lines — are the profitable ones growing or shrinking?
+                </li>
+              </ul>
+              <p style="margin-top: 8px">
+                <strong style="color: #ff8a65">2. COSTS</strong> — Since revenue
+                is flat but profits fell 25%, this is likely where the problem
+                sits:
+              </p>
+              <ul style="margin-left: 20px; color: #b0bec5">
+                <li>
+                  <strong>Variable costs:</strong> Raw materials (plastics,
+                  stainless steel), manufacturing, packaging, logistics
+                </li>
+                <li>
+                  <strong>Fixed costs:</strong> Rent, salaries, overhead — any
+                  recent hires or facility expansions?
+                </li>
+                <li>
+                  <strong>One-off costs:</strong> Any restructuring,
+                  write-downs, or investments?
+                </li>
+              </ul>
+              <p style="margin-top: 12px">
+                I'd prioritize the COST side given the revenue clue, and I'd
+                want to separate the 18-month timeline into periods to spot when
+                the decline started.
+              </p>
+              <p style="margin-top: 8px">
+                Shall I start with the cost analysis?"
+              </p>
+            </div>
+            <div
+              style="
+                margin-top: 12px;
+                padding: 12px;
+                background: rgba(76, 175, 80, 0.1);
+                border-radius: 8px;
+                border: 1px solid rgba(76, 175, 80, 0.3);
+              "
+            >
+              <strong style="color: #4caf50">Why this is good:</strong> ①
+              Tailored to EcoBottle (mentions manufacturing, raw materials) ②
+              MECE (Revenue/Costs covers everything) ③ Shows hypothesis ("likely
+              cost side") ④ Proposes priority ⑤ Asks for permission — shows case
+              leadership
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION B: EXHIBITS & MATH -->
+        <div
+          class="card"
+          style="margin-bottom: 20px; border-left: 4px solid #ff8a65"
+        >
+          <h3>🅱️ Section 2: Exhibits & Math Calculation</h3>
+
+          <div
+            style="
+              background: #1a1a1a;
+              padding: 20px;
+              border-radius: 8px;
+              margin-bottom: 16px;
+              color: #e0e0e0;
+              font-family: &quot;Courier New&quot;, monospace;
+              font-size: 0.9em;
+              line-height: 1.6;
+            "
+          >
+            <p style="color: #ff8a65; font-weight: bold; margin-bottom: 12px">
+              📊 EXHIBIT — EcoBottle Cost Breakdown (€M)
+            </p>
+            <pre
+              style="
+                color: #b0bec5;
+                background: #262626;
+                padding: 14px;
+                border-radius: 6px;
+                border: 1px solid #444;
+                font-size: 0.88em;
+                white-space: pre;
+              "
+            >
+                        Year 1 (Prior)    Year 2 (Current)    Change
+Revenue                     €120M             €122M            +1.7%
+─────────────────────────────────────────────────────────────────────
+Raw Materials                €32M              €44M           +37.5%
+Manufacturing Labor          €18M              €19M            +5.6%
+Packaging & Logistics        €14M              €18M           +28.6%
+─────────────────────────────────────────────────────────────────────
+Total Variable Costs         €64M              €81M           +26.6%
+─────────────────────────────────────────────────────────────────────
+Rent & Facilities            €12M              €12M             0%
+Salaries & Overhead          €20M              €21M            +5%
+─────────────────────────────────────────────────────────────────────
+Total Fixed Costs            €32M              €33M            +3.1%
+─────────────────────────────────────────────────────────────────────
+TOTAL COSTS                  €96M             €114M           +18.8%
+─────────────────────────────────────────────────────────────────────
+PROFIT                       €24M               €8M           -66.7%
+Margin                       20.0%              6.6%          -13.4pp
+</pre
+            >
+            <p style="margin-top: 12px; color: #fff176">
+              The interviewer asks: "What do you see? What's driving the profit
+              decline?"
+            </p>
+          </div>
+
+          <div class="collapsible" onclick="toggleCollapsible(this)">
+            💡 Tips for Exhibit Analysis
+          </div>
+          <div class="collapsible-content">
+            <div
+              style="
+                background: #1a1a1a;
+                padding: 16px;
+                border-radius: 8px;
+                color: #e0e0e0;
+                font-size: 0.9em;
+                line-height: 1.6;
+              "
+            >
+              <p>
+                📐
+                <strong style="color: #4caf50"
+                  >Read the exhibit for 15-20 seconds</strong
+                >
+                before speaking. Say: "Let me take a moment to review this."
+              </p>
+              <p style="margin-top: 8px">
+                🔍 <strong style="color: #fff176">The 3-step approach:</strong>
+              </p>
+              <ol style="margin-left: 20px; color: #b0bec5">
+                <li>
+                  <strong>HEADLINE:</strong> What's the big picture message?
+                  (Profit crashed)
+                </li>
+                <li>
+                  <strong>DRIVER:</strong> Which line items changed most? (Raw
+                  materials +37.5%, Packaging +28.6%)
+                </li>
+                <li>
+                  <strong>SO WHAT:</strong> What does this mean for the client?
+                  Why? Next steps?
+                </li>
+              </ol>
+              <p style="margin-top: 8px">
+                🧮 <strong style="color: #ff8a65">Quick Math Check:</strong>
+              </p>
+              <ul style="margin-left: 20px; color: #b0bec5">
+                <li>Profit drop: €24M → €8M = <strong>€16M decline</strong></li>
+                <li>Revenue change: +€2M (negligible)</li>
+                <li>Cost change: +€18M (this is the culprit)</li>
+                <li>
+                  Biggest cost driver: Raw materials +€12M (75% of the €16M
+                  loss!)
+                </li>
+                <li>Second: Packaging & logistics +€4M (25% of the loss)</li>
+              </ul>
+              <p style="margin-top: 8px">
+                🚫 <strong style="color: #ef5350">DON'T</strong> just read
+                numbers aloud. The interviewer can read. Add
+                <em>interpretation</em> and <em>business insight</em>.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="collapsible"
+            onclick="toggleCollapsible(this)"
+            style="margin-top: 8px"
+          >
+            ✅ Ideal Response — Exhibit Analysis
+          </div>
+          <div class="collapsible-content">
+            <div
+              style="
+                background: #1a1a1a;
+                padding: 16px;
+                border-radius: 8px;
+                color: #e0e0e0;
+                font-size: 0.9em;
+                line-height: 1.7;
+                font-family: &quot;Courier New&quot;, monospace;
+              "
+            >
+              <p>"Let me review this for a moment."</p>
+              <p style="margin-top: 12px"><em>[15 seconds]</em></p>
+              <p style="margin-top: 12px">
+                <strong style="color: #4caf50">HEADLINE:</strong> "Profit has
+                dropped from €24M to €8M — a 67% decline — while revenue is
+                essentially flat at €122M. This confirms our hypothesis: it's a
+                cost problem, not a revenue problem."
+              </p>
+              <p style="margin-top: 12px">
+                <strong style="color: #ff8a65">KEY DRIVER:</strong> "Total costs
+                increased by €18M. Breaking that down:
+              </p>
+              <ul style="margin-left: 20px; color: #b0bec5">
+                <li>
+                  Raw materials alone account for
+                  <strong>€12M of the €18M increase</strong> — that's two-thirds
+                  of the entire cost overrun
+                </li>
+                <li>Packaging & logistics added another €4M</li>
+                <li>Fixed costs barely moved — just €1M</li>
+              </ul>
+              <p style="margin-top: 12px">
+                <strong style="color: #fff176">SO WHAT:</strong> "This is
+                overwhelmingly a variable cost problem, concentrated in raw
+                materials. My hypotheses would be:
+              </p>
+              <ol style="margin-left: 20px; color: #b0bec5">
+                <li>
+                  Commodity price inflation (steel, plastics globally more
+                  expensive?)
+                </li>
+                <li>
+                  Supplier-specific issue (lost negotiation leverage? switched
+                  suppliers?)
+                </li>
+                <li>
+                  Product mix change (shifted to more expensive materials like
+                  stainless steel?)
+                </li>
+              </ol>
+              <p style="margin-top: 8px">
+                I'd want to investigate which of these three is the root cause.
+                Can you tell me if raw material prices have moved globally in
+                this period?"
+              </p>
+            </div>
+            <div
+              style="
+                margin-top: 12px;
+                padding: 12px;
+                background: rgba(255, 138, 101, 0.1);
+                border-radius: 8px;
+                border: 1px solid rgba(255, 138, 101, 0.3);
+              "
+            >
+              <strong style="color: #ff8a65">CaseCoach Scoring:</strong> ①
+              Quantified the driver (€12M/€18M = 67%) ② Gave 3 hypotheses ③
+              Asked a specific follow-up question ④ Used "headline → driver → so
+              what" ⑤ Tied back to original hypothesis
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION C: SYNTHESIS & RECOMMENDATION -->
+        <div
+          class="card"
+          style="margin-bottom: 20px; border-left: 4px solid #fff176"
+        >
+          <h3>🅲 Section 3: Synthesis & Recommendation</h3>
+
+          <div
+            style="
+              background: #1a1a1a;
+              padding: 16px;
+              border-radius: 8px;
+              margin-bottom: 16px;
+              color: #e0e0e0;
+              font-size: 0.9em;
+              line-height: 1.6;
+            "
+          >
+            <p style="color: #fff176; font-weight: bold">
+              The interviewer says:
+            </p>
+            <p
+              style="
+                font-family: &quot;Courier New&quot;, monospace;
+                margin-top: 8px;
+              "
+            >
+              "You're right — global steel prices rose 40% and the company
+              didn't hedge or renegotiate. They also shifted 30% of production
+              to premium stainless steel bottles without adjusting pricing. What
+              would you recommend to the CEO?"
+            </p>
+          </div>
+
+          <div class="collapsible" onclick="toggleCollapsible(this)">
+            💡 Tips for Synthesis
+          </div>
+          <div class="collapsible-content">
+            <div
+              style="
+                background: #1a1a1a;
+                padding: 16px;
+                border-radius: 8px;
+                color: #e0e0e0;
+                font-size: 0.9em;
+                line-height: 1.6;
+              "
+            >
+              <p>
+                📋
+                <strong style="color: #4caf50"
+                  >Use the Pyramid structure: Lead with the answer.</strong
+                >
+              </p>
+              <ul style="margin-left: 20px; color: #b0bec5">
+                <li>
+                  <strong>SITUATION</strong> (1 sentence) — remind them of the
+                  problem
+                </li>
+                <li>
+                  <strong>FINDING</strong> (1-2 sentences) — your diagnosis
+                </li>
+                <li>
+                  <strong>RECOMMENDATION</strong> (2-3 points) — prioritized by
+                  impact & timeline
+                </li>
+                <li>
+                  <strong>NEXT STEPS</strong> (1-2 sentences) — what you'd do
+                  next week
+                </li>
+              </ul>
+              <p style="margin-top: 8px">
+                ⏱️
+                <strong style="color: #fff176"
+                  >Keep it under 90 seconds.</strong
+                >
+                CEOs want clarity, not exhaustiveness.
+              </p>
+              <p style="margin-top: 8px">
+                💪 <strong style="color: #ff8a65">Be decisive.</strong> Don't
+                say "maybe" or "it depends." Pick a side and defend it. You can
+                add nuance, but lead with conviction.
+              </p>
+              <p style="margin-top: 8px">
+                🔢 <strong style="color: #81c784">Use numbers.</strong> "This
+                could save €8-10M" is way better than "significant savings."
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="collapsible"
+            onclick="toggleCollapsible(this)"
+            style="margin-top: 8px"
+          >
+            ✅ Ideal Response — Synthesis & Recommendation
+          </div>
+          <div class="collapsible-content">
+            <div
+              style="
+                background: #1a1a1a;
+                padding: 16px;
+                border-radius: 8px;
+                color: #e0e0e0;
+                font-size: 0.9em;
+                line-height: 1.7;
+                font-family: &quot;Courier New&quot;, monospace;
+              "
+            >
+              <p>
+                <strong style="color: #4caf50">SITUATION:</strong> "EcoBottle's
+                profits fell 67% — from €24M to €8M — while revenue stayed
+                flat."
+              </p>
+              <p style="margin-top: 12px">
+                <strong style="color: #ff8a65">FINDING:</strong> "The root cause
+                is a €12M increase in raw material costs, driven by two factors:
+                unhedged exposure to a 40% global steel price increase, and a
+                shift to premium stainless steel without corresponding price
+                adjustments."
+              </p>
+              <p style="margin-top: 12px">
+                <strong style="color: #fff176"
+                  >RECOMMENDATION — I'd propose three actions, in priority
+                  order:</strong
+                >
+              </p>
+              <ol style="margin-left: 20px; color: #b0bec5; line-height: 1.8">
+                <li>
+                  <strong>IMMEDIATE (0-3 months):</strong> Raise prices on the
+                  premium stainless steel line by 15-20%. These products target
+                  eco-conscious consumers with higher willingness to pay — we're
+                  essentially giving away margin. Estimated recovery:
+                  <strong>€3-5M annually.</strong>
+                </li>
+                <li>
+                  <strong>SHORT-TERM (3-6 months):</strong> Renegotiate supplier
+                  contracts and implement commodity hedging. Lock in 12-month
+                  fixed-price contracts for steel and plastic. Potential
+                  savings: <strong>€4-6M</strong> based on volume leverage.
+                </li>
+                <li>
+                  <strong>MEDIUM-TERM (6-12 months):</strong> Optimize the
+                  product portfolio — analyze which SKUs are margin-positive
+                  after the cost increase. Consider discontinuing the
+                  lowest-margin variants and focusing on the sweet spot between
+                  volume and margin.
+                </li>
+              </ol>
+              <p style="margin-top: 12px">
+                <strong style="color: #81c784">NEXT STEPS:</strong> "This week,
+                I'd start with a customer price sensitivity analysis for the
+                premium line, and simultaneously request three competing bids
+                from alternative steel suppliers to establish negotiation
+                leverage."
+              </p>
+            </div>
+            <div
+              style="
+                margin-top: 12px;
+                padding: 12px;
+                background: rgba(255, 241, 118, 0.1);
+                border-radius: 8px;
+                border: 1px solid rgba(255, 241, 118, 0.3);
+              "
+            >
+              <strong style="color: #fff176">Why this scores high:</strong> ①
+              Leads with the answer (Pyramid) ② Quantified each recommendation
+              (€3-5M, €4-6M) ③ Prioritized by timeline (immediate → short →
+              medium) ④ Specific next steps for "this week" ⑤ Shows business
+              judgment (premium customers have higher WTP)
+            </div>
+          </div>
+        </div>
+
+        <!-- OVERALL CASE TIPS -->
+        <div class="card card-accent" style="margin-top: 20px">
+          <h3>📌 Master Tips — Apply to EVERY Case</h3>
+          <table style="font-size: 0.88em">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>CaseCoach Principle</th>
+                <th>How to Apply</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td><strong>Take time to think</strong></td>
+                <td>
+                  60s for structure, 15-20s before exhibit analysis. Silence is
+                  OK.
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td><strong>Lead with the headline</strong></td>
+                <td>
+                  Never start with details. Start: "The key finding is..." then
+                  support.
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td><strong>Quantify everything</strong></td>
+                <td>
+                  "€12M of €18M" > "most of the increase." Always fraction and
+                  percentage.
+                </td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td><strong>Hypothesis-driven</strong></td>
+                <td>
+                  State your hypothesis early: "I suspect this is a cost
+                  problem." Then test it.
+                </td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td><strong>Case leadership</strong></td>
+                <td>
+                  Suggest where to go next: "Shall I explore costs?" Don't wait
+                  to be told.
+                </td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td><strong>Tailor to the client</strong></td>
+                <td>
+                  Use the client's name and industry. "EcoBottle's raw
+                  materials" > "COGS"
+                </td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td><strong>AIM every structure</strong></td>
+                <td>
+                  Answer-focused, Insightful, MECE. Miss one = weak structure.
+                </td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td><strong>Pyramid your synthesis</strong></td>
+                <td>
+                  Answer → Supporting points → Next steps. Never bottom-up
+                  (building to the answer).
+                </td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td><strong>Be creative in recommendations</strong></td>
+                <td>
+                  Don't just say "reduce costs." HOW? Which costs? By how much?
+                  What trade-offs?
+                </td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td><strong>End strong — next steps</strong></td>
+                <td>
+                  Always close with "This week I'd...". Shows you're actionable,
+                  not theoretical.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </main>
 
     <!-- BACK TO TOP -->
@@ -12814,6 +13813,306 @@
         const content = el.nextElementSibling;
         content.classList.toggle("open");
       }
+
+      // ═══════════════════════════════════════════════════
+      // FRAMEWORK DECISION TREE — Interactive Logic Tree
+      // ═══════════════════════════════════════════════════
+      var FW_TREE = {
+        id: "root",
+        question: "What is the PRIMARY question in the case prompt?",
+        options: [
+          {
+            label: "Why are profits/margins declining?",
+            next: {
+              id: "profit1",
+              question:
+                "Does the prompt mention revenue is stable or declining?",
+              options: [
+                {
+                  label: "Revenue is flat/stable → cost problem",
+                  result: {
+                    name: "💰 Profitability (Cost-focused)",
+                    framework: "#1 — Profitability",
+                    tree: "Profit = Rev - Costs → Focus on Costs:\n├── Variable Costs (raw materials, COGS, logistics)\n└── Fixed Costs (rent, salaries, overhead)",
+                    why: "Revenue is fine, so the equation tells you costs are the culprit. Decompose costs into fixed vs variable, then find which line item jumped.",
+                    tip: "Always check BOTH sides even if one seems obvious. Say: 'Revenue is flat but I want to verify there's no mix shift hiding underneath.'",
+                  },
+                },
+                {
+                  label: "Revenue is declining too",
+                  result: {
+                    name: "💰 Profitability (Full decomposition)",
+                    framework: "#1 — Profitability",
+                    tree: "Profit = Rev - Costs\n├── Revenue: Price × Volume\n│   ├── Price (discounts? competition?)\n│   └── Volume (customers? frequency? mix?)\n└── Costs: Fixed + Variable",
+                    why: "Both levers might be broken. Decompose revenue into Price × Volume AND costs into Fixed + Variable. The interviewer wants to see which side matters MORE.",
+                    tip: "Prioritize: usually one side dominates (80/20). Find it fast and drill in.",
+                  },
+                },
+                {
+                  label: "Not sure / not stated",
+                  result: {
+                    name: "💰 Profitability (Full framework)",
+                    framework: "#1 — Profitability",
+                    tree: "Profit = Revenue - Costs\n├── Revenue = Price × Volume\n└── Costs = Fixed + Variable\nThen use clarifying questions to narrow.",
+                    why: "When in doubt, use the full profitability decomposition and ask: 'Do you have a sense of whether this is more of a revenue issue or a cost issue?'",
+                    tip: "This is the safest framework. It always works for profit-focused questions.",
+                  },
+                },
+              ],
+            },
+          },
+          {
+            label: "How to grow / increase revenue / expand",
+            next: {
+              id: "growth1",
+              question:
+                "Is the client already in the market they want to grow in?",
+              options: [
+                {
+                  label: "Yes — grow within existing market",
+                  result: {
+                    name: "📈 Growth (Core Business)",
+                    framework: "#2 — How to Grow a Business",
+                    tree: "Grow the core:\n├── Grow across current segments\n│   ├── Better products\n│   ├── Improved marketing\n│   └── Competitive pricing\n└── Invest in fastest-growing segments",
+                    why: "The client already plays here, so expansion is about doing MORE of what works or doing it BETTER. Not about new markets.",
+                    tip: "Unlike profitability, growth isn't about the equation — it's about LEVERS. Think: which customer segments, products, or channels have the most headroom?",
+                  },
+                },
+                {
+                  label: "No — wants to enter a new market/segment",
+                  result: {
+                    name: "🚀 Market Entry",
+                    framework: "#4 — Whether to Enter a New Market",
+                    tree: "Should we enter?\n├── Market Opportunity (size, growth, trends)\n├── Can We Win? (capabilities, competitors, barriers)\n└── Is It Worth It? (investment, breakeven, profit potential)",
+                    why: "Growth via NEW markets is fundamentally a Market Entry question. You need to assess attractiveness BEFORE you can plan how to grow there.",
+                    tip: "Don't use the Growth framework for new markets — it assumes you're already playing. Market Entry is about WHETHER to play.",
+                  },
+                },
+                {
+                  label: "Both / diversify / adjacencies",
+                  result: {
+                    name: "📈 Growth (Full — Core + Adjacent)",
+                    framework: "#2 — How to Grow + elements of #4",
+                    tree: "How to grow?\n├── Core: current segments × better execution\n├── Adjacent: new products to existing customers\n└── New: new markets entirely (→ Market Entry sub-analysis)",
+                    why: "The client wants to explore all growth avenues. Use Growth as the main frame but add Market Entry analysis for the 'new' bucket.",
+                    tip: "In the interview, say: 'I'd split growth into three buckets: core, adjacent, and new — and I'd prioritize by risk and speed to revenue.'",
+                  },
+                },
+              ],
+            },
+          },
+          {
+            label: "Should we enter market X / new geography / new segment?",
+            result: {
+              name: "🚀 Market Entry",
+              framework: "#4 — Whether to Enter a New Market",
+              tree: "Should we enter?\n├── Market Opportunity (TAM, growth, trends)\n├── Can We Win? (our capabilities vs. competitors)\n└── Is It Worth It? (investment, P&L, breakeven)",
+              why: "The question is WHETHER to enter, not HOW to grow. You need to assess attractiveness, fit, and financials.",
+              tip: "Always assess market → capabilities → financials in that order. A great market you can't win in is worthless.",
+            },
+          },
+          {
+            label: "How to respond to a competitor / market share loss",
+            result: {
+              name: "⚔️ Competitive Response",
+              framework: "#9 — How to Respond to a Competitive Threat",
+              tree: "How to respond?\n├── Impact: How big is the threat? (segment, size, profitability)\n├── Competitor's play: What opportunity are they pursuing?\n└── Our options: Do nothing / Mitigate / Replicate / Collaborate / Match",
+              why: "This ISN'T profitability — it's strategic. You need to assess the THREAT first, then choose a RESPONSE. Profitability is just one input.",
+              tip: "'Do nothing' is always a valid option. Sometimes the competitor is chasing an unprofitable segment.",
+            },
+          },
+          {
+            label: "Should we acquire / merge with Company Y?",
+            result: {
+              name: "🤝 M&A / Acquisition",
+              framework: "#8 — Whether to Acquire a Business",
+              tree: "Should we acquire?\n├── Standalone value (future revenue, costs, multiples)\n├── Synergies (cost savings + revenue uplift)\n└── Risks (integration, culture, capabilities)",
+              why: "M&A has its own logic: standalone value + synergies - risks. Profitability is just ONE input into valuation.",
+              tip: "Always separate standalone value from synergies. Most candidates forget to assess integration risk.",
+            },
+          },
+          {
+            label: "Should we invest in X / build vs buy / CapEx decision",
+            result: {
+              name: "💼 Investment Decision",
+              framework: "#7 — Whether to Make an Investment",
+              tree: "Should we invest?\n├── Revenue impact (how much more will we earn?)\n├── Cost impact (what does it cost? and does it save money?)\n├── Breakeven (when do we recoup the investment?)\n└── Implementation (can we execute? risks?)",
+              why: "Investment decisions need ROI analysis, not just revenue/cost decomposition. The 'when' (breakeven) matters as much as the 'how much'.",
+              tip: "Always calculate payback period or simple ROI. 'This investment costs €5M and generates €2M/year, so 2.5 year payback.'",
+            },
+          },
+          {
+            label: "How to price / pricing strategy",
+            result: {
+              name: "🏷️ Pricing",
+              framework: "#6 — How to Price a Product",
+              tree: "How to price?\n├── Cost floor (variable + fixed + margin = minimum price)\n├── Competitor benchmark (their prices → above or below?)\n└── Customer WTP (willingness to pay → maximum price)",
+              why: "Pricing has three anchors: cost, competition, and customer value. It's not just 'Revenue = Price × Volume' — you need all three to set the right price.",
+              tip: "The answer is almost always: 'Price somewhere between cost floor and customer WTP, benchmarked against competitors.' Position depends on strategy (premium vs. value).",
+            },
+          },
+          {
+            label: "How to launch a new product",
+            result: {
+              name: "🆕 New Product Launch",
+              framework: "#5 — How to Launch a New Product",
+              tree: "How to launch?\n├── Target segments (size, growth, needs, competition)\n├── Marketing strategy (Product, Price, Place, Promotion)\n└── Implementation (design, production, logistics, sales)",
+              why: "Product launch combines market analysis (who to target) with execution planning (how to deliver). It's broader than just pricing or just growth.",
+              tip: "Use the 4Ps (Product, Price, Place, Promotion) as your marketing strategy sub-frame. It's MECE and interviewers love it.",
+            },
+          },
+          {
+            label: "How to cut costs / improve efficiency",
+            next: {
+              id: "cost1",
+              question:
+                "Is this about reducing costs broadly, or optimizing a specific process/operation?",
+              options: [
+                {
+                  label: "Reduce costs broadly",
+                  result: {
+                    name: "📉 Cost Reduction",
+                    framework: "#3 — How to Cut Costs",
+                    tree: "How to cut costs?\n├── Reduce the need (eliminate or lower service level)\n├── Meet need with less (eliminate waste, improve productivity)\n└── Cheaper resources (alternatives, renegotiate)",
+                    why: "Broad cost cutting has three MECE levers: do less, do it better, or pay less. This covers all options without overlap.",
+                    tip: "Don't just say 'reduce costs.' Specify: 'I'd look at whether we can eliminate the need entirely, then whether we can meet it more efficiently, then whether we can get cheaper inputs.'",
+                  },
+                },
+                {
+                  label: "Optimize a specific process",
+                  result: {
+                    name: "⚙️ Process Optimization",
+                    framework: "#10 — How to Optimize a Process",
+                    tree: "How to optimize?\n├── Map current process (capacity, utilization, bottleneck)\n├── Improve each step (eliminate, anticipate, automate)\n└── Estimate gains (cost, quality, speed)",
+                    why: "Process optimization focuses on HOW things get done, not just how much they cost. It's about bottlenecks, throughput, and capacity — operational concepts.",
+                    tip: "Always ask: 'Where is the bottleneck?' That's usually where 80% of the improvement potential sits.",
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      };
+
+      var fwTreeState = [];
+
+      function fwTreeReset() {
+        fwTreeState = [];
+        document.getElementById("fw-tree-result").style.display = "none";
+        fwTreeRender(FW_TREE);
+      }
+
+      function fwTreeRender(node) {
+        var c = document.getElementById("fw-tree-container");
+        // Build breadcrumb
+        var bc = fwTreeState
+          .map(function (s, i) {
+            return (
+              '<span style="color:var(--bcg-green);cursor:pointer;text-decoration:underline;" onclick="fwTreeGoBack(' +
+              i +
+              ')">' +
+              s.label +
+              "</span>"
+            );
+          })
+          .join(" → ");
+        var bcHTML = bc
+          ? '<div style="margin-bottom:16px;font-size:0.85em;color:var(--text-muted);">Path: ' +
+            bc +
+            "</div>"
+          : "";
+
+        var html =
+          bcHTML +
+          '<div style="font-size:1.1em;font-weight:700;margin-bottom:16px;color:#e0e0e0;">' +
+          node.question +
+          "</div>";
+        html += '<div style="display:flex;flex-direction:column;gap:10px;">';
+        node.options.forEach(function (opt, idx) {
+          html +=
+            '<button onclick="fwTreeChoose(' +
+            idx +
+            ")\" style=\"text-align:left;padding:14px 18px;background:#1a1a1a;border:1px solid #444;border-radius:8px;color:#e0e0e0;font-size:0.95em;cursor:pointer;transition:all 0.2s;\" onmouseover=\"this.style.borderColor='var(--bcg-green)';this.style.background='#222'\" onmouseout=\"this.style.borderColor='#444';this.style.background='#1a1a1a'\">" +
+            opt.label +
+            "</button>";
+        });
+        html += "</div>";
+        c.innerHTML = html;
+      }
+
+      function fwTreeChoose(idx) {
+        // Find current node
+        var node = FW_TREE;
+        for (var i = 0; i < fwTreeState.length; i++) {
+          var opt = node.options[fwTreeState[i].idx];
+          node = opt.next;
+        }
+        var chosen = node.options[idx];
+        fwTreeState.push({ label: chosen.label, idx: idx });
+
+        if (chosen.result) {
+          // Leaf node — show result
+          fwTreeShowResult(chosen.result);
+        } else if (chosen.next) {
+          // Intermediate node — go deeper
+          fwTreeRender(chosen.next);
+        }
+      }
+
+      function fwTreeGoBack(toIdx) {
+        fwTreeState = fwTreeState.slice(0, toIdx);
+        var node = FW_TREE;
+        for (var i = 0; i < fwTreeState.length; i++) {
+          node = node.options[fwTreeState[i].idx].next;
+        }
+        document.getElementById("fw-tree-result").style.display = "none";
+        fwTreeRender(node);
+      }
+
+      function fwTreeShowResult(r) {
+        var c = document.getElementById("fw-tree-container");
+        // keep breadcrumb + dim options
+        var bc = fwTreeState
+          .map(function (s, i) {
+            return (
+              '<span style="color:var(--bcg-green);cursor:pointer;text-decoration:underline;" onclick="fwTreeGoBack(' +
+              i +
+              ')">' +
+              s.label +
+              "</span>"
+            );
+          })
+          .join(" → ");
+        c.innerHTML =
+          '<div style="font-size:0.85em;color:var(--text-muted);margin-bottom:8px;">Path: ' +
+          bc +
+          "</div>";
+
+        var res = document.getElementById("fw-tree-result");
+        res.style.display = "block";
+        res.innerHTML =
+          '<h3 style="color:var(--bcg-green);margin-bottom:12px;">' +
+          r.name +
+          "</h3>" +
+          '<p style="color:var(--text-muted);font-size:0.85em;margin-bottom:12px;">Framework: <strong style="color:#e0e0e0;">' +
+          r.framework +
+          "</strong></p>" +
+          '<pre style="background:#262626;color:#b0bec5;padding:14px;border-radius:8px;border:1px solid #444;white-space:pre-wrap;font-size:0.85em;line-height:1.5;margin-bottom:16px;">' +
+          r.tree +
+          "</pre>" +
+          '<div style="margin-bottom:12px;"><strong style="color:#fff176;">WHY this framework?</strong><p style="color:#e0e0e0;font-size:0.9em;margin-top:4px;">' +
+          r.why +
+          "</p></div>" +
+          '<div style="padding:12px;background:rgba(76,175,80,0.1);border-radius:8px;border:1px solid rgba(76,175,80,0.3);"><strong style="color:#4caf50;">💡 Interview Tip:</strong> <span style="color:#e0e0e0;font-size:0.9em;">' +
+          r.tip +
+          "</span></div>";
+      }
+
+      // Initialize tree on first load
+      (function () {
+        var el = document.getElementById("fw-tree-container");
+        if (el) fwTreeRender(FW_TREE);
+      })();
 
       // Mobile sidebar
       function toggleSidebar() {
@@ -12974,6 +14273,13 @@
           color: "#e91e63",
           onsetMin: 120,
           peakMin: 480,
+          durationMin: 1440,
+        },
+        aerius: {
+          name: "Aerius 5mg",
+          color: "#00bcd4",
+          onsetMin: 60,
+          peakMin: 180,
           durationMin: 1440,
         },
       };
@@ -13144,6 +14450,7 @@
           "propranolol",
           "alprazolam",
           "britellix",
+          "aerius",
         ].forEach((id) => {
           const btn = document.getElementById("btn-" + id);
           btn.textContent = "Tomei";
@@ -13229,6 +14536,7 @@
           "propranolol",
           "alprazolam",
           "britellix",
+          "aerius",
         ].forEach((id) => {
           document.getElementById("bar-" + id).style.display = "none";
         });
@@ -13582,6 +14890,7 @@
             "propranolol",
             "alprazolam",
             "britellix",
+            "aerius",
           ].forEach((id) => {
             const btn = document.getElementById("btn-" + id);
             btn.textContent = "Tomei";
@@ -13726,6 +15035,23 @@
             "Menos ruminação",
           ],
         },
+        aerius: {
+          name: "Aerius (Desloratadina)",
+          individual: [
+            "Sonolência",
+            "Boca seca",
+            "Dor de cabeça",
+            "Fadiga",
+            "Dor de barriga",
+          ],
+          cognitive: ["Sonolência afetou foco?", "Reação mais lenta?"],
+          positive: [
+            "Sem alergias",
+            "Nariz desentupido",
+            "Menos comichão",
+            "Sono melhorado",
+          ],
+        },
       };
 
       // Adaptive expected pills — adjusts based on prior day feedback
@@ -13739,6 +15065,7 @@
             propranolol: { time: "15:30", dose: "10mg" },
             alprazolam: { time: "23:00", dose: "0,25mg" },
             britellix: { time: "21:00", dose: "15mg" },
+            aerius: { time: "00:00", dose: "5mg" },
           },
           "2026-02-25": {
             // QUARTA — COMBO PRIME DOSE (se Terça correu bem)
@@ -13749,6 +15076,7 @@
             propranolol: { time: "13:00", dose: "20mg" },
             alprazolam: { time: "13:00", dose: "0,5mg" },
             britellix: { time: "21:00", dose: "15mg" },
+            aerius: { time: "00:00", dose: "5mg" },
           },
           "2026-02-26": {
             // QUINTA — CONSOLIDATION (sem SOS — baseline day)
@@ -13757,6 +15085,7 @@
             concerta: { time: "09:30", dose: "27mg" },
             rubifen: { time: "12:30", dose: "20mg" },
             britellix: { time: "21:00", dose: "15mg" },
+            aerius: { time: "00:00", dose: "5mg" },
           },
           "2026-02-26-night": {
             // QUINTA À NOITE — Aerius para dia seguinte
@@ -13771,6 +15100,7 @@
             propranolol: { time: "14:00", dose: "20mg" },
             alprazolam: { time: "14:00", dose: "0,5mg" },
             britellix: { time: "21:00", dose: "15mg" },
+            aerius: { time: "00:00", dose: "5mg" },
           },
         };
 
@@ -16044,7 +17374,49 @@
         var dataTable = cgGenerateData(fwKey, indKey, mathKey, company, isPT);
         if (sections[1]) {
           sections[1].data = dataTable;
-          // Keep prompt as-is — data will be rendered as <pre> in cgRenderSection
+          // Inject math-specific question into Section 2 prompt
+          var mathQuestions = {
+            en: {
+              basic:
+                "Using the data provided, calculate the key margins and identify which cost line is driving the change. Show your math clearly.",
+              "market-sizing":
+                "Size the addressable market opportunity using a top-down or bottom-up approach. State your assumptions clearly at each step.",
+              breakeven:
+                "Calculate the breakeven point. How many units (or what revenue level) does the client need to break even? What's the time to breakeven?",
+              "growth-cagr":
+                "Calculate the compound annual growth rate (CAGR) from the data. Which segment is growing fastest? What drives the difference?",
+              "weighted-avg":
+                "Calculate the weighted average across segments. How does the mix shift affect the overall result? What segment deserves priority?",
+              probability:
+                "Calculate the expected value of each scenario. Which option has the highest risk-adjusted return? Build a simple decision tree.",
+              "unit-economics":
+                "Calculate the unit economics: LTV, CAC, and LTV:CAC ratio. Is the current model sustainable? What lever has the most impact?",
+            },
+            pt: {
+              basic:
+                "Usando os dados, calcule as margens principais e identifique que linha de custo está a mudar. Mostre os cálculos.",
+              "market-sizing":
+                "Dimensione o mercado endereçável com abordagem top-down ou bottom-up. Declare os pressupostos em cada passo.",
+              breakeven:
+                "Calcule o ponto de breakeven. Quantas unidades (ou que receita) precisa para cobrir custos? Qual o tempo para breakeven?",
+              "growth-cagr":
+                "Calcule o CAGR a partir dos dados. Que segmento cresce mais rápido? O que explica a diferença?",
+              "weighted-avg":
+                "Calcule a média ponderada entre segmentos. Como a mudança de mix afeta o resultado global?",
+              probability:
+                "Calcule o valor esperado de cada cenário. Qual opção tem melhor retorno ajustado ao risco?",
+              "unit-economics":
+                "Calcule unit economics: LTV, CAC e rácio LTV:CAC. O modelo é sustentável? Que alavanca tem mais impacto?",
+            },
+          };
+          var mathQ =
+            mathQuestions[lang][mathKey] || mathQuestions[lang]["basic"];
+          sections[1].prompt =
+            sections[1].prompt +
+            "\n\n🔢 " +
+            mt[isPT ? "namePT" : "name"] +
+            ": " +
+            mathQ;
         }
 
         // Add per-section hints
@@ -16112,8 +17484,8 @@
         document.getElementById("cg-output").style.display = "block";
         document.getElementById("cg-case-text").textContent = text;
 
-        // Show industry intro card
-        var introEl = document.getElementById("cg-industry-intro");
+        // Show industry intro card (collapsed by default)
+        var introDetails = document.getElementById("cg-industry-intro-details");
         var introText = isPT ? ind.introPT || ind.intro : ind.intro;
         var indIcons = {
           retail: "🛒",
@@ -16136,9 +17508,10 @@
             introText;
           document.getElementById("cg-industry-intro-metrics").textContent =
             "📊 " + (ind.metrics || "");
-          introEl.style.display = "block";
+          introDetails.style.display = "block";
+          introDetails.removeAttribute("open"); // collapsed by default
         } else {
-          introEl.style.display = "none";
+          introDetails.style.display = "none";
         }
 
         // Set hints (now inside <details>, auto-hidden)
@@ -16253,7 +17626,7 @@
           (sec.title || sectionLabels[n - 1]) +
           diffBadge;
 
-        // Update section prompt (adapts to difficulty)
+        // Update section prompt (adapts to difficulty) — dark bg (#1a1a1a)
         var fwInfo = cgState.framework;
         var promptHTML =
           '<div style="font-weight:600; color:var(--bcg-green); margin-bottom:8px; font-size:1.05em;">' +
@@ -16264,12 +17637,14 @@
           // EASY: coaching tips, data tables, but NO framework tree shown (it's behind the hint)
           if (sec.data) {
             promptHTML +=
-              '<pre style="font-size:0.82em; color:#333; margin:0 0 12px; white-space:pre-wrap; font-family:monospace; line-height:1.5; background:#f5f5f5; padding:14px; border-radius:8px; border:1px solid #e0e0e0;">' +
+              '<pre style="font-size:0.82em; color:#b0bec5; margin:0 0 12px; white-space:pre-wrap; font-family:monospace; line-height:1.5; background:#262626; padding:14px; border-radius:8px; border:1px solid #444;">' +
               sec.data +
               "</pre>";
           }
           promptHTML +=
-            '<div style="margin-bottom:12px;">' + sec.prompt + "</div>";
+            '<div style="margin-bottom:12px; color:#e0e0e0;">' +
+            sec.prompt +
+            "</div>";
           // Add coaching tip for this section (NOT the framework tree)
           var easyTips = cgState.isPT
             ? [
@@ -16283,7 +17658,7 @@
                 "💡 Tip: Use the Situation → Finding → Recommendation structure. Be specific with numbers.",
               ];
           promptHTML +=
-            '<div style="margin-top:10px; padding:10px; background:#fff8e1; border-radius:6px; font-size:0.85em; color:#795548;">' +
+            '<div style="margin-top:10px; padding:10px; background:rgba(255,248,225,0.12); border:1px solid rgba(255,248,225,0.2); border-radius:6px; font-size:0.85em; color:#ffe082;">' +
             easyTips[n - 1] +
             "</div>";
           // Auto-open hints in easy mode
@@ -16305,18 +17680,18 @@
           if (n === 2 && sec.data) {
             // Show data table even in hard mode
             promptHTML +=
-              '<pre style="font-size:0.82em; color:#333; margin:0 0 12px; white-space:pre-wrap; font-family:monospace; line-height:1.5; background:#f5f5f5; padding:12px; border-radius:8px;">' +
+              '<pre style="font-size:0.82em; color:#b0bec5; margin:0 0 12px; white-space:pre-wrap; font-family:monospace; line-height:1.5; background:#262626; padding:12px; border-radius:8px;">' +
               sec.data +
               "</pre>";
             promptHTML +=
-              '<div style="margin-bottom:12px; color:#555;">' +
+              '<div style="margin-bottom:12px; color:#aaa;">' +
               (cgState.isPT
                 ? "Analise os dados. O que observa?"
                 : "Analyze the data. What do you observe?") +
               "</div>";
           } else {
             promptHTML +=
-              '<div style="margin-bottom:12px; color:#555;">' +
+              '<div style="margin-bottom:12px; color:#aaa;">' +
               hardPrompts[n - 1] +
               "</div>";
           }
@@ -16325,18 +17700,20 @@
           var hintsPanel = document.getElementById("cg-hints-panel");
           if (hintsPanel) hintsPanel.removeAttribute("open");
           // Hide industry intro in hard mode
-          var introEl = document.getElementById("cg-industry-intro");
+          var introEl = document.getElementById("cg-industry-intro-details");
           if (introEl) introEl.style.display = "none";
         } else {
           // MEDIUM: standard behavior — NO framework tree shown (it's behind Show Hint + Show Solution)
           if (sec.data) {
             promptHTML +=
-              '<pre style="font-size:0.82em; color:#333; margin:0 0 12px; white-space:pre-wrap; font-family:monospace; line-height:1.5; background:#f5f5f5; padding:14px; border-radius:8px; border:1px solid #e0e0e0;">' +
+              '<pre style="font-size:0.82em; color:#b0bec5; margin:0 0 12px; white-space:pre-wrap; font-family:monospace; line-height:1.5; background:#262626; padding:14px; border-radius:8px; border:1px solid #444;">' +
               sec.data +
               "</pre>";
           }
           promptHTML +=
-            '<div style="margin-bottom:12px;">' + sec.prompt + "</div>";
+            '<div style="margin-bottom:12px; color:#e0e0e0;">' +
+            sec.prompt +
+            "</div>";
         }
         document.getElementById("cg-section-prompt").innerHTML = promptHTML;
 
@@ -16350,10 +17727,10 @@
             (cgState.isPT ? "💡 Mostrar Dica" : "💡 Show Hint") +
             "' : '" +
             (cgState.isPT ? "💡 Esconder Dica" : "💡 Hide Hint") +
-            '\'" style="background:none;border:1px dashed #ccc;border-radius:6px;padding:6px 14px;font-size:0.82em;color:#888;cursor:pointer;">' +
+            '\'" style="background:none;border:1px dashed #555;border-radius:6px;padding:6px 14px;font-size:0.82em;color:#aaa;cursor:pointer;">' +
             (cgState.isPT ? "💡 Mostrar Dica" : "💡 Show Hint") +
             "</button>" +
-            '<div style="display:none;margin-top:6px;padding:10px;background:#fffde7;border-radius:8px;border:1px solid #fff9c4;font-size:0.82em;color:#5d4037;white-space:pre-line;line-height:1.5;">' +
+            '<div style="display:none;margin-top:6px;padding:10px;background:rgba(255,248,225,0.10);border-radius:8px;border:1px solid rgba(255,248,225,0.18);font-size:0.82em;color:#ffe082;white-space:pre-line;line-height:1.5;">' +
             sHint +
             "</div>";
           document.getElementById("cg-section-prompt").appendChild(hintEl);
@@ -16395,6 +17772,8 @@
 
         // Update nav buttons
         document.getElementById("cg-prev-btn").style.display =
+          n > 1 ? "block" : "none";
+        document.getElementById("cg-q1-btn").style.display =
           n > 1 ? "block" : "none";
         var nextBtn = document.getElementById("cg-next-btn");
         if (n >= 3) {
@@ -16934,6 +18313,7 @@
           "propranolol",
           "alprazolam",
           "britellix",
+          "aerius",
         ].forEach((pillId) => {
           const fillEl = document.getElementById("bar-" + pillId + "-fill");
           if (fillEl && !fillEl._dragAttached) {
