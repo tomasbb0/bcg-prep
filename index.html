@@ -4526,6 +4526,10 @@
             <option value="telecom">📡 Telecom & Media</option>
             <option value="nonprofit">🌍 Non-Profit / Public Sector</option>
           </select>
+          <label style="display:inline-flex;align-items:center;gap:6px;margin-left:16px;font-size:0.9em;color:var(--text-muted);cursor:pointer;">
+            <input type="checkbox" id="fw-inline-examples-toggle" checked onchange="fwToggleInlineExamples(this.checked)" style="cursor:pointer;accent-color:var(--bcg-green);">
+            Show inline examples
+          </label>
         </div>
 
         <!-- HOW TO BUILD A STRUCTURE -->
@@ -4654,18 +4658,10 @@
             Nas receitas, olho para preço e volume. Nos custos, separo fixos e
             variáveis."
           </blockquote>
-          <div
-            class="fw-when-to-use"
-            style="
-              background: #1b2a1b;
-              padding: 12px 16px;
-              border-radius: 8px;
-              border-left: 3px solid var(--bcg-green);
-              margin: 12px 0;
-            "
-          ></div>
-          <div class="fw-industry-examples" style="margin: 10px 0"></div>
-          <div class="fw-industry-prompt"></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;margin-top:10px;">✅ When to Use / ⚠️ When NOT</div>
+          <div class="collapsible-content"><div class="fw-when-to-use"></div></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;">📋 Example Case Prompt</div>
+          <div class="collapsible-content"><div class="fw-industry-prompt"></div></div>
         </div>
 
         <!-- 2. GROWTH -->
@@ -4715,18 +4711,10 @@
               </ul>
             </li>
           </ul>
-          <div
-            class="fw-when-to-use"
-            style="
-              background: #1b2a1b;
-              padding: 12px 16px;
-              border-radius: 8px;
-              border-left: 3px solid var(--bcg-green);
-              margin: 12px 0;
-            "
-          ></div>
-          <div class="fw-industry-examples" style="margin: 10px 0"></div>
-          <div class="fw-industry-prompt"></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;margin-top:10px;">✅ When to Use / ⚠️ When NOT</div>
+          <div class="collapsible-content"><div class="fw-when-to-use"></div></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;">📋 Example Case Prompt</div>
+          <div class="collapsible-content"><div class="fw-industry-prompt"></div></div>
         </div>
 
         <!-- 3. CUT COSTS -->
@@ -4782,18 +4770,10 @@
             Examples / Exemplos: Self-service portal / Portal self-service,
             Offshoring, Training / Formação
           </p>
-          <div
-            class="fw-when-to-use"
-            style="
-              background: #1b2a1b;
-              padding: 12px 16px;
-              border-radius: 8px;
-              border-left: 3px solid var(--bcg-green);
-              margin: 12px 0;
-            "
-          ></div>
-          <div class="fw-industry-examples" style="margin: 10px 0"></div>
-          <div class="fw-industry-prompt"></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;margin-top:10px;">✅ When to Use / ⚠️ When NOT</div>
+          <div class="collapsible-content"><div class="fw-when-to-use"></div></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;">📋 Example Case Prompt</div>
+          <div class="collapsible-content"><div class="fw-industry-prompt"></div></div>
         </div>
 
         <!-- 4. ENTER A NEW MARKET -->
@@ -4843,18 +4823,10 @@
               </ul>
             </li>
           </ul>
-          <div
-            class="fw-when-to-use"
-            style="
-              background: #1b2a1b;
-              padding: 12px 16px;
-              border-radius: 8px;
-              border-left: 3px solid var(--bcg-green);
-              margin: 12px 0;
-            "
-          ></div>
-          <div class="fw-industry-examples" style="margin: 10px 0"></div>
-          <div class="fw-industry-prompt"></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;margin-top:10px;">✅ When to Use / ⚠️ When NOT</div>
+          <div class="collapsible-content"><div class="fw-when-to-use"></div></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;">📋 Example Case Prompt</div>
+          <div class="collapsible-content"><div class="fw-industry-prompt"></div></div>
         </div>
 
         <!-- 5. LAUNCH NEW PRODUCT -->
@@ -4903,18 +4875,10 @@
               </ul>
             </li>
           </ul>
-          <div
-            class="fw-when-to-use"
-            style="
-              background: #1b2a1b;
-              padding: 12px 16px;
-              border-radius: 8px;
-              border-left: 3px solid var(--bcg-green);
-              margin: 12px 0;
-            "
-          ></div>
-          <div class="fw-industry-examples" style="margin: 10px 0"></div>
-          <div class="fw-industry-prompt"></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;margin-top:10px;">✅ When to Use / ⚠️ When NOT</div>
+          <div class="collapsible-content"><div class="fw-when-to-use"></div></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;">📋 Example Case Prompt</div>
+          <div class="collapsible-content"><div class="fw-industry-prompt"></div></div>
         </div>
 
         <!-- 6. PRICING -->
@@ -4958,18 +4922,10 @@
               </ul>
             </li>
           </ul>
-          <div
-            class="fw-when-to-use"
-            style="
-              background: #1b2a1b;
-              padding: 12px 16px;
-              border-radius: 8px;
-              border-left: 3px solid var(--bcg-green);
-              margin: 12px 0;
-            "
-          ></div>
-          <div class="fw-industry-examples" style="margin: 10px 0"></div>
-          <div class="fw-industry-prompt"></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;margin-top:10px;">✅ When to Use / ⚠️ When NOT</div>
+          <div class="collapsible-content"><div class="fw-when-to-use"></div></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;">📋 Example Case Prompt</div>
+          <div class="collapsible-content"><div class="fw-industry-prompt"></div></div>
         </div>
 
         <!-- 7. INVESTMENT -->
@@ -5004,18 +4960,10 @@
               </ul>
             </li>
           </ul>
-          <div
-            class="fw-when-to-use"
-            style="
-              background: #1b2a1b;
-              padding: 12px 16px;
-              border-radius: 8px;
-              border-left: 3px solid var(--bcg-green);
-              margin: 12px 0;
-            "
-          ></div>
-          <div class="fw-industry-examples" style="margin: 10px 0"></div>
-          <div class="fw-industry-prompt"></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;margin-top:10px;">✅ When to Use / ⚠️ When NOT</div>
+          <div class="collapsible-content"><div class="fw-when-to-use"></div></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;">📋 Example Case Prompt</div>
+          <div class="collapsible-content"><div class="fw-industry-prompt"></div></div>
         </div>
 
         <!-- 8. ACQUIRE A BUSINESS -->
@@ -5052,18 +5000,10 @@
               </ul>
             </li>
           </ul>
-          <div
-            class="fw-when-to-use"
-            style="
-              background: #1b2a1b;
-              padding: 12px 16px;
-              border-radius: 8px;
-              border-left: 3px solid var(--bcg-green);
-              margin: 12px 0;
-            "
-          ></div>
-          <div class="fw-industry-examples" style="margin: 10px 0"></div>
-          <div class="fw-industry-prompt"></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;margin-top:10px;">✅ When to Use / ⚠️ When NOT</div>
+          <div class="collapsible-content"><div class="fw-when-to-use"></div></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;">📋 Example Case Prompt</div>
+          <div class="collapsible-content"><div class="fw-industry-prompt"></div></div>
         </div>
 
         <!-- 9. COMPETITIVE THREAT -->
@@ -5114,18 +5054,10 @@
               </ul>
             </li>
           </ul>
-          <div
-            class="fw-when-to-use"
-            style="
-              background: #1b2a1b;
-              padding: 12px 16px;
-              border-radius: 8px;
-              border-left: 3px solid var(--bcg-green);
-              margin: 12px 0;
-            "
-          ></div>
-          <div class="fw-industry-examples" style="margin: 10px 0"></div>
-          <div class="fw-industry-prompt"></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;margin-top:10px;">✅ When to Use / ⚠️ When NOT</div>
+          <div class="collapsible-content"><div class="fw-when-to-use"></div></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;">📋 Example Case Prompt</div>
+          <div class="collapsible-content"><div class="fw-industry-prompt"></div></div>
         </div>
 
         <!-- 10. OPTIMIZE A PROCESS -->
@@ -5169,18 +5101,10 @@
               </ul>
             </li>
           </ul>
-          <div
-            class="fw-when-to-use"
-            style="
-              background: #1b2a1b;
-              padding: 12px 16px;
-              border-radius: 8px;
-              border-left: 3px solid var(--bcg-green);
-              margin: 12px 0;
-            "
-          ></div>
-          <div class="fw-industry-examples" style="margin: 10px 0"></div>
-          <div class="fw-industry-prompt"></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;margin-top:10px;">✅ When to Use / ⚠️ When NOT</div>
+          <div class="collapsible-content"><div class="fw-when-to-use"></div></div>
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="font-size:0.9em;">📋 Example Case Prompt</div>
+          <div class="collapsible-content"><div class="fw-industry-prompt"></div></div>
         </div>
 
         <!-- SECOND-LEVEL DRIVERS -->
@@ -14103,6 +14027,218 @@ Margin                       20.0%              6.6%          -13.4pp
             </tbody>
           </table>
         </div>
+
+        <!-- ═══════════════════════════════════════════════════════ -->
+        <!-- PERSONALITY FIT — Collapsible within Model Case        -->
+        <!-- ═══════════════════════════════════════════════════════ -->
+        <h2 style="margin-top:32px;">🧑‍💼 Personality Fit — Prepare in Advance</h2>
+
+        <!-- 2-MINUTE INTRO -->
+        <div class="collapsible" onclick="toggleCollapsible(this)">
+          🎤 2-Minute Intro — "Tell me about yourself"
+        </div>
+        <div class="collapsible-content">
+          <div class="card" style="border-left:4px solid var(--bcg-green);">
+            <p style="color:var(--text-muted);font-size:0.85em;margin-bottom:12px;">
+              <strong>Format:</strong> Present → Past → Future. ~90-120 seconds. Confident, natural, conversational.
+            </p>
+            <blockquote style="line-height:1.7;">
+              "I'm Tomás, 26, Portuguese. I'm currently between roles after co-founding and exiting a B2B SaaS startup called Pairwire, where I was Chief Sales & Marketing Officer for 11 months.<br><br>
+              Before that, I interned at <strong>Google</strong> as a Business Analyst — I presented to 237+ senior clients at their Peak Season Summit and built a dashboard projecting $1.4M in annual savings. Before Google, I helped launch <strong>Amazon Business into Portugal</strong>, outperforming KPI benchmarks by 21x while managing 2,300+ accounts.<br><br>
+              My education is in strategy and economics — MSc from Rotterdam, BSc from NOVA Lisbon, and exchange at NUS Singapore.<br><br>
+              What draws me to BCG is the combination of <strong>analytical rigor</strong> with <strong>real-world impact</strong>. I've spent the last two years executing strategy in startups and tech — now I want to design strategy at scale with the best minds in consulting."
+            </blockquote>
+            <div style="background:#1a1a1a;padding:12px;border-radius:8px;margin-top:12px;border:1px solid #333;">
+              <p style="color:#4caf50;font-weight:600;font-size:0.9em;">⏱️ Timing Guide:</p>
+              <ul style="color:#e0e0e0;font-size:0.85em;padding-left:18px;margin-top:6px;">
+                <li><strong>Present</strong> (15s): Who you are now, current situation</li>
+                <li><strong>Past highlights</strong> (60s): 2-3 key experiences with 1 metric each — Google, Amazon, Pairwire</li>
+                <li><strong>Education</strong> (10s): One sentence, signal quality</li>
+                <li><strong>Future / Why BCG</strong> (20s): What you want + why it fits</li>
+              </ul>
+            </div>
+            <div style="background:#2a1a1a;padding:12px;border-radius:8px;margin-top:12px;border:1px solid #442222;">
+              <p style="color:#ef9a9a;font-weight:600;font-size:0.9em;">⚠️ Common Mistakes:</p>
+              <ul style="color:#e0e0e0;font-size:0.85em;padding-left:18px;margin-top:6px;">
+                <li>Going chronological from childhood — START with the present</li>
+                <li>Listing every role — pick the 2-3 most impressive</li>
+                <li>No metrics — always have 1 number per experience</li>
+                <li>Over-explaining Pairwire exit — keep it positive: "clean exit after 11 months"</li>
+                <li>Forgetting the "why BCG" landing — always end on why you're here</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- STAR STORIES BANK -->
+        <div class="collapsible" onclick="toggleCollapsible(this)">
+          ⭐ STAR Stories — Your 4 Prepared Stories
+        </div>
+        <div class="collapsible-content">
+          <div class="card" style="border-left:4px solid #fff176;">
+            <p style="color:var(--text-muted);font-size:0.85em;margin-bottom:16px;">
+              <strong>Rule:</strong> 2-3 min each. S+T = 30s, A = 90s, R = 30s. Always 1st person. Always quantified result + 1 learning.
+            </p>
+            <table style="font-size:0.88em;width:100%;">
+              <thead>
+                <tr>
+                  <th style="width:30px;">#</th>
+                  <th style="width:180px;">Story</th>
+                  <th>Mnemonic</th>
+                  <th>Key Metric</th>
+                  <th>Covers</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td><strong style="color:var(--bcg-green);">Google — Peak Season Summit</strong></td>
+                  <td>GOOGLE — STAGE — 237</td>
+                  <td>237 clients, 4.7/5, $1.41M</td>
+                  <td>Leadership, Influence, Communication</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td><strong style="color:#e8a500;">Amazon — Portugal Expansion</strong></td>
+                  <td>AMAZON — PORTUGAL — 21x</td>
+                  <td>21x KPI, 2,311 accounts, 56%→+25%</td>
+                  <td>Challenge, Resilience, Drive</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td><strong style="color:#1976d2;">Pairwire — Co-founder Exit</strong></td>
+                  <td>PAIRWIRE — COFOUNDER — EXIT</td>
+                  <td>€147K pipeline preserved, clean exit</td>
+                  <td>Teamwork, Conflict, Integrity</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td><strong style="color:#9c27b0;">Pairwire — Building the Pipeline</strong></td>
+                  <td>PAIRWIRE — PIPELINE — 147K</td>
+                  <td>€147K pipeline, 23 pilots, €10K ARR</td>
+                  <td>Achievement, Entrepreneurship, Creative Thinking</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="background:#1a1a1a;padding:12px;border-radius:8px;margin-top:16px;border:1px solid #333;">
+              <p style="color:#fff176;font-weight:600;font-size:0.9em;">🎯 Story Selection Guide:</p>
+              <table style="font-size:0.83em;color:#e0e0e0;margin-top:8px;">
+                <thead><tr><th>If they ask about...</th><th>Use story</th></tr></thead>
+                <tbody>
+                  <tr><td>"Leadership" / "Influence" / "Led a project"</td><td><strong>#1 Google</strong> — presenting to 237 executives</td></tr>
+                  <tr><td>"Challenge" / "Failure" / "Difficulty"</td><td><strong>#2 Amazon</strong> — cold-starting Portugal, 56% below average</td></tr>
+                  <tr><td>"Conflict" / "Difficult person" / "Teamwork"</td><td><strong>#3 Pairwire Exit</strong> — co-founder disagreement</td></tr>
+                  <tr><td>"Proudest achievement" / "Impact"</td><td><strong>#4 Pairwire Pipeline</strong> — €147K from zero</td></tr>
+                  <tr><td>"Tell me about a time you took initiative"</td><td><strong>#1 or #4</strong> — both show proactive initiative</td></tr>
+                  <tr><td>"Analytical thinking" / "Data-driven"</td><td><strong>#2 Amazon</strong> — 19-page report, 54 interviews</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- MOST LIKELY BCG FIT QUESTIONS -->
+        <div class="collapsible" onclick="toggleCollapsible(this)">
+          ❓ Most Likely BCG Fit Questions
+        </div>
+        <div class="collapsible-content">
+          <div class="card" style="border-left:4px solid #42a5f5;">
+            <p style="color:var(--text-muted);font-size:0.85em;margin-bottom:12px;">
+              BCG fit is 10-15 min: Background (2-3 min) + Behavioral (5-8 min) + Motivation (2-3 min) + Your Qs (2 min)
+            </p>
+
+            <h4 style="color:#42a5f5;margin-bottom:8px;">🔵 Background / Intro (almost always asked)</h4>
+            <ol style="font-size:0.9em;">
+              <li>"Walk me through your resume." → <em>Use your 2-min intro</em></li>
+              <li>"Tell me about yourself." → <em>Same 2-min intro, slightly more personal</em></li>
+              <li>"What have you been doing since Pairwire?" → <em>Honest: job search + BCG prep + reflecting on next chapter</em></li>
+            </ol>
+
+            <h4 style="color:#ff8a65;margin-top:16px;margin-bottom:8px;">🟠 Behavioral (1-2 of these, expect the hardest)</h4>
+            <ol style="font-size:0.9em;" start="4">
+              <li>"Tell me about a time you <strong>led a team</strong> or influenced without authority." → <strong>Story #1 (Google)</strong></li>
+              <li>"Describe a <strong>significant challenge</strong> you faced." → <strong>Story #2 (Amazon)</strong></li>
+              <li>"Tell me about a time you <strong>dealt with conflict</strong> or disagreement." → <strong>Story #3 (Pairwire Exit)</strong></li>
+              <li>"What is your <strong>proudest achievement</strong>?" → <strong>Story #4 (Pairwire Pipeline)</strong></li>
+              <li>"Tell me about a time you <strong>failed</strong>." → <em>Adapt Story #2 or #3 — frame as learning</em></li>
+              <li>"Give an example of when you showed <strong>initiative</strong>." → <strong>Story #1 or #4</strong></li>
+              <li>"Tell me about a complex <strong>analytical problem</strong> you solved." → <strong>Story #2</strong> (19-page report, 54 interviews)</li>
+              <li>"How did you <strong>convince someone</strong> who initially disagreed with you?" → <strong>Story #1 or #3</strong></li>
+            </ol>
+
+            <h4 style="color:#81c784;margin-top:16px;margin-bottom:8px;">🟢 Motivation (almost always asked)</h4>
+            <ol style="font-size:0.9em;" start="12">
+              <li>"Why <strong>consulting</strong>?" → <em>Passion for solving complex problems + impact + accelerated learning. Bridge: "I've executed strategy in startups, now I want to design it at scale."</em></li>
+              <li>"Why <strong>BCG</strong> specifically?" → <em>Culture of innovation (BCG X), real implementation, intellectual curiosity of the people.</em></li>
+              <li>"Why <strong>now</strong> (after a startup)?" → <em>"I've seen the gap between strategy and execution firsthand. I want BCG's toolkit to close that gap for companies at scale."</em></li>
+              <li>"Where do you see yourself in <strong>5 years</strong>?" → <em>Growing within consulting, leading projects, specializing in tech/digital transformation.</em></li>
+            </ol>
+
+            <h4 style="color:#ce93d8;margin-top:16px;margin-bottom:8px;">🟣 Curveball Questions (less common but be ready)</h4>
+            <ol style="font-size:0.9em;" start="16">
+              <li>"What would your co-founder say about you?" → <em>Driven, analytical, sometimes too fast. I learned to slow down and listen.</em></li>
+              <li>"What's your biggest weakness?" → <em>Impatience with slow processes — I've learned that in consulting, building consensus IS the process.</em></li>
+              <li>"If you don't get into consulting, what would you do?" → <em>Tech sales leadership at a top company (Google, etc.) — but consulting is my priority because of the breadth of impact.</em></li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- PERSONALITY / PRESENCE TIPS -->
+        <div class="collapsible" onclick="toggleCollapsible(this)">
+          💎 Personality & Presence — What BCG Really Evaluates
+        </div>
+        <div class="collapsible-content">
+          <div class="card" style="border-left:4px solid #ce93d8;">
+            <p style="margin-bottom:12px;font-size:0.9em;">BCG evaluates <strong>presence & communication throughout the ENTIRE interview</strong> — not just in the fit section. Here's what they're looking for:</p>
+            <table style="font-size:0.88em;">
+              <thead>
+                <tr><th>Quality</th><th>What it looks like</th><th>Your natural advantage</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Confidence</strong></td>
+                  <td>Firm handshake, eye contact, steady speaking pace, no filler words</td>
+                  <td>Google (237 executives), Pairwire (investor pitches)</td>
+                </tr>
+                <tr>
+                  <td><strong>Warmth / Rapport</strong></td>
+                  <td>Genuine smiles, interest in interviewer, not robotic</td>
+                  <td>You're naturally personable — use it. Ask about their BCG experience.</td>
+                </tr>
+                <tr>
+                  <td><strong>Intellectual Curiosity</strong></td>
+                  <td>Asking "why" before jumping to answers, genuine interest in the case</td>
+                  <td>Your startup experience gave you real business curiosity</td>
+                </tr>
+                <tr>
+                  <td><strong>Structured Communication</strong></td>
+                  <td>"I'd break this into three parts..." — never rambling</td>
+                  <td>Practice: every answer should have a number upfront</td>
+                </tr>
+                <tr>
+                  <td><strong>Coachability</strong></td>
+                  <td>Takes hints gracefully, adjusts when redirected, doesn't argue</td>
+                  <td>Say: "That's a great point, let me reconsider..." and pivot</td>
+                </tr>
+                <tr>
+                  <td><strong>Energy / Drive</strong></td>
+                  <td>Leaning forward, enthusiastic about the problem, not passive</td>
+                  <td>Built a €147K pipeline from zero — channel that energy</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="background:#1b2a1b;padding:12px;border-radius:8px;margin-top:16px;border:1px solid #2e4d2e;">
+              <p style="color:#81c784;font-weight:600;font-size:0.9em;">✅ Pre-Interview Mindset Reset:</p>
+              <ol style="color:#e0e0e0;font-size:0.85em;padding-left:18px;margin-top:6px;">
+                <li>You're not there to impress — you're there to <strong>have an interesting business conversation</strong></li>
+                <li>The interviewer WANTS you to succeed — they need to fill the position</li>
+                <li>You've presented to 237 executives at Google. This is ONE person. You've done harder.</li>
+                <li>Treat the case like a real problem you're solving with a colleague — not an exam</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
       </div>
     </main>
 
@@ -15839,6 +15975,9 @@ Margin                       20.0%              6.6%          -13.4pp
 
       function fwUpdateIndustryExamples() {
         var ind = fwGetIndustry();
+        var showInline = document.getElementById('fw-inline-examples-toggle');
+        var inlineVisible = showInline ? showInline.checked : true;
+
         Object.keys(FW_ID_MAP).forEach(function (htmlId) {
           var key = FW_ID_MAP[htmlId];
           var data = FW_EXAMPLES[key];
@@ -15852,36 +15991,35 @@ Margin                       20.0%              6.6%          -13.4pp
           var whenDiv = el.querySelector(".fw-when-to-use");
           if (whenDiv && !whenDiv.dataset.filled) {
             var wh =
-              '<p style="color:#81c784;margin:0 0 8px;">\u2705 <strong>When to use:</strong> ' +
-              data.whenToUse +
-              "</p>";
-            wh +=
-              '<p style="color:#ef9a9a;margin:8px 0 4px;">\u26a0\ufe0f <strong>When NOT to use (common traps):</strong></p>';
+              '<p style="color:#2e7d32;margin:0 0 8px;">✅ <strong>When to use:</strong> ' +
+              data.whenToUse + '</p>';
+            wh += '<p style="color:#c62828;margin:8px 0 4px;">⚠️ <strong>When NOT to use (common traps):</strong></p>';
             wh += '<ul style="margin:4px 0 0;padding-left:20px;">';
             data.whenNOT.forEach(function (w) {
-              wh +=
-                '<li style="color:#e0e0e0;margin-bottom:4px;font-size:0.9em;"><span style="color:#ffcc80;">Tempting:</span> ' +
-                w.trap +
-                ' \u2192 <span style="color:#90caf9;">Use instead:</span> ' +
-                w.use +
-                "</li>";
+              wh += '<li style="color:#333;margin-bottom:4px;font-size:0.9em;">' +
+                '<span style="color:#e65100;font-weight:600;">Tempting:</span> ' + w.trap +
+                ' → <span style="color:#1565c0;font-weight:600;">Use instead:</span> ' + w.use + '</li>';
             });
-            wh += "</ul>";
+            wh += '</ul>';
             whenDiv.innerHTML = wh;
-            whenDiv.dataset.filled = "1";
+            whenDiv.dataset.filled = '1';
           }
 
-          // Update 2nd level examples
-          var exDiv = el.querySelector(".fw-industry-examples");
-          if (exDiv) {
-            var html =
-              "<strong style='color:var(--bcg-green);'>Industry-specific considerations:</strong><ul style='margin-top:6px;color:var(--text-muted);font-size:0.9em;'>";
-            indData.lvl2.forEach(function (ex) {
-              html += "<li>" + ex + "</li>";
-            });
-            html += "</ul>";
-            exDiv.innerHTML = html;
-          }
+          // Inject inline examples next to tree-branch spans
+          var branches = el.querySelectorAll('.tree-branch');
+          // Remove old inline examples first
+          el.querySelectorAll('.fw-inline-example').forEach(function(old) { old.remove(); });
+          var lvl2 = indData.lvl2 || [];
+          branches.forEach(function(br, i) {
+            if (i < lvl2.length) {
+              var span = document.createElement('span');
+              span.className = 'fw-inline-example';
+              span.style.cssText = 'display:block;font-size:0.82em;color:#666;font-style:italic;margin:2px 0 4px 0;padding-left:2px;border-left:2px solid var(--bcg-green);padding-left:8px;';
+              span.textContent = '💡 ' + lvl2[i];
+              if (!inlineVisible) span.style.display = 'none';
+              br.parentNode.insertBefore(span, br.nextSibling);
+            }
+          });
 
           // Update prompt
           var promptIdx = fwPromptIdxMap[key] || 0;
@@ -15890,17 +16028,14 @@ Margin                       20.0%              6.6%          -13.4pp
           var promptDiv = el.querySelector(".fw-industry-prompt");
           if (promptDiv) {
             promptDiv.innerHTML =
-              '<div style="background:#1a1a1a;padding:14px;border-radius:8px;border:1px solid #333;margin-top:8px;">' +
-              '<p style="color:#fff176;font-size:0.85em;margin-bottom:6px;">📋 Example case prompt (' +
-              CG_DATA.industries[ind].name +
-              "):</p>" +
-              '<p style="color:#e0e0e0;font-family:\'Courier New\',monospace;font-size:0.88em;line-height:1.5;">"' +
-              indData.prompts[promptIdx] +
-              '"</p>' +
-              "<button onclick=\"fwRegeneratePrompt('" +
-              key +
-              '\')" style="margin-top:8px;padding:4px 12px;background:none;border:1px solid #555;border-radius:4px;color:#aaa;font-size:0.8em;cursor:pointer;">🔄 Another example</button>' +
-              "</div>";
+              '<div style="background:#f5f5f5;padding:14px;border-radius:8px;border:1px solid #ddd;margin-top:4px;">' +
+              '<p style="color:#555;font-size:0.85em;margin-bottom:6px;">📋 Example case prompt (' +
+              CG_DATA.industries[ind].name + '):</p>' +
+              '<p style="color:#1a1a1a;font-family:\'Courier New\',monospace;font-size:0.88em;line-height:1.5;">"' +
+              indData.prompts[promptIdx] + '"</p>' +
+              "<button onclick=\"fwRegeneratePrompt('" + key +
+              '\')" style="margin-top:8px;padding:4px 12px;background:#fff;border:1px solid #ccc;border-radius:4px;color:#555;font-size:0.8em;cursor:pointer;">🔄 Another example</button>' +
+              '</div>';
           }
         });
       }
@@ -15913,6 +16048,12 @@ Margin                       20.0%              6.6%          -13.4pp
         if (idx >= indData.prompts.length) idx = 0;
         fwPromptIdxMap[fwKey] = idx;
         fwUpdateIndustryExamples();
+      }
+
+      function fwToggleInlineExamples(show) {
+        document.querySelectorAll('.fw-inline-example').forEach(function(el) {
+          el.style.display = show ? 'block' : 'none';
+        });
       }
 
       // Initialize on load
