@@ -13094,7 +13094,32 @@
 
         <!-- INTERACTIVE DECISION TREE -->
         <div class="card" style="padding: 24px">
-          <h3 style="margin-bottom: 16px">🔀 Interactive Framework Finder</h3>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 16px;
+            "
+          >
+            <h3 style="margin: 0">🔀 Interactive Framework Finder</h3>
+            <button
+              id="fw-tree-view-toggle"
+              onclick="fwToggleTreeView()"
+              style="
+                padding: 6px 14px;
+                background: #f0f0f0;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 0.82em;
+                font-weight: 600;
+                color: #1a1a1a;
+              "
+            >
+              🌳 Full Tree View
+            </button>
+          </div>
           <p
             style="
               margin-bottom: 16px;
@@ -13106,6 +13131,7 @@
             framework in 2-3 clicks.
           </p>
           <div id="fw-tree-container" style="min-height: 200px"></div>
+          <div id="fw-tree-full" style="display: none"></div>
           <div
             id="fw-tree-result"
             style="
@@ -13231,6 +13257,170 @@
         <div class="section-subtitle">
           A realistic BCG-style case with ideal responses, exhibit analysis, and
           CaseCoach tips at every step
+        </div>
+
+        <!-- CASE TYPES OVERVIEW -->
+        <div class="card card-accent" style="margin-bottom:20px;">
+          <h3>📊 Types of Case Structures</h3>
+          <p style="margin-bottom:12px;color:var(--text-muted);font-size:0.9em;">Cases vary not just by industry, but by <strong>structure</strong> — the types of sections the interviewer presents. Select a case type to see what to expect:</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+            <button class="mc-type-btn mc-type-active" onclick="mcShowType('balanced')" id="mc-btn-balanced" style="padding:8px 14px;border-radius:6px;cursor:pointer;font-size:0.85em;font-weight:600;background:var(--bcg-green);color:white;border:none;">⚖️ Balanced (Standard)</button>
+            <button class="mc-type-btn" onclick="mcShowType('exhibit')" id="mc-btn-exhibit" style="padding:8px 14px;border-radius:6px;cursor:pointer;font-size:0.85em;font-weight:600;background:#f0f0f0;color:#333;border:1px solid #ccc;">📊 Exhibit-Intensive</button>
+            <button class="mc-type-btn" onclick="mcShowType('math')" id="mc-btn-math" style="padding:8px 14px;border-radius:6px;cursor:pointer;font-size:0.85em;font-weight:600;background:#f0f0f0;color:#333;border:1px solid #ccc;">🧮 Math-Intensive</button>
+            <button class="mc-type-btn" onclick="mcShowType('interviewer')" id="mc-btn-interviewer" style="padding:8px 14px;border-radius:6px;cursor:pointer;font-size:0.85em;font-weight:600;background:#f0f0f0;color:#333;border:1px solid #ccc;">🎤 Interviewer-Led</button>
+            <button class="mc-type-btn" onclick="mcShowType('creative')" id="mc-btn-creative" style="padding:8px 14px;border-radius:6px;cursor:pointer;font-size:0.85em;font-weight:600;background:#f0f0f0;color:#333;border:1px solid #ccc;">💡 Creativity / Brainstorm</button>
+          </div>
+          <div id="mc-type-desc">
+            <div id="mc-desc-balanced">
+              <table style="font-size:0.85em;">
+                <thead><tr><th>Section</th><th>What Happens</th><th>Duration</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>1. Structuring</strong></td><td>You hear the prompt, ask clarifying questions, take 60s to structure, present your issue tree</td><td>~5 min</td></tr>
+                  <tr><td><strong>2. Analysis (1-2 exhibits)</strong></td><td>Interviewer shares 1-2 charts/tables. You interpret data, do light math, give "so what"</td><td>~10 min</td></tr>
+                  <tr><td><strong>3. Math Calculation</strong></td><td>One focused calculation (break-even, market sizing, ROI)</td><td>~5 min</td></tr>
+                  <tr><td><strong>4. Synthesis</strong></td><td>Recommendation to CEO using Pyramid structure + risks + next steps</td><td>~5 min</td></tr>
+                </tbody>
+              </table>
+              <p style="font-size:0.85em;color:var(--text-muted);margin-top:8px;">📌 This is the <strong>most common</strong> BCG case format. ~70% of first-round cases follow this pattern.</p>
+            </div>
+            <div id="mc-desc-exhibit" style="display:none;">
+              <table style="font-size:0.85em;">
+                <thead><tr><th>Section</th><th>What Happens</th><th>Duration</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>1. Structuring</strong></td><td>Standard structuring — shorter prompt, less context</td><td>~3 min</td></tr>
+                  <tr><td><strong>2-4. Exhibit 1, 2, 3</strong></td><td>Rapid-fire exhibits: bar charts, scatter plots, line graphs. Each one reveals a new finding. You must connect them.</td><td>~15 min</td></tr>
+                  <tr><td><strong>5. Synthesis</strong></td><td>Pull insights from ALL exhibits together. Storyline must be coherent.</td><td>~5 min</td></tr>
+                </tbody>
+              </table>
+              <p style="font-size:0.85em;color:var(--text-muted);margin-top:8px;">📌 Tests your <strong>data interpretation speed</strong> and ability to build a narrative across multiple data sources. Common in 2nd rounds.</p>
+              <div style="margin-top:12px;padding:12px;background:#1a1a1a;border-radius:8px;border:1px solid #333;">
+                <p style="color:#ff8a65;font-weight:600;font-size:0.9em;">⚡ Exhibit Types You'll See:</p>
+                <ul style="color:#e0e0e0;font-size:0.85em;margin-top:6px;padding-left:18px;">
+                  <li><strong>Bar charts:</strong> Compare categories (revenue by segment, costs by region)</li>
+                  <li><strong>Line graphs:</strong> Trends over time (market share, pricing, growth)</li>
+                  <li><strong>Scatter plots:</strong> Correlation analysis (price vs margin, size vs growth)</li>
+                  <li><strong>Pie charts:</strong> Market share or cost composition</li>
+                  <li><strong>Tables:</strong> Detailed financial data (P&L, cost breakdown, customer segments)</li>
+                  <li><strong>Combo charts:</strong> Two Y-axes (volume + price over time)</li>
+                </ul>
+              </div>
+            </div>
+            <div id="mc-desc-math" style="display:none;">
+              <table style="font-size:0.85em;">
+                <thead><tr><th>Section</th><th>What Happens</th><th>Duration</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>1. Structuring</strong></td><td>Prompt with numbers upfront — signals math is a core component</td><td>~3 min</td></tr>
+                  <tr><td><strong>2. Market Sizing / Estimation</strong></td><td>Top-down or bottom-up market estimate. "How many X in Y?"</td><td>~8 min</td></tr>
+                  <tr><td><strong>3. Business Case Math</strong></td><td>Break-even analysis, ROI calculation, NPV, payback period</td><td>~8 min</td></tr>
+                  <tr><td><strong>4. Synthesis</strong></td><td>What do the numbers tell us? Go/no-go recommendation with quantified support.</td><td>~5 min</td></tr>
+                </tbody>
+              </table>
+              <p style="font-size:0.85em;color:var(--text-muted);margin-top:8px;">📌 Tests your <strong>structured math and mental arithmetic</strong>. You MUST lay out your approach before calculating. State assumptions clearly.</p>
+              <div style="margin-top:12px;padding:12px;background:#1a1a1a;border-radius:8px;border:1px solid #333;">
+                <p style="color:#ff8a65;font-weight:600;font-size:0.9em;">🧮 Math Types You'll Encounter:</p>
+                <ul style="color:#e0e0e0;font-size:0.85em;margin-top:6px;padding-left:18px;">
+                  <li><strong>Market sizing:</strong> "How many electric scooters are sold in Europe per year?"</li>
+                  <li><strong>Break-even:</strong> "How many units to cover the €50M investment?"</li>
+                  <li><strong>Revenue/profit impact:</strong> "What's the margin impact of a 5% price increase?"</li>
+                  <li><strong>ROI / Payback:</strong> "If we invest €20M, when do we break even?"</li>
+                  <li><strong>Sensitivity:</strong> "What if volume drops 10%? What if costs rise 15%?"</li>
+                  <li><strong>Growth math:</strong> "At 8% CAGR, what's revenue in 5 years?"</li>
+                </ul>
+              </div>
+            </div>
+            <div id="mc-desc-interviewer" style="display:none;">
+              <table style="font-size:0.85em;">
+                <thead><tr><th>Section</th><th>What Happens</th><th>Duration</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>1. No Structuring</strong></td><td>Interviewer jumps straight to questions — NO time to structure</td><td>0 min</td></tr>
+                  <tr><td><strong>2-5. Rapid Questions</strong></td><td>4-6 rapid questions: "What factors would you look at?" "What could explain X?" "If the data showed Y, what would you do?"</td><td>~18 min</td></tr>
+                  <tr><td><strong>6. Quick Synthesis</strong></td><td>"Sum it up for me in 30 seconds."</td><td>~2 min</td></tr>
+                </tbody>
+              </table>
+              <p style="font-size:0.85em;color:var(--text-muted);margin-top:8px;">📌 Tests your <strong>thinking speed and adaptability</strong>. You still need structure — just build it IN YOUR HEAD as you go. Keep a mental MECE map.</p>
+              <div style="margin-top:12px;padding:12px;background:#1a1a1a;border-radius:8px;border:1px solid #333;">
+                <p style="color:#ff8a65;font-weight:600;font-size:0.9em;">🎤 How to Handle Interviewer-Led:</p>
+                <ul style="color:#e0e0e0;font-size:0.85em;margin-top:6px;padding-left:18px;">
+                  <li><strong>Don't panic</strong> when there's no structuring time — quickly categorize each question into Revenue/Cost/Market/etc.</li>
+                  <li><strong>Answer in mini-structures:</strong> "I'd look at three things: X, Y, Z" — even for quick questions</li>
+                  <li><strong>Build the storyline:</strong> Track how each answer connects. The synthesis is where you show you were building something.</li>
+                  <li><strong>Ask for 10 seconds:</strong> "Can I take 10 seconds?" is OK even in interviewer-led. Just don't take 60.</li>
+                </ul>
+              </div>
+            </div>
+            <div id="mc-desc-creative" style="display:none;">
+              <table style="font-size:0.85em;">
+                <thead><tr><th>Section</th><th>What Happens</th><th>Duration</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>1. Light Structuring</strong></td><td>"Our client wants ideas for X" — they want VOLUME and VARIETY of ideas</td><td>~3 min</td></tr>
+                  <tr><td><strong>2. Brainstorm</strong></td><td>"Give me as many ideas as you can for..." — aim for 8-12 ideas, structured in categories</td><td>~10 min</td></tr>
+                  <tr><td><strong>3. Prioritize</strong></td><td>"Pick the best 2-3 and explain why" — needs impact/feasibility evaluation</td><td>~5 min</td></tr>
+                  <tr><td><strong>4. Implementation</strong></td><td>"How would you actually implement your top idea?" — show operational thinking</td><td>~5 min</td></tr>
+                </tbody>
+              </table>
+              <p style="font-size:0.85em;color:var(--text-muted);margin-top:8px;">📌 Tests your <strong>creativity and structured brainstorming</strong>. Don't just list ideas randomly — group them into 3-4 categories (customer, product, channel, operations).</p>
+              <div style="margin-top:12px;padding:12px;background:#1a1a1a;border-radius:8px;border:1px solid #333;">
+                <p style="color:#ff8a65;font-weight:600;font-size:0.9em;">💡 Brainstorming Framework:</p>
+                <ul style="color:#e0e0e0;font-size:0.85em;margin-top:6px;padding-left:18px;">
+                  <li><strong>Structure first:</strong> "I'll organize my ideas across 4 dimensions: product, customer, channel, and operations"</li>
+                  <li><strong>Quantity matters:</strong> Aim for 3+ ideas per category. More ideas = better score.</li>
+                  <li><strong>Mix obvious and creative:</strong> Don't only say safe things. Include 2-3 bold ideas — flag them as "more creative".</li>
+                  <li><strong>Prioritize using 2×2:</strong> Impact (high/low) vs Feasibility (easy/hard). Pick the "high impact, easy to implement" ones.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AIM CLARIFYING QUESTIONS -->
+        <div class="card" style="margin-bottom:20px;border-left:4px solid #2196f3;">
+          <h3>🎯 Step 0: Clarifying Questions (AIM Framework)</h3>
+          <p style="color:var(--text-muted);font-size:0.9em;margin-bottom:12px;">Before structuring, you have 2-3 questions to ask. The AIM test starts here — your questions should reveal the client's REAL goal and scope.</p>
+          
+          <div class="collapsible" onclick="toggleCollapsible(this)">
+            📋 What to Clarify (and What NOT to Ask)
+          </div>
+          <div class="collapsible-content">
+            <div style="background:#1a1a1a;padding:16px;border-radius:8px;color:#e0e0e0;font-size:0.9em;line-height:1.6;">
+              <p style="color:#4caf50;font-weight:600;margin-bottom:8px;">✅ GOOD Clarifying Questions (help you structure):</p>
+              <table style="font-size:0.88em;width:100%;">
+                <thead><tr><th style="color:#4caf50;">Category</th><th>Example Question</th><th>Why It Helps</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Client's Goal</strong></td><td>"Is the primary objective to restore profitability to prior levels, or is there a specific margin target?"</td><td>Tells you whether this is a turnaround or optimization</td></tr>
+                  <tr><td><strong>Scope</strong></td><td>"Are we looking at the entire business, or a specific division/product line?"</td><td>Prevents you from boiling the ocean</td></tr>
+                  <tr><td><strong>Timeline</strong></td><td>"Is there a time horizon in mind? Quick wins vs structural changes?"</td><td>Affects whether you recommend operational vs strategic fixes</td></tr>
+                  <tr><td><strong>Business Model</strong></td><td>"Could you give me a quick sense of the product range and customer segments?"</td><td>Helps you tailor the structure to THEIR business (Insightful)</td></tr>
+                  <tr><td><strong>Constraints</strong></td><td>"Are there any options off the table — layoffs, price increases, market exits?"</td><td>Prevents you from recommending something they've already ruled out</td></tr>
+                </tbody>
+              </table>
+              <p style="color:#ef5350;font-weight:600;margin:16px 0 8px;">🚫 BAD Clarifying Questions (waste your time):</p>
+              <ul style="padding-left:18px;color:#ef9a9a;">
+                <li>"What industry is the client in?" — <em>They just told you</em></li>
+                <li>"What are their revenues?" — <em>Already in the prompt</em></li>
+                <li>"Who are their competitors?" — <em>You'll find this out later in the case</em></li>
+                <li>"What's the market like?" — <em>Too broad. Ask about a specific aspect.</em></li>
+                <li>Restating the entire case back — <em>The interviewer knows what they said</em></li>
+              </ul>
+              <p style="color:#fff176;font-weight:600;margin:16px 0 8px;">🎯 The AIM Clarifying Test:</p>
+              <p>Every question you ask should pass this: <strong>"Will this answer change my structure?"</strong> If no, don't ask it. You only get 2-3 questions — make them count.</p>
+            </div>
+          </div>
+
+          <div class="collapsible" onclick="toggleCollapsible(this)" style="margin-top:8px;">
+            ✅ Ideal Clarifying Questions — EcoBottle Example
+          </div>
+          <div class="collapsible-content">
+            <div style="background:#1a1a1a;padding:16px;border-radius:8px;color:#e0e0e0;font-size:0.9em;line-height:1.7;font-family:'Courier New',monospace;">
+              <p>"Thank you. Before I structure my approach, I'd like to ask a few clarifying questions:"</p>
+              <p style="margin-top:12px;"><strong style="color:#4caf50;">1.</strong> "When you say profits declined 25% — is that operating profit or net profit? And are there any one-off items I should be aware of?"</p>
+              <p style="font-size:0.85em;color:#81c784;margin-left:20px;">→ This scopes the problem: one-off write-down vs recurring deterioration</p>
+              <p style="margin-top:8px;"><strong style="color:#4caf50;">2.</strong> "Could you tell me a bit about the product portfolio? Are all products affected equally, or is the decline concentrated?"</p>
+              <p style="font-size:0.85em;color:#81c784;margin-left:20px;">→ This makes your structure Insightful — you'll tailor to the product mix</p>
+              <p style="margin-top:8px;"><strong style="color:#4caf50;">3.</strong> "Is there a target the CEO has in mind — return to prior 20% margin, or a different threshold?"</p>
+              <p style="font-size:0.85em;color:#81c784;margin-left:20px;">→ Answer-focused: you need the goal to prioritize recommendations</p>
+              <p style="margin-top:12px;font-style:italic;color:#b0bec5;">[After interviewer answers, you transition smoothly into structuring]</p>
+            </div>
+          </div>
         </div>
 
         <!-- THE CASE PROMPT -->
@@ -13685,6 +13875,9 @@ Margin                       20.0%              6.6%          -13.4pp
                   impact & timeline
                 </li>
                 <li>
+                  <strong>RISKS & MITIGATIONS</strong> (2-3 bullet points) — what could go wrong and how to handle it
+                </li>
+                <li>
                   <strong>NEXT STEPS</strong> (1-2 sentences) — what you'd do
                   next week
                 </li>
@@ -13774,6 +13967,28 @@ Margin                       20.0%              6.6%          -13.4pp
                 from alternative steel suppliers to establish negotiation
                 leverage."
               </p>
+              <p style="margin-top: 12px">
+                <strong style="color: #ef5350">RISKS & MITIGATIONS:</strong>
+              </p>
+              <ul style="margin-left: 20px; color: #b0bec5; line-height: 1.8">
+                <li>
+                  <strong>Risk:</strong> Price increase on premium line could
+                  reduce volume → <strong>Mitigation:</strong> Run an A/B test
+                  on one region first; eco-conscious consumers tend to have
+                  lower price elasticity
+                </li>
+                <li>
+                  <strong>Risk:</strong> Supplier renegotiation takes time while
+                  costs keep rising → <strong>Mitigation:</strong> Short-term
+                  hedging immediately, parallel-track supplier diversification
+                </li>
+                <li>
+                  <strong>Risk:</strong> Discontinuing SKUs may lose shelf space
+                  at retailers → <strong>Mitigation:</strong> Keep the SKU slots
+                  but replace lowest-margin products with higher-margin
+                  alternatives
+                </li>
+              </ul>
             </div>
             <div
               style="
@@ -13788,7 +14003,8 @@ Margin                       20.0%              6.6%          -13.4pp
               Leads with the answer (Pyramid) ② Quantified each recommendation
               (€3-5M, €4-6M) ③ Prioritized by timeline (immediate → short →
               medium) ④ Specific next steps for "this week" ⑤ Shows business
-              judgment (premium customers have higher WTP)
+              judgment (premium customers have higher WTP) ⑥ Acknowledges risks
+              with concrete mitigations — shows maturity and real-world thinking
             </div>
           </div>
         </div>
@@ -14187,7 +14403,7 @@ Margin                       20.0%              6.6%          -13.4pp
 
         var html =
           bcHTML +
-          '<div style="font-size:1.1em;font-weight:700;margin-bottom:16px;color:#e0e0e0;">' +
+          '<div style="font-size:1.1em;font-weight:700;margin-bottom:16px;color:#1a1a1a;">' +
           node.question +
           "</div>";
         html += '<div style="display:flex;flex-direction:column;gap:10px;">';
@@ -14195,7 +14411,7 @@ Margin                       20.0%              6.6%          -13.4pp
           html +=
             '<button onclick="fwTreeChoose(' +
             idx +
-            ")\" style=\"text-align:left;padding:14px 18px;background:#1a1a1a;border:1px solid #444;border-radius:8px;color:#e0e0e0;font-size:0.95em;cursor:pointer;transition:all 0.2s;\" onmouseover=\"this.style.borderColor='var(--bcg-green)';this.style.background='#222'\" onmouseout=\"this.style.borderColor='#444';this.style.background='#1a1a1a'\">" +
+            ")\" style=\"text-align:left;padding:14px 18px;background:#f0f0f0;border:1px solid #ccc;border-radius:8px;color:#1a1a1a;font-size:0.95em;cursor:pointer;transition:all 0.2s;\" onmouseover=\"this.style.borderColor='var(--bcg-green)';this.style.background='#e8f5e9'\" onmouseout=\"this.style.borderColor='#ccc';this.style.background='#f0f0f0'\">" +
             opt.label +
             "</button>";
         });
@@ -14269,6 +14485,99 @@ Margin                       20.0%              6.6%          -13.4pp
           '<div style="padding:12px;background:rgba(76,175,80,0.1);border-radius:8px;border:1px solid rgba(76,175,80,0.3);"><strong style="color:#4caf50;">💡 Interview Tip:</strong> <span style="color:#e0e0e0;font-size:0.9em;">' +
           r.tip +
           "</span></div>";
+      }
+
+      // ─── FULL TREE VIEW ───
+      var fwTreeFullMode = false;
+
+      function fwToggleTreeView() {
+        fwTreeFullMode = !fwTreeFullMode;
+        var btn = document.getElementById("fw-tree-view-toggle");
+        var interactive = document.getElementById("fw-tree-container");
+        var result = document.getElementById("fw-tree-result");
+        var full = document.getElementById("fw-tree-full");
+        var startBtn = document.querySelector('[onclick="fwTreeReset()"]');
+
+        if (fwTreeFullMode) {
+          btn.textContent = "🔀 Condensed View";
+          interactive.style.display = "none";
+          result.style.display = "none";
+          if (startBtn) startBtn.style.display = "none";
+          full.style.display = "block";
+          fwRenderFullTree();
+        } else {
+          btn.textContent = "🌳 Full Tree View";
+          interactive.style.display = "block";
+          full.style.display = "none";
+          if (startBtn) startBtn.style.display = "";
+          fwTreeReset();
+        }
+      }
+
+      function fwRenderFullTree() {
+        function renderNode(node, depth) {
+          var html = "";
+          if (node.question) {
+            html +=
+              '<div style="font-weight:600;color:#1a1a1a;margin:' +
+              (depth > 0 ? "8" : "0") +
+              "px 0 6px;font-size:" +
+              (depth === 0 ? "1.05em" : "0.92em") +
+              ';">' +
+              node.question +
+              "</div>";
+          }
+          if (node.options) {
+            html +=
+              '<ul style="list-style:none;padding-left:' +
+              (depth > 0 ? "20" : "0") +
+              'px;margin:0;">';
+            node.options.forEach(function (opt) {
+              html += '<li style="margin-bottom:8px;">';
+              if (opt.result) {
+                html +=
+                  '<div style="display:flex;align-items:flex-start;gap:8px;">';
+                html +=
+                  '<span style="color:var(--bcg-green);font-weight:600;">→</span>';
+                html += "<div>";
+                html +=
+                  '<span style="font-weight:500;color:#333;">' +
+                  opt.label +
+                  "</span>";
+                html +=
+                  '<div style="margin-top:4px;padding:8px 12px;background:#f0f8f0;border-radius:6px;border-left:3px solid var(--bcg-green);font-size:0.85em;">';
+                html +=
+                  '<strong style="color:var(--bcg-green);">' +
+                  opt.result.name +
+                  "</strong>";
+                html +=
+                  '<div style="color:#555;margin-top:2px;font-size:0.9em;">' +
+                  opt.result.why.split(".")[0] +
+                  ".</div>";
+                html += "</div></div></div>";
+              } else if (opt.next) {
+                html +=
+                  '<div style="display:flex;align-items:flex-start;gap:8px;">';
+                html +=
+                  '<span style="color:var(--highlight);font-weight:700;">▶</span>';
+                html += '<div style="flex:1;">';
+                html +=
+                  '<span style="font-weight:500;color:#333;">' +
+                  opt.label +
+                  "</span>";
+                html += renderNode(opt.next, depth + 1);
+                html += "</div></div>";
+              }
+              html += "</li>";
+            });
+            html += "</ul>";
+          }
+          return html;
+        }
+        document.getElementById("fw-tree-full").innerHTML = renderNode(
+          FW_TREE,
+          0,
+        );
       }
 
       // Initialize tree on first load
@@ -15611,6 +15920,27 @@ Margin                       20.0%              6.6%          -13.4pp
         setTimeout(fwUpdateIndustryExamples, 100);
       })();
 
+      // ─── MODEL CASE TYPE SELECTOR ───
+      function mcShowType(type) {
+        var types = ['balanced','exhibit','math','interviewer','creative'];
+        types.forEach(function(t) {
+          var desc = document.getElementById('mc-desc-' + t);
+          var btn = document.getElementById('mc-btn-' + t);
+          if (desc) desc.style.display = (t === type) ? '' : 'none';
+          if (btn) {
+            if (t === type) {
+              btn.style.background = 'var(--bcg-green)';
+              btn.style.color = 'white';
+              btn.style.border = 'none';
+            } else {
+              btn.style.background = '#f0f0f0';
+              btn.style.color = '#333';
+              btn.style.border = '1px solid #ccc';
+            }
+          }
+        });
+      }
+
       // Mobile sidebar
       function toggleSidebar() {
         document.getElementById("bcg-nav").classList.toggle("open");
@@ -16090,9 +16420,19 @@ Margin                       20.0%              6.6%          -13.4pp
           barEl.style.display = "block";
 
           const fillEl = document.getElementById("bar-" + pillId + "-fill");
-          const startPct = hourToPercent(takenH);
+          // For 24h+ pills taken before timeline start (e.g. Aerius at midnight),
+          // show the bar spanning from timeline start to the actual fade time
+          let effectiveStartH = takenH;
+          if (data.durationMin >= 1440 && takenH < TIMELINE_START) {
+            effectiveStartH = TIMELINE_START; // pill was taken before timeline, still active
+          }
+          const startPct = hourToPercent(effectiveStartH);
           const endPct = hourToPercent(fadeH);
-          const widthPct = Math.max(2, endPct - startPct);
+          let widthPct = Math.max(2, endPct - startPct);
+          // If fadeH wraps beyond timeline end, fill to 100%
+          if (data.durationMin >= 1440) {
+            widthPct = Math.max(widthPct, 100 - startPct);
+          }
 
           fillEl.style.left = startPct + "%";
           fillEl.style.width = widthPct + "%";
