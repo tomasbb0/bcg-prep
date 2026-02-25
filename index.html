@@ -4428,61 +4428,104 @@
         </div>
 
         <!-- AIM TEST -->
-        <div class="card card-accent" style="margin-bottom: 24px">
-          <h3>🎯 The AIM Test / O Teste AIM</h3>
-          <p style="margin-bottom: 12px">
-            Every structure must pass all 3 / Toda a estrutura deve passar nos
-            3:
-          </p>
-          <table>
-            <thead>
-              <tr>
-                <th></th>
-                <th>English</th>
-                <th>Português</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>A</strong></td>
-                <td>
-                  <strong>Answer-focused</strong> — Focus on the right question;
-                  provide a prioritized approach to solving it
-                </td>
-                <td>
-                  <strong>Focado na resposta</strong> — Foca na pergunta certa;
-                  abordagem priorizada para a resolver
-                </td>
-              </tr>
-              <tr>
-                <td><strong>I</strong></td>
-                <td>
-                  <strong>Insightful</strong> — Tailor structure to the client's
-                  specific situation
-                </td>
-                <td>
-                  <strong>Perspicaz</strong> — Adaptar a estrutura à situação
-                  específica do cliente
-                </td>
-              </tr>
-              <tr>
-                <td><strong>M</strong></td>
-                <td>
-                  <strong>MECE</strong> — Break down into an exhaustive set of
-                  independent drivers
-                </td>
-                <td>
-                  <strong>MECE</strong> — Dividir num conjunto exaustivo de
-                  fatores independentes
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="card card-danger" style="margin-top: 12px">
-            <strong>TIP:</strong> Only ask questions that help you structure.
-            Don't restate the whole brief. / Só faz perguntas que ajudem a
-            estruturar. Não repitas todo o briefing.
+        <div class="collapsible" onclick="toggleCollapsible(this)">
+          🎯 The AIM Test / O Teste AIM
+        </div>
+        <div class="collapsible-content">
+          <div class="card card-accent" style="margin-bottom: 0">
+            <p style="margin-bottom: 12px">
+              Every structure must pass all 3 / Toda a estrutura deve passar nos
+              3:
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>English</th>
+                  <th>Português</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>A</strong></td>
+                  <td>
+                    <strong>Answer-focused</strong> — Focus on the right
+                    question; provide a prioritized approach to solving it
+                  </td>
+                  <td>
+                    <strong>Focado na resposta</strong> — Foca na pergunta
+                    certa; abordagem priorizada para a resolver
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>I</strong></td>
+                  <td>
+                    <strong>Insightful</strong> — Tailor structure to the
+                    client's specific situation
+                  </td>
+                  <td>
+                    <strong>Perspicaz</strong> — Adaptar a estrutura à situação
+                    específica do cliente
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>M</strong></td>
+                  <td>
+                    <strong>MECE</strong> — Break down into an exhaustive set of
+                    independent drivers
+                  </td>
+                  <td>
+                    <strong>MECE</strong> — Dividir num conjunto exaustivo de
+                    fatores independentes
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="card card-danger" style="margin-top: 12px">
+              <strong>TIP:</strong> Only ask questions that help you structure.
+              Don't restate the whole brief. / Só faz perguntas que ajudem a
+              estruturar. Não repitas todo o briefing.
+            </div>
           </div>
+        </div>
+
+        <!-- INDUSTRY SELECTOR -->
+        <div class="card" style="margin-bottom: 20px; padding: 16px">
+          <h3 style="margin-bottom: 12px">🏭 Select Industry for Examples</h3>
+          <p
+            style="
+              color: var(--text-muted);
+              font-size: 0.88em;
+              margin-bottom: 12px;
+            "
+          >
+            Choose an industry to see tailored examples in each framework below.
+          </p>
+          <select
+            id="fw-industry-select"
+            onchange="fwUpdateIndustryExamples()"
+            style="
+              padding: 10px 16px;
+              border-radius: 8px;
+              border: 1px solid var(--border);
+              background: var(--bg-card);
+              color: var(--text);
+              font-size: 1em;
+              width: 100%;
+              max-width: 400px;
+              cursor: pointer;
+            "
+          >
+            <option value="retail">🛒 Retail & Consumer Goods</option>
+            <option value="healthcare">🏥 Healthcare & Pharma</option>
+            <option value="tech">💻 Technology / SaaS</option>
+            <option value="financial">🏦 Financial Services</option>
+            <option value="energy">⚡ Energy & Utilities</option>
+            <option value="airlines">✈️ Airlines & Transport</option>
+            <option value="manufacturing">🏭 Manufacturing</option>
+            <option value="telecom">📡 Telecom & Media</option>
+            <option value="nonprofit">🌍 Non-Profit / Public Sector</option>
+          </select>
         </div>
 
         <!-- HOW TO BUILD A STRUCTURE -->
@@ -4581,7 +4624,7 @@
         <div class="collapsible" onclick="toggleCollapsible(this)">
           💰 1. How to Improve Profits? / Como Melhorar Lucros?
         </div>
-        <div class="collapsible-content">
+        <div class="collapsible-content" id="fw-ex-1">
           <ul class="tree-list">
             <li>
               <strong>How to improve profits? / Como melhorar lucros?</strong>
@@ -4611,13 +4654,25 @@
             Nas receitas, olho para preço e volume. Nos custos, separo fixos e
             variáveis."
           </blockquote>
+          <div
+            class="fw-when-to-use"
+            style="
+              background: #1b2a1b;
+              padding: 12px 16px;
+              border-radius: 8px;
+              border-left: 3px solid var(--bcg-green);
+              margin: 12px 0;
+            "
+          ></div>
+          <div class="fw-industry-examples" style="margin: 10px 0"></div>
+          <div class="fw-industry-prompt"></div>
         </div>
 
         <!-- 2. GROWTH -->
         <div class="collapsible" onclick="toggleCollapsible(this)">
           📈 2. How to Grow a Business? / Como Fazer Crescer um Negócio?
         </div>
-        <div class="collapsible-content">
+        <div class="collapsible-content" id="fw-ex-2">
           <ul class="tree-list">
             <li>
               <strong>How to grow a business? / Como crescer?</strong>
@@ -4660,13 +4715,25 @@
               </ul>
             </li>
           </ul>
+          <div
+            class="fw-when-to-use"
+            style="
+              background: #1b2a1b;
+              padding: 12px 16px;
+              border-radius: 8px;
+              border-left: 3px solid var(--bcg-green);
+              margin: 12px 0;
+            "
+          ></div>
+          <div class="fw-industry-examples" style="margin: 10px 0"></div>
+          <div class="fw-industry-prompt"></div>
         </div>
 
         <!-- 3. CUT COSTS -->
         <div class="collapsible" onclick="toggleCollapsible(this)">
           📉 3. How to Cut Costs? / Como Reduzir Custos?
         </div>
-        <div class="collapsible-content">
+        <div class="collapsible-content" id="fw-ex-3">
           <ul class="tree-list">
             <li>
               <strong>How to cut costs? / Como reduzir custos?</strong>
@@ -4715,6 +4782,18 @@
             Examples / Exemplos: Self-service portal / Portal self-service,
             Offshoring, Training / Formação
           </p>
+          <div
+            class="fw-when-to-use"
+            style="
+              background: #1b2a1b;
+              padding: 12px 16px;
+              border-radius: 8px;
+              border-left: 3px solid var(--bcg-green);
+              margin: 12px 0;
+            "
+          ></div>
+          <div class="fw-industry-examples" style="margin: 10px 0"></div>
+          <div class="fw-industry-prompt"></div>
         </div>
 
         <!-- 4. ENTER A NEW MARKET -->
@@ -4722,7 +4801,7 @@
           🚀 4. Whether to Enter a New Market? / Devemos Entrar num Novo
           Mercado?
         </div>
-        <div class="collapsible-content">
+        <div class="collapsible-content" id="fw-ex-4">
           <ul class="tree-list">
             <li>
               <strong>Whether to enter? / Devemos entrar?</strong>
@@ -4764,13 +4843,25 @@
               </ul>
             </li>
           </ul>
+          <div
+            class="fw-when-to-use"
+            style="
+              background: #1b2a1b;
+              padding: 12px 16px;
+              border-radius: 8px;
+              border-left: 3px solid var(--bcg-green);
+              margin: 12px 0;
+            "
+          ></div>
+          <div class="fw-industry-examples" style="margin: 10px 0"></div>
+          <div class="fw-industry-prompt"></div>
         </div>
 
         <!-- 5. LAUNCH NEW PRODUCT -->
         <div class="collapsible" onclick="toggleCollapsible(this)">
           🆕 5. How to Launch a New Product? / Como Lançar um Novo Produto?
         </div>
-        <div class="collapsible-content">
+        <div class="collapsible-content" id="fw-ex-5">
           <ul class="tree-list">
             <li>
               <strong>How to launch? / Como lançar?</strong>
@@ -4812,13 +4903,25 @@
               </ul>
             </li>
           </ul>
+          <div
+            class="fw-when-to-use"
+            style="
+              background: #1b2a1b;
+              padding: 12px 16px;
+              border-radius: 8px;
+              border-left: 3px solid var(--bcg-green);
+              margin: 12px 0;
+            "
+          ></div>
+          <div class="fw-industry-examples" style="margin: 10px 0"></div>
+          <div class="fw-industry-prompt"></div>
         </div>
 
         <!-- 6. PRICING -->
         <div class="collapsible" onclick="toggleCollapsible(this)">
           🏷️ 6. How to Price a Product? / Como Definir o Preço?
         </div>
-        <div class="collapsible-content">
+        <div class="collapsible-content" id="fw-ex-6">
           <ul class="tree-list">
             <li>
               <strong>How to price? / Como precificar?</strong>
@@ -4855,13 +4958,25 @@
               </ul>
             </li>
           </ul>
+          <div
+            class="fw-when-to-use"
+            style="
+              background: #1b2a1b;
+              padding: 12px 16px;
+              border-radius: 8px;
+              border-left: 3px solid var(--bcg-green);
+              margin: 12px 0;
+            "
+          ></div>
+          <div class="fw-industry-examples" style="margin: 10px 0"></div>
+          <div class="fw-industry-prompt"></div>
         </div>
 
         <!-- 7. INVESTMENT -->
         <div class="collapsible" onclick="toggleCollapsible(this)">
           💼 7. Whether to Make an Investment? / Devemos Investir?
         </div>
-        <div class="collapsible-content">
+        <div class="collapsible-content" id="fw-ex-7">
           <ul class="tree-list">
             <li>
               <strong>Whether to invest? / Devemos investir?</strong>
@@ -4889,13 +5004,25 @@
               </ul>
             </li>
           </ul>
+          <div
+            class="fw-when-to-use"
+            style="
+              background: #1b2a1b;
+              padding: 12px 16px;
+              border-radius: 8px;
+              border-left: 3px solid var(--bcg-green);
+              margin: 12px 0;
+            "
+          ></div>
+          <div class="fw-industry-examples" style="margin: 10px 0"></div>
+          <div class="fw-industry-prompt"></div>
         </div>
 
         <!-- 8. ACQUIRE A BUSINESS -->
         <div class="collapsible" onclick="toggleCollapsible(this)">
           🤝 8. Whether to Acquire a Business? / Devemos Adquirir?
         </div>
-        <div class="collapsible-content">
+        <div class="collapsible-content" id="fw-ex-8">
           <ul class="tree-list">
             <li>
               <strong>Whether to acquire? / Devemos adquirir?</strong>
@@ -4925,6 +5052,18 @@
               </ul>
             </li>
           </ul>
+          <div
+            class="fw-when-to-use"
+            style="
+              background: #1b2a1b;
+              padding: 12px 16px;
+              border-radius: 8px;
+              border-left: 3px solid var(--bcg-green);
+              margin: 12px 0;
+            "
+          ></div>
+          <div class="fw-industry-examples" style="margin: 10px 0"></div>
+          <div class="fw-industry-prompt"></div>
         </div>
 
         <!-- 9. COMPETITIVE THREAT -->
@@ -4932,7 +5071,7 @@
           ⚔️ 9. How to Respond to a Competitive Threat? / Como Responder a uma
           Ameaça Competitiva?
         </div>
-        <div class="collapsible-content">
+        <div class="collapsible-content" id="fw-ex-9">
           <ul class="tree-list">
             <li>
               <strong>How to respond? / Como responder?</strong>
@@ -4975,13 +5114,25 @@
               </ul>
             </li>
           </ul>
+          <div
+            class="fw-when-to-use"
+            style="
+              background: #1b2a1b;
+              padding: 12px 16px;
+              border-radius: 8px;
+              border-left: 3px solid var(--bcg-green);
+              margin: 12px 0;
+            "
+          ></div>
+          <div class="fw-industry-examples" style="margin: 10px 0"></div>
+          <div class="fw-industry-prompt"></div>
         </div>
 
         <!-- 10. OPTIMIZE A PROCESS -->
         <div class="collapsible" onclick="toggleCollapsible(this)">
           ⚙️ 10. How to Optimize a Process? / Como Otimizar um Processo?
         </div>
-        <div class="collapsible-content">
+        <div class="collapsible-content" id="fw-ex-10">
           <ul class="tree-list">
             <li>
               <strong>How to optimize? / Como otimizar?</strong>
@@ -5018,6 +5169,18 @@
               </ul>
             </li>
           </ul>
+          <div
+            class="fw-when-to-use"
+            style="
+              background: #1b2a1b;
+              padding: 12px 16px;
+              border-radius: 8px;
+              border-left: 3px solid var(--bcg-green);
+              margin: 12px 0;
+            "
+          ></div>
+          <div class="fw-industry-examples" style="margin: 10px 0"></div>
+          <div class="fw-industry-prompt"></div>
         </div>
 
         <!-- SECOND-LEVEL DRIVERS -->
@@ -14112,6 +14275,1340 @@ Margin                       20.0%              6.6%          -13.4pp
       (function () {
         var el = document.getElementById("fw-tree-container");
         if (el) fwTreeRender(FW_TREE);
+      })();
+
+      // ═══════════════════════════════════════════════
+      // FRAMEWORK INDUSTRY EXAMPLES — Dynamic content
+      // ═══════════════════════════════════════════════
+      var FW_EXAMPLES = {
+        profitability: {
+          whenToUse:
+            "The prompt explicitly mentions <strong>declining profits, shrinking margins, losing money</strong>, or the company being <strong>unprofitable</strong>. The core question is: WHY is profit changing?",
+          whenNOT: [
+            {
+              trap: "Client wants to grow revenue",
+              use: "📈 Growth — growing revenue is not the same as fixing profitability",
+            },
+            {
+              trap: "Client should enter a new market",
+              use: "🚀 Market Entry — even if profit is the end goal, you need to assess market attractiveness first",
+            },
+            {
+              trap: "Client's costs are too high (specific process)",
+              use: "⚙️ Process Optimization — if the cost problem is in a specific operation/process",
+            },
+          ],
+          examples: {
+            retail: {
+              lvl2: [
+                "e.g. footfall decline driving fewer transactions",
+                "e.g. rent per sqm rising in prime locations",
+                "e.g. private-label margin vs branded margin shift",
+              ],
+              prompts: [
+                "FreshMart, a chain of 200 supermarkets, has seen operating margin fall from 5% to 1.5% over the last 2 years. Revenue is flat at €3B. The CEO wants to understand why and what to do.",
+                "UrbanWear, a DTC fashion brand, has seen profit drop 40% YoY despite 10% revenue growth. What's going on?",
+                "GreenGrocer, an organic grocery chain, turned unprofitable last quarter for the first time in 8 years. How would you diagnose the problem?",
+              ],
+            },
+            healthcare: {
+              lvl2: [
+                "e.g. reimbursement rate cuts from government",
+                "e.g. R&D spend on failed Phase III trials",
+                "e.g. patent cliff on blockbuster drug",
+              ],
+              prompts: [
+                "CureFirst Pharma has seen EBITDA margin drop from 35% to 18% over 3 years. Their top-selling drug faces generic competition. Why are profits down and what should they do?",
+                "CarePlus Hospital Group's operating costs are growing 12% annually while reimbursement rates are flat. How would you approach this?",
+                "MedVita Labs' gross margin is 75% but net margin is only 3%. Where is the money going?",
+              ],
+            },
+            tech: {
+              lvl2: [
+                "e.g. CAC rising due to competitive ad market",
+                "e.g. cloud infrastructure costs scaling non-linearly",
+                "e.g. churn rate increasing → lower LTV",
+              ],
+              prompts: [
+                "CloudSync, a B2B SaaS platform with $50M ARR, has never been profitable despite 70% gross margin. The board wants a path to profitability. How would you structure this?",
+                "DataPulse AI's revenue grew 40% but losses doubled. What's driving the disconnect?",
+                "AppForge has 200K free users but only 5K paid — their unit economics are underwater. How to fix profitability?",
+              ],
+            },
+            financial: {
+              lvl2: [
+                "e.g. net interest margin compression",
+                "e.g. rising NPL (non-performing loans)",
+                "e.g. compliance costs after new regulation",
+              ],
+              prompts: [
+                "TrustBank's cost-to-income ratio has risen from 55% to 72% over 3 years. Profits are down 45%. What's happening?",
+                "InsureAll's combined ratio has exceeded 100% — they're losing money on underwriting. Why?",
+                "PayQuick processes $2B annually but is unprofitable on a unit economics basis. How to fix this?",
+              ],
+            },
+            energy: {
+              lvl2: [
+                "e.g. energy price volatility compressing margins",
+                "e.g. carbon tax increasing operating costs",
+                "e.g. over-investment in capacity vs demand",
+              ],
+              prompts: [
+                "GridPower, a utility company, has seen profits halve despite stable customer numbers. Energy prices have been volatile. Diagnose the issue.",
+                "FuelTech, an oil refiner, is losing money for the first time in 20 years. What's driving this?",
+                "SolarFirst's solar farms are operating at 85% capacity but still unprofitable. Where's the problem?",
+              ],
+            },
+            airlines: {
+              lvl2: [
+                "e.g. fuel cost spike (25-35% of costs)",
+                "e.g. load factor dropping on certain routes",
+                "e.g. yield dilution from discount competition",
+              ],
+              prompts: [
+                "SkyBridge Airlines' profit has turned negative despite stable load factors. Revenue per passenger km is down. What's happening?",
+                "EuroConnect, a low-cost carrier, used to have 8% margins — now they're break-even. Diagnose the decline.",
+                "CargoFast's costs per tonne-km have risen 25% while cargo yields are flat. How would you analyze this?",
+              ],
+            },
+            manufacturing: {
+              lvl2: [
+                "e.g. raw material cost inflation (steel, plastics)",
+                "e.g. scrap rate increasing on production line",
+                "e.g. underutilized capacity (65% vs 85% target)",
+              ],
+              prompts: [
+                "SteelForge operates 3 plants at 65% utilization. Profit margin has dropped from 12% to 3%. What should they do?",
+                "AutoParts Global's unit cost has risen 20% in 18 months while prices to OEM customers are fixed. Diagnose the problem.",
+                "PackRight is losing margin on its biggest customer. How would you analyze the profitability of this contract?",
+              ],
+            },
+            telecom: {
+              lvl2: [
+                "e.g. ARPU declining due to price competition",
+                "e.g. capex for 5G rollout not yet generating returns",
+                "e.g. content costs rising for streaming bundle",
+              ],
+              prompts: [
+                "ConnectAll's ARPU has dropped 15% over 2 years while subscriber growth is flat. Why are profits declining?",
+                "StreamVision's content costs are growing 30% annually while subscriber growth is only 10%. How to fix the economics?",
+                "DataWave invested €2B in 5G infrastructure but has yet to monetize it. Is the investment paying off?",
+              ],
+            },
+            nonprofit: {
+              lvl2: [
+                "e.g. donor fatigue reducing funding",
+                "e.g. overhead ratio creeping up due to expansion",
+                "e.g. cost per beneficiary rising in new regions",
+              ],
+              prompts: [
+                "EduBridge Foundation's cost per student served has risen 40% as they expanded to new countries. Funding is flat. How do they balance growth with sustainability?",
+                "HealthForAll NGO's overhead ratio has risen from 15% to 28%. Donors are concerned. How would you address this?",
+                "Global Literacy Fund must cut programs by 20% due to budget constraints. How should they decide which to keep?",
+              ],
+            },
+          },
+        },
+        growth: {
+          whenToUse:
+            "The prompt asks how to <strong>grow revenue, increase market share, expand</strong>, or <strong>scale the business</strong>. The company is healthy but wants to be bigger.",
+          whenNOT: [
+            {
+              trap: "Profit is declining (even if growth is mentioned)",
+              use: "💰 Profitability — fix the profit problem first, then grow",
+            },
+            {
+              trap: "Client considering a specific new geography",
+              use: "🚀 Market Entry — use the dedicated entry framework for new markets",
+            },
+            {
+              trap: "Client wants to acquire a company to grow",
+              use: "🤝 M&A — acquisition is a specific growth mechanism with its own analysis",
+            },
+          ],
+          examples: {
+            retail: {
+              lvl2: [
+                "e.g. open new stores in underserved regions",
+                "e.g. launch e-commerce channel for existing customers",
+                "e.g. expand into adjacent categories (food → meal kits)",
+              ],
+              prompts: [
+                "FreshMart has 200 stores and €3B revenue. The board wants 15% revenue growth in 3 years. Where should they focus?",
+                "UrbanWear, a DTC fashion brand, wants to double revenue from €50M to €100M. What growth strategy would you recommend?",
+                "PetPlanet's subscription service has plateaued at 80K subscribers. How can they reignite growth?",
+              ],
+            },
+            healthcare: {
+              lvl2: [
+                "e.g. expand geographic reach to emerging markets",
+                "e.g. add complementary therapy areas to pipeline",
+                "e.g. build digital health services on top of drug portfolio",
+              ],
+              prompts: [
+                "BioNova Therapeutics just received FDA approval for a rare disease drug. How should they maximize growth from this asset?",
+                "CarePlus Hospitals operate 12 facilities. The board wants to grow from €800M to €1.2B revenue. How?",
+                "HealthBridge's remote monitoring platform has 50K users. How can they grow to 500K?",
+              ],
+            },
+            tech: {
+              lvl2: [
+                "e.g. move upmarket from SMB to enterprise",
+                "e.g. international expansion into APAC",
+                "e.g. add new product modules for cross-sell",
+              ],
+              prompts: [
+                "CloudSync has $50M ARR from SMB customers. The CEO wants to reach $200M in 3 years. Where should they focus?",
+                "SecureNet is dominant in the US cybersecurity market but has minimal international presence. How to grow?",
+                "StreamFlow's collaboration tool has 1M users. How can they grow to 10M?",
+              ],
+            },
+            financial: {
+              lvl2: [
+                "e.g. expand to underserved demographics (Gen Z, gig workers)",
+                "e.g. cross-sell wealth management to banking customers",
+                "e.g. launch embedded finance products for platforms",
+              ],
+              prompts: [
+                "TrustBank wants to grow retail deposits by 25% — but branches are expensive. What strategy would you recommend?",
+                "WealthBridge has $20B AUM and wants to reach $50B. What growth levers exist?",
+                "PayQuick processes $2B annually and wants to reach $10B. How should they scale?",
+              ],
+            },
+            energy: {
+              lvl2: [
+                "e.g. expand renewable portfolio (solar, wind, storage)",
+                "e.g. enter new deregulated energy markets",
+                "e.g. sell energy services (efficiency audits, EV charging)",
+              ],
+              prompts: [
+                "SolarFirst operates 500MW of solar capacity. The CEO wants to grow to 2GW in 5 years. How to achieve this?",
+                "GreenGrid wants to sell smart grid technology across Europe. They're currently in 3 countries. Growth strategy?",
+                "WindHarvest wants to grow from €200M to €500M revenue. What are the options?",
+              ],
+            },
+            airlines: {
+              lvl2: [
+                "e.g. add new routes to high-demand destinations",
+                "e.g. grow ancillary revenue (bags, seats, lounges)",
+                "e.g. launch loyalty program for frequent flyers",
+              ],
+              prompts: [
+                "EuroConnect is a low-cost carrier that wants to enter the long-haul market. Should they? How?",
+                "SkyBridge Airlines wants to grow revenue per passenger by 20%. What levers are available?",
+                "CargoFast sees growing demand for e-commerce logistics. How should they capitalize?",
+              ],
+            },
+            manufacturing: {
+              lvl2: [
+                "e.g. add higher-margin customized products",
+                "e.g. expand into new OEM customer segments",
+                "e.g. vertically integrate into component manufacturing",
+              ],
+              prompts: [
+                "AutoParts Global supplies 5 major OEMs. They want to grow revenue by 30%. What approach would you recommend?",
+                "PrecisionTech makes standard components but wants to move into high-margin custom manufacturing. How?",
+                "PackRight wants to grow from €150M to €250M. What options exist?",
+              ],
+            },
+            telecom: {
+              lvl2: [
+                "e.g. launch convergent bundles (mobile + broadband + TV)",
+                "e.g. enter B2B IoT connectivity market",
+                "e.g. expand into adjacent markets (cloud, security)",
+              ],
+              prompts: [
+                "ConnectAll has 8M mobile subscribers and wants to reach 12M. How can they grow in a saturated market?",
+                "MediaPulse wants to double streaming subscribers from 2M to 4M. What strategy?",
+                "TowerLink wants to grow revenue by offering smart city infrastructure services. How?",
+              ],
+            },
+            nonprofit: {
+              lvl2: [
+                "e.g. scale program to new countries/regions",
+                "e.g. diversify funding sources (corporate, govt, earned income)",
+                "e.g. build partnerships for greater reach",
+              ],
+              prompts: [
+                "CleanWater Initiative serves 500K people in 5 countries. They want to reach 2M in 15 countries. How?",
+                "EduBridge depends 80% on a single donor. They need to diversify and grow funding. Strategy?",
+                "HealthForAll NGO wants to double its impact without doubling its budget. What approaches exist?",
+              ],
+            },
+          },
+        },
+        "cost-reduction": {
+          whenToUse:
+            "The prompt asks to <strong>reduce costs, improve efficiency, cut spending</strong>, or deal with <strong>budget pressure</strong>. You know the WHAT (costs too high) and need to find the HOW.",
+          whenNOT: [
+            {
+              trap: "Profits are declining (but you don't know if it's costs OR revenue)",
+              use: "💰 Profitability — start with the full decomposition first",
+            },
+            {
+              trap: "A specific production process is slow",
+              use: "⚙️ Process Optimization — focuses on bottlenecks and throughput, not just cost",
+            },
+            {
+              trap: "Client considering outsourcing or offshoring",
+              use: "💼 Investment — the outsource decision is really an investment/ROI question",
+            },
+          ],
+          examples: {
+            retail: {
+              lvl2: [
+                "e.g. consolidate suppliers for volume discounts",
+                "e.g. reduce store hours or staff during low-traffic periods",
+                "e.g. switch to self-checkout to reduce labor",
+              ],
+              prompts: [
+                "FreshMart's labor costs are 14% of revenue vs industry average of 10%. The CEO wants a cost reduction plan.",
+                "LuxHome's logistics costs have risen 30% due to last-mile delivery. How can they bring these down?",
+                "SnackNation wants to reduce COGS by 15% without affecting product quality. What levers exist?",
+              ],
+            },
+            healthcare: {
+              lvl2: [
+                "e.g. consolidate hospitals/wards with low occupancy",
+                "e.g. shift to lower-cost care settings (outpatient)",
+                "e.g. renegotiate procurement contracts for medical supplies",
+              ],
+              prompts: [
+                "CarePlus Hospitals need to reduce operating costs by €50M. Current cost base is €700M. Where would you look?",
+                "MedVita Labs' SG&A is 40% of revenue — far above the 25% industry average. What's driving this?",
+                "HealthBridge needs to reduce infrastructure costs for its telehealth platform by 30%. How?",
+              ],
+            },
+            tech: {
+              lvl2: [
+                "e.g. optimize cloud infrastructure (right-sizing, reserved instances)",
+                "e.g. reduce customer acquisition cost through organic channels",
+                "e.g. offshore support/QA to lower-cost geographies",
+              ],
+              prompts: [
+                "CloudSync's gross margin is 70% but their cloud hosting bill is growing 40% YoY. How to optimize?",
+                "DataPulse AI's R&D spend is 45% of revenue. The board wants it closer to 30%. What should they cut?",
+                "AppForge's customer support costs $12/user/month. Competitors spend $4. How to reduce?",
+              ],
+            },
+            financial: {
+              lvl2: [
+                "e.g. close/merge low-performing branches",
+                "e.g. automate back-office processes (KYC, claims)",
+                "e.g. renegotiate IT vendor contracts",
+              ],
+              prompts: [
+                "TrustBank has 800 branches. 30% are unprofitable. How would you approach the cost optimization?",
+                "InsureAll's claims processing cost is 3x the industry benchmark. How to fix this?",
+                "WealthBridge's compliance costs have tripled since new regulations. How to manage?",
+              ],
+            },
+            energy: {
+              lvl2: [
+                "e.g. reduce O&M costs on wind/solar farms",
+                "e.g. optimize grid load balancing to reduce waste",
+                "e.g. renegotiate fuel supply contracts",
+              ],
+              prompts: [
+                "GridPower's O&M costs on their wind farms are €30/MWh vs industry avg of €20/MWh. How to close the gap?",
+                "FuelTech's refining costs are 15% above competitors. What cost reduction opportunities exist?",
+                "SolarFirst spent €200M on a solar farm. O&M is 20% over budget. How to bring costs in line?",
+              ],
+            },
+            airlines: {
+              lvl2: [
+                "e.g. fuel hedging to reduce price volatility",
+                "e.g. fleet standardization (one aircraft type)",
+                "e.g. reduce turnaround time to add daily flights",
+              ],
+              prompts: [
+                "SkyBridge Airlines' CASK is 15% above the industry median. Where are the biggest cost-saving opportunities?",
+                "EuroConnect's ground handling costs are double the low-cost carrier average. How to reduce?",
+                "PacificWing needs to cut costs by $200M. Where would you start?",
+              ],
+            },
+            manufacturing: {
+              lvl2: [
+                "e.g. reduce scrap/waste on production lines",
+                "e.g. consolidate plants to increase utilization",
+                "e.g. switch to cheaper raw material alternatives",
+              ],
+              prompts: [
+                "SteelForge has 3 plants at 65% utilization. Costs are too high. What restructuring options exist?",
+                "ChemWorks' raw material costs rose 25% but they can't raise prices. How to offset?",
+                "AutoParts Global's scrap rate is 8% vs 3% benchmark. How to improve?",
+              ],
+            },
+            telecom: {
+              lvl2: [
+                "e.g. decommission legacy infrastructure (copper networks)",
+                "e.g. share tower infrastructure with competitors",
+                "e.g. automate network operations (AI-driven)",
+              ],
+              prompts: [
+                "ConnectAll runs both copper and fiber networks. Maintaining both costs €300M/year. How to optimize?",
+                "TowerLink wants to reduce tower operating costs by 20%. What approach?",
+                "StreamVision's content costs per subscriber are rising 3x faster than ARPU. How to control?",
+              ],
+            },
+            nonprofit: {
+              lvl2: [
+                "e.g. share back-office functions across programs",
+                "e.g. use volunteers/fellows instead of paid staff for delivery",
+                "e.g. centralize procurement across country offices",
+              ],
+              prompts: [
+                "EduBridge's overhead ratio is 28%, up from 15%. Donor pressure to reduce. What should they do?",
+                "CleanWater Initiative's cost per beneficiary has risen 40% in new regions. How to bring it down?",
+                "Global Literacy Fund must reduce spending by 20% without cutting program impact. How?",
+              ],
+            },
+          },
+        },
+        "market-entry": {
+          whenToUse:
+            "The prompt asks whether the client <strong>should enter a new market, geography, segment, or customer group</strong>. The question is WHETHER (yes/no), not just HOW.",
+          whenNOT: [
+            {
+              trap: "Client already in the market, wants to grow share",
+              use: "📈 Growth — they're already in, so it's about optimization not entry",
+            },
+            {
+              trap: "Client launching a product in their existing market",
+              use: "🆕 New Product Launch — same market, new product is different from new market",
+            },
+            {
+              trap: "Client considering acquiring a company to enter the market",
+              use: "🤝 M&A — wrap the entry analysis inside an acquisition framework",
+            },
+          ],
+          examples: {
+            retail: {
+              lvl2: [
+                "e.g. local consumer preferences in target market",
+                "e.g. real estate availability and costs per sqm",
+                "e.g. existing competitor density and loyalty",
+              ],
+              prompts: [
+                "FreshMart operates in Western Europe. Should they enter the Eastern European market? How?",
+                "UrbanWear is considering launching in the US market. They currently only operate in Europe. Advise them.",
+                "PetPlanet UK wants to expand to Germany. Is this a good idea? What's the approach?",
+              ],
+            },
+            healthcare: {
+              lvl2: [
+                "e.g. regulatory approval pathway (FDA, EMA)",
+                "e.g. reimbursement landscape in target country",
+                "e.g. disease prevalence and patient population size",
+              ],
+              prompts: [
+                "BioNova wants to launch their rare disease drug in Japan. What factors should they assess?",
+                "HealthBridge's telehealth platform works well in the US. Should they enter Brazil?",
+                "CureFirst Pharma is considering entering the OTC (over-the-counter) market. Should they?",
+              ],
+            },
+            tech: {
+              lvl2: [
+                "e.g. product localization requirements (language, compliance)",
+                "e.g. competing platforms and lock-in effects",
+                "e.g. willingness to pay in target segment",
+              ],
+              prompts: [
+                "CloudSync is US-based and wants to enter the European enterprise market. What should they consider?",
+                "SecureNet is considering the APAC cybersecurity market. Is this attractive? How to enter?",
+                "AppForge wants to expand from developer tools into project management. New market or extension?",
+              ],
+            },
+            financial: {
+              lvl2: [
+                "e.g. banking license requirements in target country",
+                "e.g. financial literacy and banking penetration rates",
+                "e.g. regulatory restrictions on foreign ownership",
+              ],
+              prompts: [
+                "PayQuick operates in Europe. Should they enter the Southeast Asian payments market?",
+                "TrustBank is considering launching a neobank for Gen Z customers. New market or extension?",
+                "InsureAll wants to enter the US health insurance market. What's the attractiveness?",
+              ],
+            },
+            energy: {
+              lvl2: [
+                "e.g. renewable subsidies and feed-in tariffs in target market",
+                "e.g. grid infrastructure and interconnection",
+                "e.g. political stability and regulatory risk",
+              ],
+              prompts: [
+                "SolarFirst operates in Spain. Should they expand to the Middle East solar market?",
+                "GreenGrid's smart grid tech is proven in Germany. Should they enter India?",
+                "WindHarvest is evaluating offshore wind opportunities in the US. Is this attractive?",
+              ],
+            },
+            airlines: {
+              lvl2: [
+                "e.g. slot availability at target airports",
+                "e.g. bilateral aviation agreements",
+                "e.g. demand on route and competitor capacity",
+              ],
+              prompts: [
+                "EuroConnect wants to launch transatlantic routes. Should a low-cost carrier enter long-haul?",
+                "SkyBridge is considering entering the Indian domestic market. What's the opportunity?",
+                "CargoFast wants to expand from Europe to intra-Asia cargo. Should they?",
+              ],
+            },
+            manufacturing: {
+              lvl2: [
+                "e.g. labor costs and skill availability in target region",
+                "e.g. supply chain proximity to customers",
+                "e.g. local regulatory and environmental standards",
+              ],
+              prompts: [
+                "AutoParts Global is considering opening a plant in Vietnam. Should they?",
+                "ChemWorks wants to enter the Indian specialty chemicals market. What's the attractiveness?",
+                "PrecisionTech is evaluating nearshoring from China to Mexico. Is this the right move?",
+              ],
+            },
+            telecom: {
+              lvl2: [
+                "e.g. spectrum availability and auction costs",
+                "e.g. existing operators and market concentration",
+                "e.g. regulatory environment for foreign operators",
+              ],
+              prompts: [
+                "ConnectAll wants to enter the African mobile market. Which country and how?",
+                "MediaPulse's streaming service is strong in Europe. Should they enter Latin America?",
+                "DataWave is considering the enterprise IoT market. Should they enter this new segment?",
+              ],
+            },
+            nonprofit: {
+              lvl2: [
+                "e.g. local partner availability and reliability",
+                "e.g. political stability and access to beneficiaries",
+                "e.g. funding availability for new geography",
+              ],
+              prompts: [
+                "CleanWater Initiative serves 5 countries in Africa. Should they expand to South Asia?",
+                "EduBridge is considering launching in the Middle East. What should they assess?",
+                "HealthForAll NGO wants to enter emergency response (new area). Should they?",
+              ],
+            },
+          },
+        },
+        "new-product": {
+          whenToUse:
+            "The prompt asks how to <strong>launch, design, or position a new product or service</strong>. The product doesn't exist yet (or is being redesigned for launch).",
+          whenNOT: [
+            {
+              trap: "Client entering a new market with existing products",
+              use: "🚀 Market Entry — same product, different market uses Entry framework",
+            },
+            {
+              trap: "Client wants to price an existing product",
+              use: "🏷️ Pricing — if the product already exists, it's a pricing question",
+            },
+            {
+              trap: "Client wants to grow revenue generally",
+              use: "📈 Growth — new products are ONE lever for growth, not the whole picture",
+            },
+          ],
+          examples: {
+            retail: {
+              lvl2: [
+                "e.g. consumer testing and MVP validation",
+                "e.g. channel strategy (online, stores, grocery)",
+                "e.g. packaging, branding, and shelf positioning",
+              ],
+              prompts: [
+                "FreshMart wants to launch a premium private-label organic food line. How should they approach this?",
+                "UrbanWear is designing a sustainable fashion line. How to bring it to market?",
+                "SnackNation wants to launch a protein bar competing with RXBar and Kind. What's the strategy?",
+              ],
+            },
+            healthcare: {
+              lvl2: [
+                "e.g. clinical trial design and endpoints",
+                "e.g. regulatory filing strategy (FDA, EMA)",
+                "e.g. pricing and reimbursement model",
+              ],
+              prompts: [
+                "BioNova is launching a gene therapy for a rare disease affecting 5,000 patients. How to maximize uptake?",
+                "MedVita Labs wants to launch a digital companion app alongside their flagship drug. How?",
+                "CureFirst Pharma is developing a biosimilar. How should they strategy the launch?",
+              ],
+            },
+            tech: {
+              lvl2: [
+                "e.g. freemium vs paid-only model",
+                "e.g. integration with existing ecosystem/APIs",
+                "e.g. product-led growth vs sales-led approach",
+              ],
+              prompts: [
+                "CloudSync wants to launch an AI analytics add-on module. How should they design and price it?",
+                "DataPulse AI wants to launch a self-serve version for SMBs. Their current product is enterprise-only. How?",
+                "StreamFlow wants to launch a video meeting feature to compete with Zoom. Smart move? How?",
+              ],
+            },
+            financial: {
+              lvl2: [
+                "e.g. regulatory approval for new financial product",
+                "e.g. risk modeling and capital requirements",
+                "e.g. distribution channel (branch, app, partner)",
+              ],
+              prompts: [
+                "TrustBank wants to launch a robo-advisory wealth product for millennials. How?",
+                "PayQuick wants to launch a BNPL (buy now, pay later) product. How should they approach it?",
+                "InsureAll wants to launch a usage-based car insurance product. Strategy?",
+              ],
+            },
+            energy: {
+              lvl2: [
+                "e.g. technology readiness and pilot results",
+                "e.g. regulatory approvals and grid interconnection",
+                "e.g. customer willingness to switch/adopt",
+              ],
+              prompts: [
+                "GreenGrid wants to launch a home battery storage product. How to bring it to market?",
+                "SolarFirst wants to launch a solar-as-a-service offering for SMEs. Strategy?",
+                "FuelTech wants to launch a hydrogen fuel product. How to evaluate feasibility?",
+              ],
+            },
+            airlines: {
+              lvl2: [
+                "e.g. route demand analysis and seasonality",
+                "e.g. fleet allocation and scheduling",
+                "e.g. pricing tier design (basic, standard, premium)",
+              ],
+              prompts: [
+                "SkyBridge wants to launch a premium economy class. How should they design and position it?",
+                "EuroConnect wants to launch a subscription-based frequent flyer product. Strategy?",
+                "CargoFast wants to launch a same-day delivery service for e-commerce. How?",
+              ],
+            },
+            manufacturing: {
+              lvl2: [
+                "e.g. production line setup and capex",
+                "e.g. raw material sourcing for new specs",
+                "e.g. customer qualification and testing",
+              ],
+              prompts: [
+                "SteelForge wants to launch a lightweight alloy product for EV manufacturers. How?",
+                "PackRight wants to launch biodegradable packaging. How to bring it to market?",
+                "PrecisionTech wants to launch a 3D-printed component service. Feasibility?",
+              ],
+            },
+            telecom: {
+              lvl2: [
+                "e.g. content licensing and production costs",
+                "e.g. bundling with existing services (mobile + content)",
+                "e.g. device partnerships (hardware + service)",
+              ],
+              prompts: [
+                "ConnectAll wants to launch an IoT platform for smart homes. Strategy?",
+                "StreamVision wants to launch a sports-only streaming tier. How?",
+                "MediaPulse wants to launch a podcast network. How to design the product?",
+              ],
+            },
+            nonprofit: {
+              lvl2: [
+                "e.g. beneficiary needs assessment",
+                "e.g. funding model (grants, earned income, fees)",
+                "e.g. delivery model (direct, through partners)",
+              ],
+              prompts: [
+                "EduBridge wants to launch an online learning platform for underserved students. How?",
+                "CleanWater Initiative wants to launch a sanitation program alongside water. Strategy?",
+                "HealthForAll wants to launch a mental health hotline. How to design and deploy?",
+              ],
+            },
+          },
+        },
+        pricing: {
+          whenToUse:
+            "The prompt asks how to <strong>set, change, or optimize prices</strong>. The product exists; the question is what to charge.",
+          whenNOT: [
+            {
+              trap: "Profit is declining due to price pressure",
+              use: "💰 Profitability — diagnose whether it's price or volume before jumping to pricing",
+            },
+            {
+              trap: "Client launching a brand-new product",
+              use: "🆕 New Product Launch — pricing is ONE element; use the full launch framework",
+            },
+          ],
+          examples: {
+            retail: {
+              lvl2: [
+                "e.g. price elasticity varies by category",
+                "e.g. competitor price monitoring and matching",
+                "e.g. dynamic pricing based on time/demand",
+              ],
+              prompts: [
+                "FreshMart wants to raise prices without losing customers. How should they approach pricing?",
+                "LuxHome is losing customers to Amazon on the same products. Should they match prices or differentiate?",
+                "UrbanWear is launching a premium line and needs to set pricing. How?",
+              ],
+            },
+            healthcare: {
+              lvl2: [
+                "e.g. value-based pricing tied to patient outcomes",
+                "e.g. payer negotiation and rebate structure",
+                "e.g. reference pricing across countries",
+              ],
+              prompts: [
+                "BioNova's rare disease drug can be life-changing. How should they price it?",
+                "CureFirst is launching a biosimilar at 70% of the reference price. Is this the right level?",
+                "CarePlus Hospitals want to introduce tiered pricing for elective procedures. Strategy?",
+              ],
+            },
+            tech: {
+              lvl2: [
+                "e.g. freemium-to-paid conversion pricing psychology",
+                "e.g. per-seat vs usage-based pricing model",
+                "e.g. enterprise discount structures",
+              ],
+              prompts: [
+                "CloudSync's pricing is per-seat but customers use it differently. Should they switch to usage-based?",
+                "AppForge has 200K free users. They want to monetize more. What pricing strategy?",
+                "SecureNet is 2x cheaper than competitors but growing slower. Should they raise prices?",
+              ],
+            },
+            financial: {
+              lvl2: [
+                "e.g. fee structure (flat, %, tiered)",
+                "e.g. interchange economics",
+                "e.g. regulatory caps on certain fees",
+              ],
+              prompts: [
+                "PayQuick charges 1.5% per transaction. Competitors range 1-3%. Should they change?",
+                "WealthBridge charges 1% AUM. Robo-advisors charge 0.25%. How to defend pricing?",
+                "TrustBank wants to introduce fees on previously free accounts. How to minimize churn?",
+              ],
+            },
+            energy: {
+              lvl2: [
+                "e.g. regulated vs deregulated pricing regimes",
+                "e.g. time-of-use pricing to manage demand",
+                "e.g. green premium for renewable energy",
+              ],
+              prompts: [
+                "SolarFirst is selling solar energy at €40/MWh. Should they price higher given ESG premium?",
+                "GridPower wants to introduce time-of-use pricing for residential customers. Strategy?",
+                "GreenGrid's smart grid service is priced per node. Should they switch to outcome-based pricing?",
+              ],
+            },
+            airlines: {
+              lvl2: [
+                "e.g. dynamic pricing based on demand and booking time",
+                "e.g. fare class design and upgrade economics",
+                "e.g. ancillary unbundling (bags, meals, seats)",
+              ],
+              prompts: [
+                "SkyBridge Airlines wants to optimize its revenue management system. How to improve pricing?",
+                "EuroConnect wants to add a 'basic' fare 30% cheaper than standard. Smart or risky?",
+                "CargoFast's cargo rates are contract-based. Should they introduce spot pricing?",
+              ],
+            },
+            manufacturing: {
+              lvl2: [
+                "e.g. cost-plus vs value-based for OEM customers",
+                "e.g. contract pricing vs spot market",
+                "e.g. volume discounts and minimum order quantities",
+              ],
+              prompts: [
+                "AutoParts Global supplies 5 OEMs at cost-plus pricing. One customer wants a volume discount. How to evaluate?",
+                "SteelForge's costs rose 20% but contracts fix prices for 12 months. How to renegotiate?",
+                "PrecisionTech wants to charge 3x more for custom parts vs standard. Is this justified?",
+              ],
+            },
+            telecom: {
+              lvl2: [
+                "e.g. ARPU optimization through bundles",
+                "e.g. competitive pricing in saturated markets",
+                "e.g. data pricing (unlimited vs tiered)",
+              ],
+              prompts: [
+                "ConnectAll's ARPU is €25 vs competitor at €30. Should they raise prices? How?",
+                "StreamVision charges €9.99/month. Should they launch a €14.99 premium tier?",
+                "TowerLink charges operators per tower. Should they switch to revenue-share?",
+              ],
+            },
+            nonprofit: {
+              lvl2: [
+                "e.g. service fees vs free-to-beneficiary models",
+                "e.g. tiered pricing for different income levels",
+                "e.g. government reimbursement rates",
+              ],
+              prompts: [
+                "HealthForAll currently offers free services. Should they introduce sliding-scale fees?",
+                "EduBridge wants to sell corporate training to fund free student programs. What to charge?",
+                "City of Greenville needs to set pricing for a new public transit route. How?",
+              ],
+            },
+          },
+        },
+        investment: {
+          whenToUse:
+            "The prompt asks whether to <strong>invest in X, build vs buy, allocate CapEx</strong>, or evaluate <strong>ROI of a specific project</strong>.",
+          whenNOT: [
+            {
+              trap: "Client acquiring another company",
+              use: "🤝 M&A — acquisitions have synergies and integration risk beyond simple ROI",
+            },
+            {
+              trap: "Client deciding whether to enter a market",
+              use: "🚀 Market Entry — entry decision needs market assessment, not just ROI",
+            },
+          ],
+          examples: {
+            retail: {
+              lvl2: [
+                "e.g. store renovation ROI (cost vs incremental sales)",
+                "e.g. technology investment (POS, inventory systems)",
+                "e.g. warehouse automation payback",
+              ],
+              prompts: [
+                "FreshMart is considering €100M to renovate 50 stores. Is this a good investment?",
+                "UrbanWear can invest €20M in an automated warehouse. Should they?",
+              ],
+            },
+            healthcare: {
+              lvl2: [
+                "e.g. new MRI machine ROI (patient volume × charge)",
+                "e.g. R&D investment in Phase II trial",
+                "e.g. digital health platform build cost",
+              ],
+              prompts: [
+                "CarePlus wants to invest €50M in a new hospital wing. What's the ROI analysis?",
+                "MedVita Labs has €200M to allocate across 3 Phase II drugs. How to prioritize?",
+              ],
+            },
+            tech: {
+              lvl2: [
+                "e.g. build vs buy for a new feature",
+                "e.g. data center investment vs cloud migration",
+                "e.g. hiring 50 engineers for a new product line",
+              ],
+              prompts: [
+                "CloudSync is deciding whether to build or buy an AI analytics engine. How to evaluate?",
+                "DataPulse AI needs $30M for new GPU infrastructure. Is this worth it?",
+              ],
+            },
+            financial: {
+              lvl2: [
+                "e.g. branch renovation vs digital investment",
+                "e.g. core banking system replacement cost",
+                "e.g. fintech partnership vs building in-house",
+              ],
+              prompts: [
+                "TrustBank can invest €500M in digital transformation or €200M in branch renovation. Which?",
+                "PayQuick is evaluating a $50M investment in compliance automation. Worth it?",
+              ],
+            },
+            energy: {
+              lvl2: [
+                "e.g. solar/wind farm LCOE and payback",
+                "e.g. battery storage economics",
+                "e.g. grid upgrade capex vs demand growth",
+              ],
+              prompts: [
+                "SolarFirst is evaluating a €500M investment in a new solar farm. What's the financial case?",
+                "GridPower must choose between upgrading the existing grid (€300M) or building new (€800M). Which?",
+              ],
+            },
+            airlines: {
+              lvl2: [
+                "e.g. new aircraft order economics",
+                "e.g. lounge investment for premium passengers",
+                "e.g. IT system modernization",
+              ],
+              prompts: [
+                "SkyBridge is deciding between ordering 20 A321neos ($2.4B) or 15 787s ($3.5B). How to evaluate?",
+                "EuroConnect is considering a $100M investment in airport lounges. Makes sense for a LCC?",
+              ],
+            },
+            manufacturing: {
+              lvl2: [
+                "e.g. new plant vs expand existing",
+                "e.g. automation line capex vs labor savings",
+                "e.g. R&D for new product development",
+              ],
+              prompts: [
+                "SteelForge is evaluating €80M to automate 2 production lines. What's the business case?",
+                "PackRight can invest €50M in a new biodegradable packaging line. Should they?",
+              ],
+            },
+            telecom: {
+              lvl2: [
+                "e.g. 5G spectrum auction and rollout capex",
+                "e.g. fiber-to-the-home investment",
+                "e.g. content production for streaming service",
+              ],
+              prompts: [
+                "DataWave is evaluating a €2B 5G rollout. Will it generate returns?",
+                "ConnectAll must choose between extending copper or building fiber. Capex analysis?",
+              ],
+            },
+            nonprofit: {
+              lvl2: [
+                "e.g. program expansion vs new program",
+                "e.g. technology platform investment",
+                "e.g. endowment building vs direct spending",
+              ],
+              prompts: [
+                "EduBridge can invest €5M in an online platform serving 100K students. Is it worth it?",
+                "Global Literacy Fund is deciding between expanding existing programs or launching new ones. How to allocate $10M?",
+              ],
+            },
+          },
+        },
+        "m-and-a": {
+          whenToUse:
+            "The prompt asks whether to <strong>acquire, merge with, or divest</strong> a business. The question involves valuation, synergies, and integration.",
+          whenNOT: [
+            {
+              trap: "Client wants to enter a new market (but not via acquisition)",
+              use: "🚀 Market Entry — organic entry doesn't need M&A analysis",
+            },
+            {
+              trap: "Client evaluating a generic investment",
+              use: "💼 Investment — if it's not about buying a company, use the simpler Investment framework",
+            },
+          ],
+          examples: {
+            retail: {
+              lvl2: [
+                "e.g. store portfolio overlap and cannibalization",
+                "e.g. supply chain integration synergies",
+                "e.g. brand portfolio strategy post-merger",
+              ],
+              prompts: [
+                "FreshMart is considering acquiring a 50-store organic chain for €300M. Should they?",
+                "UrbanWear can buy a competing DTC brand for 3x revenue. Is this a good deal?",
+              ],
+            },
+            healthcare: {
+              lvl2: [
+                "e.g. pipeline synergies (combined R&D)",
+                "e.g. market access and distribution overlap",
+                "e.g. regulatory risk of combined entity",
+              ],
+              prompts: [
+                "CureFirst Pharma is evaluating an acquisition of a biotech with 2 Phase III drugs. Worth €1B?",
+                "CarePlus Hospitals can acquire a rival hospital group for €500M. Should they?",
+              ],
+            },
+            tech: {
+              lvl2: [
+                "e.g. acqui-hire for talent/engineering team",
+                "e.g. product integration and codebase compatibility",
+                "e.g. customer overlap and churn risk",
+              ],
+              prompts: [
+                "CloudSync is considering acquiring a smaller competitor with $15M ARR for $100M. Should they?",
+                "SecureNet wants to buy an AI startup for $50M to add AI capabilities. Smart move?",
+              ],
+            },
+            financial: {
+              lvl2: [
+                "e.g. customer portfolio overlap",
+                "e.g. regulatory antitrust review",
+                "e.g. technology platform consolidation",
+              ],
+              prompts: [
+                "TrustBank is evaluating a merger with a regional bank. How to assess the deal?",
+                "PayQuick can acquire a BNPL company for $200M. Should they?",
+              ],
+            },
+            energy: {
+              lvl2: [
+                "e.g. asset portfolio complementarity (solar + wind)",
+                "e.g. geographic footprint expansion",
+                "e.g. regulatory approvals in energy sector",
+              ],
+              prompts: [
+                "SolarFirst wants to acquire a wind energy company for €800M. Synergies?",
+                "FuelTech is considering selling its refining division. How to evaluate the divestiture?",
+              ],
+            },
+            airlines: {
+              lvl2: [
+                "e.g. route network complementarity",
+                "e.g. fleet standardization post-merger",
+                "e.g. alliance membership impact",
+              ],
+              prompts: [
+                "SkyBridge Airlines is evaluating a merger with a regional carrier. What's the case?",
+                "EuroConnect can buy an African airline for route access. Should they?",
+              ],
+            },
+            manufacturing: {
+              lvl2: [
+                "e.g. production capacity consolidation",
+                "e.g. vertical integration (buy a supplier)",
+                "e.g. customer base and contract transferability",
+              ],
+              prompts: [
+                "AutoParts Global can acquire a competing supplier for €400M. Synergies?",
+                "SteelForge wants to vertically integrate by buying a scrap metal supplier. Analysis?",
+              ],
+            },
+            telecom: {
+              lvl2: [
+                "e.g. spectrum holdings combination",
+                "e.g. network infrastructure sharing post-merger",
+                "e.g. regulatory approval (antitrust in telecom)",
+              ],
+              prompts: [
+                "ConnectAll is evaluating a merger with a rival mobile operator. What's the regulatory risk?",
+                "MediaPulse can buy a content studio for $300M. Should they produce in-house?",
+              ],
+            },
+            nonprofit: {
+              lvl2: [
+                "e.g. program overlap and consolidation",
+                "e.g. donor base overlap and fundraising efficiency",
+                "e.g. organizational culture compatibility",
+              ],
+              prompts: [
+                "EduBridge and Global Literacy Fund are considering a merger. Both serve education. Should they?",
+                "HealthForAll can absorb a smaller NGO in the same space. Analysis?",
+              ],
+            },
+          },
+        },
+        "competitive-response": {
+          whenToUse:
+            "The prompt mentions a <strong>competitor threat, market share loss to a rival, or a disruptive new entrant</strong>. The question is how to RESPOND.",
+          whenNOT: [
+            {
+              trap: "Profits are declining but no specific competitor mentioned",
+              use: "💰 Profitability — it might be internal issues, not competitive",
+            },
+            {
+              trap: "Client wants to enter a new market proactively",
+              use: "🚀 Market Entry — entering is proactive, responding is reactive",
+            },
+          ],
+          examples: {
+            retail: {
+              lvl2: [
+                "e.g. competitor opened stores in our territory",
+                "e.g. Amazon entered our product category",
+                "e.g. private-label copycat of our hero product",
+              ],
+              prompts: [
+                "Amazon has started selling products identical to LuxHome's at 30% lower prices. How should LuxHome respond?",
+                "A new discount grocery chain opened 20 stores in FreshMart's core territory. What should FreshMart do?",
+              ],
+            },
+            healthcare: {
+              lvl2: [
+                "e.g. generic version of our blockbuster drug",
+                "e.g. competitor received faster regulatory approval",
+                "e.g. digital health startup disrupting our model",
+              ],
+              prompts: [
+                "A generic version of CureFirst's blockbuster drug is launching next quarter. How should they respond?",
+                "A telehealth startup is disrupting CarePlus's outpatient visits. Response strategy?",
+              ],
+            },
+            tech: {
+              lvl2: [
+                "e.g. competitor launched a free version",
+                "e.g. big tech entered our space (Google, Microsoft)",
+                "e.g. open-source alternative gaining adoption",
+              ],
+              prompts: [
+                "Microsoft just launched a free product that competes directly with CloudSync. How to respond?",
+                "An open-source alternative to SecureNet's product is gaining enterprise adoption. What to do?",
+              ],
+            },
+            financial: {
+              lvl2: [
+                "e.g. neobank taking Gen Z customers",
+                "e.g. competitor offering zero-fee accounts",
+                "e.g. fintech unbundling our services",
+              ],
+              prompts: [
+                "A neobank has gained 500K customers in TrustBank's core market in 12 months. Response?",
+                "A fintech competitor just launched instant payments — PayQuick's unique selling point. Now what?",
+              ],
+            },
+            energy: {
+              lvl2: [
+                "e.g. competitor wins renewable subsidy auction",
+                "e.g. new entrant offers cheaper green energy",
+                "e.g. tech company entering energy storage",
+              ],
+              prompts: [
+                "A competitor won a subsidy auction that SolarFirst was counting on. How to respond?",
+                "A tech giant is entering the home energy market with AI-powered storage. Impact on GridPower?",
+              ],
+            },
+            airlines: {
+              lvl2: [
+                "e.g. low-cost carrier entered our routes",
+                "e.g. competitor launched premium economy",
+                "e.g. high-speed rail disrupting short-haul",
+              ],
+              prompts: [
+                "A low-cost carrier started flying 5 of SkyBridge's most profitable routes. How to respond?",
+                "A high-speed rail link opened, competing with EuroConnect on 3 short-haul routes. What to do?",
+              ],
+            },
+            manufacturing: {
+              lvl2: [
+                "e.g. Chinese manufacturer undercutting on price",
+                "e.g. competitor automated and now has 30% lower costs",
+                "e.g. customer backward-integrating",
+              ],
+              prompts: [
+                "A Chinese manufacturer is offering AutoParts Global's product at 40% lower price. How to respond?",
+                "AutoParts' biggest customer is considering manufacturing parts in-house. What should AutoParts do?",
+              ],
+            },
+            telecom: {
+              lvl2: [
+                "e.g. MVNO taking subscribers with lower prices",
+                "e.g. tech company bundling free calling (WhatsApp)",
+                "e.g. competitor first to launch 5G",
+              ],
+              prompts: [
+                "An MVNO is taking 5% of ConnectAll's subscribers per year with 40% cheaper plans. Response?",
+                "StreamVision's biggest competitor just launched a cheaper plan with more content. What to do?",
+              ],
+            },
+            nonprofit: {
+              lvl2: [
+                "e.g. new NGO duplicating our programs",
+                "e.g. government launching free version of our service",
+                "e.g. for-profit company entering our space",
+              ],
+              prompts: [
+                "The government launched a free version of EduBridge's literacy program. Should EduBridge pivot?",
+                "A well-funded new NGO is duplicating CleanWater Initiative's programs. How to respond?",
+              ],
+            },
+          },
+        },
+        "process-optimization": {
+          whenToUse:
+            "The prompt asks about <strong>improving a specific process, reducing bottlenecks, increasing throughput</strong>, or <strong>operational efficiency</strong>.",
+          whenNOT: [
+            {
+              trap: "Client wants to cut costs broadly",
+              use: "📉 Cost Reduction — process optimization is about HOW things work, not just what they cost",
+            },
+            {
+              trap: "Profits declining (might not be a process issue)",
+              use: "💰 Profitability — diagnose whether it's really operational before jumping to process",
+            },
+          ],
+          examples: {
+            retail: {
+              lvl2: [
+                "e.g. checkout queue times (bottleneck)",
+                "e.g. inventory replenishment cycle (stock-outs)",
+                "e.g. returns processing throughput",
+              ],
+              prompts: [
+                "FreshMart's checkout wait times average 12 minutes vs target of 5. How to optimize?",
+                "LuxHome's online return processing takes 14 days. Customers expect 3. How to fix?",
+              ],
+            },
+            healthcare: {
+              lvl2: [
+                "e.g. patient admission-to-discharge cycle time",
+                "e.g. operating room utilization rate",
+                "e.g. lab test turnaround time",
+              ],
+              prompts: [
+                "CarePlus Hospital's ER wait time averages 4 hours. Target is 90 minutes. How to improve?",
+                "MedVita Labs' drug manufacturing line has 30% downtime. How to optimize?",
+              ],
+            },
+            tech: {
+              lvl2: [
+                "e.g. deployment pipeline speed",
+                "e.g. customer onboarding time",
+                "e.g. bug resolution cycle time",
+              ],
+              prompts: [
+                "CloudSync's customer onboarding takes 6 weeks vs competitor's 3 days. How to streamline?",
+                "DataPulse AI's model training pipeline takes 48 hours. They need it under 6. How?",
+              ],
+            },
+            financial: {
+              lvl2: [
+                "e.g. loan approval cycle time",
+                "e.g. claims processing throughput",
+                "e.g. account opening completion rate",
+              ],
+              prompts: [
+                "TrustBank's mortgage approval takes 45 days. Industry best practice is 15. How to optimize?",
+                "InsureAll's claims processing takes 30 days. Customers are leaving. How to accelerate?",
+              ],
+            },
+            energy: {
+              lvl2: [
+                "e.g. plant turnaround time (maintenance cycles)",
+                "e.g. grid fault response time",
+                "e.g. energy trading execution speed",
+              ],
+              prompts: [
+                "FuelTech's refinery maintenance turnaround takes 6 weeks. Target is 3. How?",
+                "GridPower's fault response time is 8 hours vs 2-hour regulatory target. How to fix?",
+              ],
+            },
+            airlines: {
+              lvl2: [
+                "e.g. aircraft turnaround time at gate",
+                "e.g. baggage handling throughput",
+                "e.g. boarding process speed",
+              ],
+              prompts: [
+                "SkyBridge's average turnaround time is 55 minutes. Low-cost carriers do it in 25. How?",
+                "CargoFast's cargo loading process has a 20% delay rate. How to optimize?",
+              ],
+            },
+            manufacturing: {
+              lvl2: [
+                "e.g. production line cycle time",
+                "e.g. changeover time between product runs",
+                "e.g. quality inspection bottleneck",
+              ],
+              prompts: [
+                "AutoParts Global's production line runs at 65% utilization. Bottleneck is quality inspection. How to fix?",
+                "PackRight's changeover between product runs takes 4 hours vs 45-minute SMED target. How to improve?",
+              ],
+            },
+            telecom: {
+              lvl2: [
+                "e.g. network provisioning speed",
+                "e.g. customer service resolution time",
+                "e.g. tower deployment process",
+              ],
+              prompts: [
+                "ConnectAll's network provisioning takes 10 days for enterprise customers. Competitors do 2. How?",
+                "TowerLink's tower deployment process takes 18 months. Industry average is 9. How to accelerate?",
+              ],
+            },
+            nonprofit: {
+              lvl2: [
+                "e.g. beneficiary enrollment process",
+                "e.g. grant reporting cycle",
+                "e.g. program delivery logistics",
+              ],
+              prompts: [
+                "EduBridge's student enrollment process takes 3 months per cohort. How to streamline?",
+                "CleanWater Initiative's well installation takes 6 months per site. How to speed it up?",
+              ],
+            },
+          },
+        },
+      };
+
+      // Map framework HTML ids to FW_EXAMPLES keys
+      var FW_ID_MAP = {
+        "fw-ex-1": "profitability",
+        "fw-ex-2": "growth",
+        "fw-ex-3": "cost-reduction",
+        "fw-ex-4": "market-entry",
+        "fw-ex-5": "new-product",
+        "fw-ex-6": "pricing",
+        "fw-ex-7": "investment",
+        "fw-ex-8": "m-and-a",
+        "fw-ex-9": "competitive-response",
+        "fw-ex-10": "process-optimization",
+      };
+
+      var fwPromptIdxMap = {}; // tracks which prompt index is shown per framework key
+
+      function fwGetIndustry() {
+        var sel = document.getElementById("fw-industry-select");
+        return sel ? sel.value : "retail";
+      }
+
+      function fwUpdateIndustryExamples() {
+        var ind = fwGetIndustry();
+        Object.keys(FW_ID_MAP).forEach(function (htmlId) {
+          var key = FW_ID_MAP[htmlId];
+          var data = FW_EXAMPLES[key];
+          if (!data) return;
+          var el = document.getElementById(htmlId);
+          if (!el) return;
+          var indData = data.examples[ind];
+          if (!indData) return;
+
+          // Populate "when to use" section (only once, same for all industries)
+          var whenDiv = el.querySelector(".fw-when-to-use");
+          if (whenDiv && !whenDiv.dataset.filled) {
+            var wh =
+              '<p style="color:#81c784;margin:0 0 8px;">\u2705 <strong>When to use:</strong> ' +
+              data.whenToUse +
+              "</p>";
+            wh +=
+              '<p style="color:#ef9a9a;margin:8px 0 4px;">\u26a0\ufe0f <strong>When NOT to use (common traps):</strong></p>';
+            wh += '<ul style="margin:4px 0 0;padding-left:20px;">';
+            data.whenNOT.forEach(function (w) {
+              wh +=
+                '<li style="color:#e0e0e0;margin-bottom:4px;font-size:0.9em;"><span style="color:#ffcc80;">Tempting:</span> ' +
+                w.trap +
+                ' \u2192 <span style="color:#90caf9;">Use instead:</span> ' +
+                w.use +
+                "</li>";
+            });
+            wh += "</ul>";
+            whenDiv.innerHTML = wh;
+            whenDiv.dataset.filled = "1";
+          }
+
+          // Update 2nd level examples
+          var exDiv = el.querySelector(".fw-industry-examples");
+          if (exDiv) {
+            var html =
+              "<strong style='color:var(--bcg-green);'>Industry-specific considerations:</strong><ul style='margin-top:6px;color:var(--text-muted);font-size:0.9em;'>";
+            indData.lvl2.forEach(function (ex) {
+              html += "<li>" + ex + "</li>";
+            });
+            html += "</ul>";
+            exDiv.innerHTML = html;
+          }
+
+          // Update prompt
+          var promptIdx = fwPromptIdxMap[key] || 0;
+          if (promptIdx >= indData.prompts.length) promptIdx = 0;
+          fwPromptIdxMap[key] = promptIdx;
+          var promptDiv = el.querySelector(".fw-industry-prompt");
+          if (promptDiv) {
+            promptDiv.innerHTML =
+              '<div style="background:#1a1a1a;padding:14px;border-radius:8px;border:1px solid #333;margin-top:8px;">' +
+              '<p style="color:#fff176;font-size:0.85em;margin-bottom:6px;">📋 Example case prompt (' +
+              CG_DATA.industries[ind].name +
+              "):</p>" +
+              '<p style="color:#e0e0e0;font-family:\'Courier New\',monospace;font-size:0.88em;line-height:1.5;">"' +
+              indData.prompts[promptIdx] +
+              '"</p>' +
+              "<button onclick=\"fwRegeneratePrompt('" +
+              key +
+              '\')" style="margin-top:8px;padding:4px 12px;background:none;border:1px solid #555;border-radius:4px;color:#aaa;font-size:0.8em;cursor:pointer;">🔄 Another example</button>' +
+              "</div>";
+          }
+        });
+      }
+
+      function fwRegeneratePrompt(fwKey) {
+        var ind = fwGetIndustry();
+        var indData = FW_EXAMPLES[fwKey] && FW_EXAMPLES[fwKey].examples[ind];
+        if (!indData) return;
+        var idx = (fwPromptIdxMap[fwKey] || 0) + 1;
+        if (idx >= indData.prompts.length) idx = 0;
+        fwPromptIdxMap[fwKey] = idx;
+        fwUpdateIndustryExamples();
+      }
+
+      // Initialize on load
+      (function () {
+        setTimeout(fwUpdateIndustryExamples, 100);
       })();
 
       // Mobile sidebar
